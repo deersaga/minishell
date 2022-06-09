@@ -10,7 +10,7 @@ static int	get_path(char **argv, char **path)
 		if (ft_strcmp(*path, ""))
 		{
 			ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
-			return (1);
+			return (EXIT_FAILURE);
 		}
 	}
 	else
@@ -24,22 +24,22 @@ int	ft_cd(int argc, char **argv)
 	char	*pwd;
 
 	if (argc > 2)
-		return (1);
+		return (EXIT_FAILURE);
 	if (get_path(argv, &path))
-		return (1);
+		return (EXIT_FAILURE);
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
 		perror("getcwd");
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	if (chdir(path) == -1)
 	{
 		perror("cd");
 		free(pwd);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	//ここでOLDPWDという環境変数にpwdをvalueとして登録する。
 	free(pwd);
-	return (0);
+	return (EXIT_SUCCESS);
 }

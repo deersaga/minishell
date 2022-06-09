@@ -26,5 +26,5 @@ int	ft_echo(int argc, char **argv)
 		if (!n_opt)
 			write(STDOUT_FILENO, "\n", 1);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
