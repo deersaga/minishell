@@ -11,7 +11,7 @@ int	ft_echo(int argc, char **argv)
 		write(STDOUT_FILENO, "\n", 1);
 	else
 	{
-		if (ft_strcmp(argv[1], "-n") == 0)
+		while (!ft_strcmp(argv[i], "-n"))
 		{
 			n_opt = 1;
 			i++;
