@@ -41,5 +41,5 @@ int		ft_cd(int argc, char **argv, t_mshell *mshell);
 void	init_env(t_mshell *mshell);
 void	register_or_update_env(t_mshell *mshell, char *tar_key, char *tar_val);
 char	*get_env(t_mshell *mshell, char *key);
-
+void	print_env(t_envList *env);
 #endif
