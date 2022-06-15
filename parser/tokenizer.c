@@ -124,19 +124,6 @@ int	is_redirect(type_token type)
 	return (0);
 }
 
-void	format_quote(t_token *token)
-{
-	char	*tmp;
-
-	if (token->token[0] == '\'')
-		token->type = T_SQUOTE;
-	else if (token->token[0] == '\"')
-		token->type = T_DQUOTE;
-	tmp = token->token;
-	token->token = ft_substr(token->token, 1, ft_strlen(token->token) - 2);
-	free(tmp);
-}
-
 t_token	*format_tokens(t_token *head)
 {
 	t_token	*pre;
