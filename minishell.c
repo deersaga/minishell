@@ -48,11 +48,16 @@ void	free_array(char **array)
 	free(array);
 }
 
+void	init_mshell(t_mshell *mshell)
+{
+
+}
+
 int main(int argc, char **argv)
 {
 	pid_t	child_pid;
 	t_mshell mshell;
-	char	*cmd;
+	char	*cmdline;
 	char	**splited_cmd;
 	int		status;
 	struct sigaction	act;
@@ -61,36 +66,38 @@ int main(int argc, char **argv)
 	//act.sa_handler = SIG_IGN;
 	act.sa_handler = SIG_DFL;
 	sigaction(SIGINT, &act, NULL);
+	init_mshell(&mshell);
 	init_env(&mshell);
 	while (1)
 	{
-		cmd = readline("minishell$>");
-		splited_cmd = ft_split(cmd, ' ');
-		add_history(cmd);
-		if (!cmd)
+		cmdline = readline("minishell$>");
+		add_history(cmdline);
+		if (!cmdline)
 			exit(0);
+		splited_cmd = ft_split(cmdline, ' ');
+		tokenizer(&mshell, cmdline);
 		if (!ft_strcmp(splited_cmd[0], "cd"))
 		{
 			ft_cd(2, splited_cmd, &mshell);
 			free_array(splited_cmd);
-			free(cmd);
+			free(cmdline);
 			continue ;
 		}
 		if (!ft_strcmp(splited_cmd[0], "pwd"))
 		{
 			ft_pwd(1, splited_cmd, &mshell);
 			free_array(splited_cmd);
-			free(cmd);
+			free(cmdline);
 			continue ;
 		}
-		child_pid = fork();
+		/*child_pid = fork();
 		if (child_pid < 0)
 		{
 			perror("fork");
 			exit(1);
 		}
 		if (child_pid == 0)
-			exec_cmd(cmd);
+			exec_cmd(cmdline);
 		else
 		{
 			if (waitpid(child_pid, &status, 0) < 0)
@@ -98,9 +105,9 @@ int main(int argc, char **argv)
 				perror("waitpid");
 				exit(1);
 			}
-		}
+		}*/
 		free_array(splited_cmd);
-		free(cmd);
+		free(cmdline);
 	}
 	return (0);
 }
