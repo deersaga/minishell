@@ -189,7 +189,7 @@ int	tokenizer(t_mshell *mshell, char *cmdline)
 	{
 		if (is_delimiter(cmdline[i]))
 		{
-			cur = new_token(cur, ft_substr(cmdline, start, i - start + 1), T_WORD);
+			cur = new_token(cur, ft_substr(cmdline, start, i - start), T_WORD);
 			start = i + 1;
 		}
 		else if (is_operator(cmdline[i]))
