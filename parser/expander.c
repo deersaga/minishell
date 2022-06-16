@@ -1,60 +1,5 @@
 #include "../minishell.h"
 
-char	**ft_split_extend(char const *str, char *sep);
-
-static char	*ft_strcat(char *dest, const char *src)
-{
-	int	i;
-	int	cat_start;
-
-	i = 0;
-	while (dest[i] != '\0')
-		i++;
-	cat_start = i;
-	while (src[i - cat_start] != '\0')
-	{
-		dest[i] = src[i - cat_start];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-static char	*ft_multistrjoin(char **str_array)
-{
-	size_t	size;
-	size_t	i;
-	char	*ptr;
-
-	size = 1;
-	i = 0;
-	while (str_array[i])
-		size += ft_strlen(str_array[i++]);
-	ptr = (char *)malloc(size * sizeof(char));
-	if (!ptr)
-		exit(1);
-	ptr[0] = '\0';
-	i = 0;
-	while (str_array[i])
-		ft_strcat(ptr, str_array[i++]);
-	return (ptr);
-}
-
-/*
-void	free_array(char **array)
-{
-	size_t	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
-*/
-
 char	*ft_strreplace(char *src, char *target, char *implant, size_t *start)
 {
 	size_t	len;
@@ -129,6 +74,7 @@ char	*expansion(t_mshell *mshell, char *str)
 	}
 	return (str);
 }
+
 /*char	*expansion(t_mshell *mshell, char *str)
 {
 	char	**splited;
@@ -166,7 +112,7 @@ char	*expansion(t_mshell *mshell, char *str)
 	free_array(splited);
 	return tmp;
 }*/
-
+/*
 int	main(int argc, char **argv)
 {
 	char	**splited;
@@ -187,3 +133,4 @@ __attribute__((destructor)) static void destructor()
 {
 	system("leaks -q a.out");
 }
+*/

@@ -25,6 +25,7 @@ char	*remove_dquote(char *src)
 			ret[i++] = *src;
 		src++;
 	}
+	ret[i] = '\0';
 	return (ret);
 }
 
@@ -35,6 +36,7 @@ int	ft_export(int argc, char **argv, t_mshell *mshell)
 	char		*trimed;
 	char		*eq_pos;
 	char		*key;
+	char		*tmp;
 	char		*val;
 	size_t		i;
 
@@ -46,19 +48,26 @@ int	ft_export(int argc, char **argv, t_mshell *mshell)
 			perror("export");
 			continue;
 		}
+		printf("argv %s\n", argv[i]);
 		trimed = remove_dquote(argv[i]);
 		eq_pos = ft_strchr(trimed, '=');
 		if (!eq_pos)
 		{
-			key = trimed;
+			key = expansion(mshell, trimed);
 			val = NULL;
 		}
 		else
 		{
-			key = ft_substr(trimed, 0, eq_pos - trimed);
-			val = ft_substr(eq_pos + 1, 0, ft_strlen(trimed));
+			
+			tmp =  ft_substr(trimed, 0, eq_pos - trimed);
+			key = expansion(mshell, tmp);
+			tmp = ft_substr(eq_pos + 1, 0, ft_strlen(trimed));
+			val = expansion(mshell, tmp);
 		}
+		free(trimed);
 		register_or_update_env(mshell, key, val);
+		free(key);
+		free(val);
 	}
 	
 	return (0);
@@ -70,9 +79,14 @@ int main(int argc, char **argv)
 	t_mshell mshell;
 
 	init_env(&mshell);
-	printf("%s\n", argv[1]);
-	char *trimed = remove_dquote(argv[1]);
-	printf("%s\n", trimed);
-	printf("%d\n", ft_export(1, argv, &mshell));
+	char *tmp = ft_export(1, argv, &mshell);
+	//printf("%s\n", tmp);
+	free(tmp);
 	print_env(mshell.env);
+	delete_all_env(&mshell);
+}
+
+__attribute__((destructor)) static void destructor()
+{
+	system("leaks -q a.out");
 }
