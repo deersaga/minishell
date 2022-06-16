@@ -8,9 +8,9 @@ char	*remove_dquote(char *src)
 
 	len = 0;
 	i = 0;
-	while (src[i++])
+	while (src[i])
 	{
-		if (src[i] == '\"')
+		if (src[i++] == '\"')
 			continue ;
 		else
 			len++;
@@ -79,9 +79,8 @@ int main(int argc, char **argv)
 	t_mshell mshell;
 
 	init_env(&mshell);
-	char *tmp = ft_export(1, argv, &mshell);
+	ft_export(1, argv, &mshell);
 	//printf("%s\n", tmp);
-	free(tmp);
 	print_env(mshell.env);
 	delete_all_env(&mshell);
 }
