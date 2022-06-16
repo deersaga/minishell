@@ -118,14 +118,18 @@ void	register_or_update_env(t_mshell *mshell, char *tar_key, char *tar_val)
 	{
 		if (!ft_strcmp(cur->key, tar_key))
 		{
-			free(cur->val);
-			cur->val = ft_strdup(tar_val);
+			if (tar_val)
+			{
+				free(cur->val);
+				cur->val = ft_strdup(tar_val);
+			}
 			return ;
 		}
 		cur = cur->next;
 	}
 	cur->key = ft_strdup(tar_key);
-	cur->val = ft_strdup(tar_val);
+	if (tar_val != NULL)
+		cur->val = ft_strdup(tar_val);
 	cur->next = (t_envList *)malloc(sizeof(t_envList));
 	if (!cur->next)
 		exit(EXIT_FAILURE);
