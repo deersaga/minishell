@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	ft_echo(int argc, char **argv)
+int	ft_echo(int argc, char **argv, t_mshell *mshell)
 {
 	int		n_opt;
 	size_t	i;
