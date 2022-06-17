@@ -5,6 +5,7 @@ char	*ft_strreplace(char *src, char *target, char *implant, size_t *start)
 	size_t	len;
 	size_t	i;
 	size_t	j;
+	char	*tar;
 	char	*ret;
 
 	len = ft_strlen(src) + ft_strlen(implant) - ft_strlen(target);
@@ -12,9 +13,10 @@ char	*ft_strreplace(char *src, char *target, char *implant, size_t *start)
 	if (!ret)
 		exit(EXIT_FAILURE);
 	i = 0;
+	tar = ft_strnstr(src, target, ft_strlen(src));
 	while (*src)
 	{
-		if (src == ft_strnstr(src, target, ft_strlen(src)))
+		if (src == tar)
 		{
 			j = 0;
 			while (implant[j])
@@ -60,6 +62,8 @@ char	*expansion(t_mshell *mshell, char *str)
 	target = search_param(str, &start);
 	while (target)
 	{
+		printf("target %s\n", target);
+		printf("str %s\n", str);
 		if (!target[1])
 			implant = "$";
 		else
@@ -112,7 +116,7 @@ char	*expansion(t_mshell *mshell, char *str)
 	free_array(splited);
 	return tmp;
 }*/
-/*
+
 int	main(int argc, char **argv)
 {
 	char	**splited;
@@ -120,7 +124,7 @@ int	main(int argc, char **argv)
 
 	init_env(&mshell);
 	register_or_update_env(&mshell, "test", "sekai");
-	char *tmp1 = ft_strdup("$HOME $test $a$test $a");
+	char *tmp1 = ft_strdup("$HOME $test $a$test$");
 	char	*tmp;
 	tmp = expansion(&mshell, tmp1);
 	printf("%d \n", printf("%s\n",tmp));
@@ -133,4 +137,3 @@ __attribute__((destructor)) static void destructor()
 {
 	system("leaks -q a.out");
 }
-*/
