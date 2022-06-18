@@ -42,7 +42,7 @@ char	*search_param(char *str, size_t *start)
 			(*start)++;
 			continue ;
 		}
-		while (!ft_strchr("$ \t\n", str[(*start) + j]))
+		while (ft_isalnum(str[(*start) + j]) || str[(*start) + j] == '_')
 			j++;
 		break ;
 	}
@@ -62,8 +62,6 @@ char	*expansion(t_mshell *mshell, char *str)
 	target = search_param(str, &start);
 	while (target)
 	{
-		printf("target %s\n", target);
-		printf("str %s\n", str);
 		if (!target[1])
 			implant = "$";
 		else
@@ -79,6 +77,26 @@ char	*expansion(t_mshell *mshell, char *str)
 	return (str);
 }
 
+char	*concat_expanded_tokens(t_mshell *mshell, t_token *head)
+{
+	char	*ret;
+	char	*expanded;
+	char	*tmp;
+	t_token	*cur;
+
+	cur = head;
+	ret = ft_strdup("");
+	while (cur->token != NULL)
+	{
+		expanded = expansion(mshell, ft_strdup(cur->token));
+		tmp = ret;
+		ret = ft_strjoin(ret, expanded);
+		free(expanded);
+		free(tmp);
+		cur = cur->next;
+	}
+	return (ret);
+}
 /*char	*expansion(t_mshell *mshell, char *str)
 {
 	char	**splited;
@@ -116,7 +134,7 @@ char	*expansion(t_mshell *mshell, char *str)
 	free_array(splited);
 	return tmp;
 }*/
-
+/*
 int	main(int argc, char **argv)
 {
 	char	**splited;
@@ -124,16 +142,21 @@ int	main(int argc, char **argv)
 
 	init_env(&mshell);
 	register_or_update_env(&mshell, "test", "sekai");
-	char *tmp1 = ft_strdup("$HOME $test $a$test$");
+	t_token *tmp1;
+	tmp1 = verbose_tokenizer("$HOME-$test$- $a$test$", tmp1);
+	print_tokens(tmp1);
 	char	*tmp;
-	tmp = expansion(&mshell, tmp1);
+	tmp = concat_expanded_tokens(&mshell, tmp1);
 	printf("%d \n", printf("%s\n",tmp));
+	free_all_token(tmp1);
 	free(tmp);
 	delete_all_env(&mshell);
 	return (0);
 }
-
+*/
+/*
 __attribute__((destructor)) static void destructor()
 {
 	system("leaks -q a.out");
 }
+*/
