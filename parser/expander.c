@@ -88,7 +88,11 @@ char	*concat_expanded_tokens(t_mshell *mshell, t_token *head)
 	ret = ft_strdup("");
 	while (cur->token != NULL)
 	{
-		expanded = expansion(mshell, ft_strdup(cur->token));
+		if (cur->type != T_SQUOTE)
+			expanded = expansion(mshell, ft_strdup(cur->token));
+		else
+			expanded = ft_strdup(cur->token);
+			
 		tmp = ret;
 		ret = ft_strjoin(ret, expanded);
 		free(expanded);
