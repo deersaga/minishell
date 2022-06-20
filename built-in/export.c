@@ -1,7 +1,18 @@
 #include "../minishell.h"
 
-int	is_valid(char *argv)
+int	is_valid(char *s)
 {
+	char	*eq_pos;
+	char	*cur;
+
+	eq_pos = ft_strchr(s, '=');
+	cur = s;
+	while (cur != eq_pos)
+	{
+		if (!(ft_isalnum(*cur) || *cur == '_'))
+			return (0);
+		cur++;
+	}
 	return (1);
 }
 
@@ -21,14 +32,13 @@ int	ft_export(int argc, char **argv, t_mshell *mshell)
 		print_env(mshell->env);
 	while (argv[++i])
 	{
-		printf("argv %s\n", argv[i]);
 		tokens = verbose_tokenizer(argv[i], tokens);
 		trimed = concat_expanded_tokens(mshell, tokens);
 		free_all_token(tokens);
 		if (!is_valid(trimed))
 		{
+			ft_putstr_fd("export: not a valid identifier\n", 2);
 			free(trimed);
-			perror("export");
 			continue;
 		}
 		eq_pos = ft_strchr(trimed, '=');
