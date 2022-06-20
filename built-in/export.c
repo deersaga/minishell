@@ -31,7 +31,10 @@ int	ft_export(int argc, char **argv, t_mshell *mshell)
 
 	i = 0;
 	if (argc == 1)
+	{
+		sort_env(mshell->env);
 		print_env(mshell->env);
+	}
 	while (argv[++i])
 	{
 		tokens = verbose_tokenizer(argv[i], tokens);
@@ -59,7 +62,6 @@ int	ft_export(int argc, char **argv, t_mshell *mshell)
 		free(key);
 		free(val);
 	}
-	sort_env(mshell->env);
 	return (0);
 }
 
