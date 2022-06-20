@@ -37,11 +37,15 @@ void	sort_env(t_envList *head)
 void	print_env(t_envList *env)
 {
 	t_envList	*cur;
+	char		*val;
 
 	cur = env;
 	while (cur->key)
 	{
-		printf("declare -x %s=%s\n", cur->key, cur->val);
+		printf("declare -x %s", cur->key);
+		if (cur->val)
+			printf("=\"%s\"", cur->val);
+		printf("\n");
 		cur = cur->next;
 	}
 }
