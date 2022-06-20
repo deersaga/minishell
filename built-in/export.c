@@ -59,8 +59,7 @@ int	ft_export(int argc, char **argv, t_mshell *mshell)
 		free(key);
 		free(val);
 	}
-	//sort_env(mshell->env);
-	print_env(mshell->env);
+	sort_env(mshell->env);
 	return (0);
 }
 
