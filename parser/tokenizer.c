@@ -83,7 +83,10 @@ void	print_tokens(t_token *head)
 	cur = head;
 	while (cur)
 	{
-		printf("%-20s type: %u  fd %d\n", cur->token, cur->type, cur->fd);
+		if (cur->token)
+			printf("%-20s type: %u  fd %d x %x\n", cur->token, cur->type, cur->fd, cur->token[0]);
+		else
+			printf("%-20s type: %u  fd %d\n", cur->token, cur->type, cur->fd);
 		cur = cur->next;
 	}
 }
@@ -168,33 +171,29 @@ void	free_all_token(t_token *head)
 * その後にformat_tokensで不要なdelimiterTokenや空文字列tokenを削除しつつ、3>みたいな時はリダイレクションのtokenのfdに値(3)を入れて数字のtokenは削除している。
 * expansionに対応できるのかはまだ不明(おそらく多少の修正は必要になるかもしれないが大きな修正にはならないと思われる)。
 * あまり綺麗な方法でないので改善の余地あり?
+* 
+* 追記　3>みたいなケースには対応しなくていいとpedagoに記載があるので必須ではないが一応対応しようと思えばできる状態。
 */
-
-int	tokenizer(t_mshell *mshell, char *cmdline)
+t_token	*verbose_tokenizer(char	*cmdline, t_token *head)
 {
 	size_t	i;
 	size_t	len;
-	t_token	*head;
 	t_token	*cur;
 	size_t	start;
 	type_token type;
 
 	i = 0;
 	start = 0;
-	head = calloc(1, sizeof(t_token));
+	head = ft_calloc(1, sizeof(t_token));
 	if (!head)
 		exit(EXIT_FAILURE);
 	cur = head;
 	while (cmdline[i])
 	{
-		if (is_delimiter(cmdline[i]))
+		if (is_delimiter(cmdline[i]) || is_operator(cmdline[i]))
 		{
-			cur = new_token(cur, ft_substr(cmdline, start, i - start), T_WORD);
-			start = i + 1;
-		}
-		else if (is_operator(cmdline[i]))
-		{
-			cur = new_token(cur, ft_substr(cmdline, start, i - start), T_WORD);
+			if (start != i)
+				cur = new_token(cur, ft_substr(cmdline, start, i - start), T_WORD);
 			start = i;
 			type = get_token_type(&cmdline[i], &i);
 			cur = new_token(cur, ft_substr(cmdline, start, i - start + 1), type);
@@ -202,8 +201,8 @@ int	tokenizer(t_mshell *mshell, char *cmdline)
 		}
 		else if (is_quote(cmdline[i]))
 		{
-			cur = new_token(cur, ft_substr(cmdline, start, i - start), T_WORD);
-			len = 0;
+			if (start != i)
+				cur = new_token(cur, ft_substr(cmdline, start, i - start), T_WORD);
 			check_quote_type_and_len(cmdline, i, &len, &type);
 			cur = new_token(cur, ft_substr(cmdline, i + 1, len), type);
 			i += len + 1;
@@ -212,6 +211,15 @@ int	tokenizer(t_mshell *mshell, char *cmdline)
 		i++;
 	}
 	cur = new_token(cur, ft_substr(cmdline, start, i - start), get_token_type(&cmdline[i], &i));
+	return (head);
+}
+
+int	tokenizer(t_mshell *mshell, char *cmdline)
+{
+	t_token	*head;
+
+	head = verbose_tokenizer(cmdline, head);
+	print_tokens(head);
 	head = format_tokens(head);
 	print_tokens(head);
 	free_all_token(head);
@@ -232,5 +240,5 @@ __attribute__((destructor)) static void destructor()
 	system("leaks -q a.out");
 }
 
-*/
 
+*/
