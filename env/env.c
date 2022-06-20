@@ -5,6 +5,35 @@
 * envListの終端にenvList.keyがNULLのものを置くことで終端目印としている。
 * 登録するvalがexpandしなきゃいけない値の場合は未対応
 */
+
+void	sort_env(t_envList *head)
+{
+	t_envList	*cur;
+	t_envList	*tmp;
+	char		*key;
+	char		*val;
+
+	cur = head;
+	while (cur->next->key)
+	{
+		tmp = cur->next;
+		while (tmp->key)
+		{
+			if (ft_strcmp(cur->key, tmp->key) > 0)
+			{
+				key = cur->key;
+				val = cur->val;
+				cur->key = tmp->key;
+				cur->val = tmp->val;
+				tmp->key = key;
+				tmp->val = val;	
+			}
+			tmp = tmp->next;
+		}
+		cur = cur->next;
+	}
+}
+
 void	print_env(t_envList *env)
 {
 	t_envList	*cur;
@@ -12,7 +41,7 @@ void	print_env(t_envList *env)
 	cur = env;
 	while (cur->key)
 	{
-		printf("key %s val %s\n", cur->key, cur->val);
+		printf("declare -x %s=%s\n", cur->key, cur->val);
 		cur = cur->next;
 	}
 }
