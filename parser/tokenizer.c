@@ -53,6 +53,8 @@ type_token	get_token_type(char	*cur, size_t *i)
 		return (T_SQUOTE);
 	else if (cur[0] == '\"')
 		return (T_DQUOTE);
+	else if (is_delimiter(cur[0]))
+		return (T_DELM);
 	return (T_WORD);
 }
 
@@ -81,7 +83,7 @@ void	print_tokens(t_token *head)
 	t_token	*cur;
 
 	cur = head;
-	while (cur)
+	while (cur->token)
 	{
 		if (cur->token)
 			printf("%-20s type: %u  fd %d x %x\n", cur->token, cur->type, cur->fd, cur->token[0]);
@@ -138,7 +140,7 @@ t_token	*format_tokens(t_token *head)
 	next = cur->next;
 	while (cur->token)
 	{
-		if (cur->type == T_WORD && (!cur->token[0] || is_delimiter(cur->token[0])))
+		if (cur->type == T_DELM && (pre->type == T_PIPE || next->type == T_PIPE))
 			delete_one_token(&head, pre, cur, next);
 		else if (all_num(cur->token) && is_redirect(next->type))
 		{
@@ -214,16 +216,16 @@ t_token	*verbose_tokenizer(char	*cmdline, t_token *head)
 	return (head);
 }
 
-int	tokenizer(t_mshell *mshell, char *cmdline)
+t_token	*tokenizer(t_mshell *mshell, char *cmdline)
 {
 	t_token	*head;
 
 	head = verbose_tokenizer(cmdline, head);
-	print_tokens(head);
+	//print_tokens(head);
 	head = format_tokens(head);
-	print_tokens(head);
-	free_all_token(head);
-	return (0);
+	//print_tokens(head);
+	//free_all_token(head);
+	return (head);
 }
 
 /*
