@@ -39,10 +39,24 @@ typedef struct s_token {
 	
 } t_token;
 
+
+typedef struct s_redir {
+	char			*file;
+	type_token		type;
+	int				fd;
+	struct s_redir	*next;
+	
+} t_redir;
+
 typedef struct s_command {
-	struct s_token	*token;
-	char			**argv;
-	int				num_token;
+	struct s_token		*token;
+	char				**argv;
+	struct s_redir		*redir_in;
+	struct s_redir		*redir_out;
+	struct s_redir		*redir_append;
+	struct s_redir		*heredoc;
+	struct s_command	*next;
+	int					num_token;
 } t_command;
 
 typedef struct s_mshell {
@@ -51,11 +65,24 @@ typedef struct s_mshell {
 	struct s_envList	*env;
 } t_mshell;
 
-
 int		ft_cd(int argc, char **argv, t_mshell *mshell);
 void	init_env(t_mshell *mshell);
 void	register_or_update_env(t_mshell *mshell, char *tar_key, char *tar_val);
 char	*get_env(t_mshell *mshell, char *key);
+void	sort_env(t_envList *head);
+void	delete_one_env(t_mshell *mshell, char *del_key);
 void	print_env(t_envList *env);
-int		tokenizer(t_mshell *mshell, char *cmdline);
+t_token	*tokenizer(t_mshell *mshell, char *cmdline);
+t_token	*verbose_tokenizer(char	*cmdline, t_token *head);
+void	print_tokens(t_token *head);
+void	free_all_token(t_token *head);
+int		ft_unset(int argc, char **argv, t_mshell *mshell);
+int		ft_export(int argc, char **argv, t_mshell *mshell);
+char	*expansion(t_mshell *mshell, char *str);
+char	*concat_expanded_tokens(t_mshell *mshell, t_token *head);
+void	delete_all_env(t_mshell *mshell);
+int		check_syntax(t_token *head);
+int		parser(t_mshell *mshell, char *cmdline);
+
+
 #endif
