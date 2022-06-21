@@ -13,7 +13,7 @@
 # include "./libftx/libft.h"
 
 typedef enum {
-	T_END,
+	T_DELM,
 	T_WORD,		//1
 	T_SQUOTE,	//2
 	T_DQUOTE,	//3
@@ -22,6 +22,7 @@ typedef enum {
 	T_REDIR_IN,	//6
 	T_APPEND,	//7
 	T_HEREDOC,	//8
+	T_END,
 } type_token;
 
 typedef struct s_envList {
