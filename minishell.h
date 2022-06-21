@@ -39,7 +39,6 @@ typedef struct s_token {
 	
 } t_token;
 
-
 typedef struct s_redir {
 	char			*file;
 	type_token		type;

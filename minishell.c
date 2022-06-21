@@ -68,6 +68,8 @@ int main(int argc, char **argv)
 	sigaction(SIGINT, &act, NULL);
 	init_mshell(&mshell);
 	init_env(&mshell);
+	register_or_update_env(&mshell, "test", "sekai");
+	register_or_update_env(&mshell, "test1", "sekai");
 	while (1)
 	{
 		cmdline = readline("minishell$>");
@@ -75,7 +77,10 @@ int main(int argc, char **argv)
 		if (!cmdline)
 			exit(0);
 		splited_cmd = ft_split(cmdline, ' ');
-		tokenizer(&mshell, cmdline);
+		parser(&mshell, cmdline);
+		//tokenizer(&mshell, cmdline);
+		if (!ft_strcmp(splited_cmd[0], "print_env"))
+			print_env(mshell.env);
 		if (!ft_strcmp(splited_cmd[0], "cd"))
 		{
 			ft_cd(2, splited_cmd, &mshell);
@@ -86,6 +91,23 @@ int main(int argc, char **argv)
 		if (!ft_strcmp(splited_cmd[0], "pwd"))
 		{
 			ft_pwd(1, splited_cmd, &mshell);
+			free_array(splited_cmd);
+			free(cmdline);
+			continue ;
+		}
+		if (!ft_strcmp(splited_cmd[0], "unset"))
+		{
+			ft_unset(argc, splited_cmd, &mshell);
+			free_array(splited_cmd);
+			free(cmdline);
+			continue ;
+		}
+		if (!ft_strcmp(splited_cmd[0], "export"))
+		{
+			char *arg[3] = {"export", "test!=\"$PWD\"\'$PWD\'", NULL};
+			ft_export(2, arg, &mshell);
+			char *ar[3] = {"export", "hello!", NULL};
+			ft_export(2, ar, &mshell);
 			free_array(splited_cmd);
 			free(cmdline);
 			continue ;
