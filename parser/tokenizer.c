@@ -120,11 +120,22 @@ int	all_num(char *s)
 	return (1);
 }
 
-int	is_redirect(type_token type)
+int	is_redirect_token(type_token type)
 {
 	if (type == T_REDIR_IN || type == T_REDIR_OUT)
 		return (1);
 	if (type == T_APPEND || type == T_HEREDOC)
+		return (1);
+	return (0);
+}
+
+int	is_operator_token(type_token type)
+{
+	if (type == T_REDIR_IN || type == T_REDIR_OUT)
+		return (1);
+	if (type == T_APPEND || type == T_HEREDOC)
+		return (1);
+	if (type == T_PIPE)
 		return (1);
 	return (0);
 }
@@ -140,9 +151,9 @@ t_token	*format_tokens(t_token *head)
 	next = cur->next;
 	while (cur->token)
 	{
-		if (cur->type == T_DELM && (pre->type == T_PIPE || next->type == T_PIPE))
+		if (cur->type == T_DELM && (is_operator_token(pre->type) || is_operator_token(next->type)))//(pre->type == T_PIPE || next->type == T_PIPE))
 			delete_one_token(&head, pre, cur, next);
-		else if (all_num(cur->token) && is_redirect(next->type))
+		else if (all_num(cur->token) && is_redirect_token(next->type))
 		{
 			next->fd = ft_atoi(cur->token);
 			delete_one_token(&head, pre, cur, next);
@@ -160,12 +171,13 @@ void	free_all_token(t_token *head)
 	t_token	*cur;
 
 	cur = head;
-	while (cur)
+	while (cur && cur->type != T_END)
 	{
 		free_token(head);
 		head = cur->next;
 		cur = cur->next;
 	}
+	free(cur);
 }
 
 /*
