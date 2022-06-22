@@ -73,6 +73,7 @@ void	delete_one_env(t_mshell *mshell, char *del_key);
 void	print_env(t_envList *env);
 t_token	*tokenizer(t_mshell *mshell, char *cmdline);
 t_token	*verbose_tokenizer(char	*cmdline, t_token *head);
+void	delete_one_token(t_token **head, t_token *pre, t_token *cur, t_token *next);
 void	print_tokens(t_token *head);
 void	free_all_token(t_token *head);
 int		ft_unset(int argc, char **argv, t_mshell *mshell);
@@ -82,6 +83,7 @@ char	*concat_expanded_tokens(t_mshell *mshell, t_token *head);
 void	delete_all_env(t_mshell *mshell);
 int		check_syntax(t_token *head);
 int		parser(t_mshell *mshell, char *cmdline);
+int		is_redirect_token(type_token type);
 
 
 #endif

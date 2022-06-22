@@ -75,7 +75,10 @@ int main(int argc, char **argv)
 		cmdline = readline("minishell$>");
 		add_history(cmdline);
 		if (!cmdline)
-			exit(0);
+		{
+			delete_all_env(&mshell);
+			return(0);
+		}
 		splited_cmd = ft_split(cmdline, ' ');
 		parser(&mshell, cmdline);
 		//tokenizer(&mshell, cmdline);
