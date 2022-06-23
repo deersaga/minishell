@@ -84,6 +84,15 @@ void	delete_all_env(t_mshell *mshell);
 int		check_syntax(t_token *head);
 int		parser(t_mshell *mshell, char *cmdline);
 int		is_redirect_token(type_token type);
+t_token	*add_front_tokens(t_token **head, t_token *retoken, t_token *pre, t_token *cur);
+void	free_commands(t_command *cmd);
+t_token	*expand_and_retokenize(t_mshell *mshell, t_token *head);
+t_token	*format_tokens(t_token *head);
+t_token	*skip_delimiter_token(t_token *cur);
+t_token	*skip_by_next_delimiter_token(t_token *cur);
+char	*concat_tokens(t_mshell *mshell, t_token *head);
+void	free_array(char **array);
+char	*ft_strreplace(char *src, char *target, char *implant, size_t *start);
 
 
 #endif
