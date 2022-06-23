@@ -43,7 +43,7 @@ char	**create_argv(t_mshell *mshell, t_token *head)
 	while (i < len)
 	{
 		cur = skip_delimiter_token(cur);
-		argv[i] = concat_expanded_tokens(mshell, cur);
+		argv[i] = concat_tokens(mshell, cur);
 		cur = skip_by_next_delimiter_token(cur);
 		i++;
 	}
@@ -51,7 +51,7 @@ char	**create_argv(t_mshell *mshell, t_token *head)
 	return (argv);
 }
 
-int main(int argc, char **argv)
+/*int main(int argc, char **argv)
 {
 	t_token	*head;
 	t_mshell mshell;
@@ -71,4 +71,4 @@ int main(int argc, char **argv)
 		argv++;
 	}
 	//printf("%zu\n", get_size(mshell.commands->token));
-}
+}*/

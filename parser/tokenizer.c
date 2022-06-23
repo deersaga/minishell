@@ -273,6 +273,25 @@ t_token	*tokenizer(t_mshell *mshell, char *cmdline)
 	return (head);
 }
 
+char	*concat_tokens(t_mshell *mshell, t_token *head)
+{
+	char	*ret;
+	char	*tmp;
+	t_token	*cur;
+
+	cur = head;
+	ret = ft_strdup("");
+	while (cur->token != NULL && cur->type != T_DELM)
+	{
+		tmp = ret;
+		ret = ft_strjoin(ret, cur->token);
+		free(tmp);
+		cur = cur->next;
+	}
+	return (ret);
+}
+
+
 /*
 int	main(int argc, char **argv)
 {
