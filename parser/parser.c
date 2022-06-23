@@ -203,8 +203,6 @@ int	parser(t_mshell *mshell, char *cmdline)
 	cmd->token = head;
 	while(cur->token)
 	{
-		//print_tokens(cur);
-		//printf("cur token %s\n", cur->token);
 		if (cur->type == T_PIPE)
 		{
 			cur = terminate_command(mshell, cur, &cmd);
@@ -223,8 +221,8 @@ int	parser(t_mshell *mshell, char *cmdline)
 		
 	}
 	cur = terminate_command(mshell, cur, &cmd);
-	print_commands(mshell);
+	//print_commands(mshell);
 	//print_redir(mshell->commands);
-	free_commands(mshell->commands);
 	return (0);
 }
+
