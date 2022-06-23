@@ -34,7 +34,7 @@ char	**create_argv(t_mshell *mshell, t_token *head)
 	char	**argv;
 
 	len = get_size(head);
-	head = expand_and_retokenize(&mshell, head);
+	head = expand_and_retokenize(mshell, head);
 	argv = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!argv)
 		exit(EXIT_FAILURE);
@@ -51,7 +51,7 @@ char	**create_argv(t_mshell *mshell, t_token *head)
 	return (argv);
 }
 
-/*int main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	t_token	*head;
 	t_mshell mshell;
@@ -71,4 +71,4 @@ char	**create_argv(t_mshell *mshell, t_token *head)
 		argv++;
 	}
 	//printf("%zu\n", get_size(mshell.commands->token));
-}*/
+}
