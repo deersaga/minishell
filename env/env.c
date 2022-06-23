@@ -83,8 +83,16 @@ void	init_env(t_mshell *mshell)
 	while (environ[i])
 	{
 		eq_pos = ft_strchr(environ[i], '=');
-		cur->key = ft_substr(environ[i], 0, eq_pos - environ[i]);
-		cur->val = ft_substr(eq_pos + 1, 0, ft_strlen(environ[i]));
+		if (!eq_pos)
+		{
+			cur->key = ft_strdup(environ[i]);
+			cur->val = NULL;
+		}
+		else
+		{
+			cur->key = ft_substr(environ[i], 0, eq_pos - environ[i]);
+			cur->val = ft_substr(eq_pos + 1, 0, ft_strlen(environ[i]));
+		}
 		cur->next = (t_envList *)malloc(sizeof(t_envList));
 		if (!cur->next)
 			exit(EXIT_FAILURE);
@@ -167,6 +175,7 @@ void	register_or_update_env(t_mshell *mshell, char *tar_key, char *tar_val)
 	if (!cur->next)
 		exit(EXIT_FAILURE);
 	cur->next->key = NULL;
+	cur->next->val = NULL;
 }
 /*
 int	main(void)
