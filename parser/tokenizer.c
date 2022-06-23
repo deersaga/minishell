@@ -102,6 +102,20 @@ void	delete_one_token(t_token **head, t_token *pre, t_token *cur, t_token *next)
 	free_token(cur);
 }
 
+void	free_all_token(t_token *head)
+{
+	t_token	*cur;
+
+	cur = head;
+	while (cur && cur->type != T_END)
+	{
+		free_token(head);
+		head = cur->next;
+		cur = cur->next;
+	}
+	free(cur);
+}
+
 int	all_num(char *s)
 {
 	size_t	i;
@@ -151,7 +165,9 @@ t_token	*format_tokens(t_token *head)
 	next = cur->next;
 	while (cur->token)
 	{
-		if (cur->type == T_DELM && (is_operator_token(pre->type) || is_operator_token(next->type)))//(pre->type == T_PIPE || next->type == T_PIPE))
+		if (cur->type == T_DELM && next->type == T_DELM)
+			delete_one_token(&head, pre, cur, next);
+		else if (cur->type == T_DELM && ((pre && is_operator_token(pre->type)) || is_operator_token(next->type)))//(pre->type == T_PIPE || next->type == T_PIPE))
 			delete_one_token(&head, pre, cur, next);
 		else if (all_num(cur->token) && is_redirect_token(next->type))
 		{
@@ -166,18 +182,34 @@ t_token	*format_tokens(t_token *head)
 	return (head);
 }
 
-void	free_all_token(t_token *head)
+t_token	*add_front_tokens(t_token **head, t_token *retoken, t_token *pre, t_token *cur)
 {
-	t_token	*cur;
+	t_token	*tmp;
 
-	cur = head;
-	while (cur && cur->type != T_END)
-	{
-		free_token(head);
-		head = cur->next;
+	if (!pre)
+		*head = retoken;
+	else
+		pre->next = retoken;
+	tmp = retoken;
+	while (tmp->next->token)
+		tmp = tmp->next;
+	free(tmp->next);
+	tmp->next = cur;
+	return (tmp);
+}
+
+t_token	*skip_delimiter_token(t_token *cur)
+{
+	while (cur->type == T_DELM && cur->token != NULL)
 		cur = cur->next;
-	}
-	free(cur);
+	return (cur);
+}
+
+t_token	*skip_by_next_delimiter_token(t_token *cur)
+{
+	while (cur->type != T_DELM && cur->token != NULL)
+		cur = cur->next;
+	return (cur);
 }
 
 /*
@@ -207,7 +239,7 @@ t_token	*verbose_tokenizer(char	*cmdline, t_token *head)
 		if (is_delimiter(cmdline[i]) || is_operator(cmdline[i]))
 		{
 			if (start != i)
-				cur = new_token(cur, ft_substr(cmdline, start, i - start), T_WORD);
+				cur = new_token(cur, ft_substr(cmdline, start, i - start), get_token_type(&cmdline[start], &start));//T_WORD);
 			start = i;
 			type = get_token_type(&cmdline[i], &i);
 			cur = new_token(cur, ft_substr(cmdline, start, i - start + 1), type);
@@ -224,7 +256,8 @@ t_token	*verbose_tokenizer(char	*cmdline, t_token *head)
 		}
 		i++;
 	}
-	cur = new_token(cur, ft_substr(cmdline, start, i - start), get_token_type(&cmdline[i], &i));
+	if (start != i)
+		cur = new_token(cur, ft_substr(cmdline, start, i - start), get_token_type(&cmdline[i], &i));
 	return (head);
 }
 
