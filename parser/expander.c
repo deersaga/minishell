@@ -86,13 +86,13 @@ char	*concat_expanded_tokens(t_mshell *mshell, t_token *head)
 
 	cur = head;
 	ret = ft_strdup("");
-	while (cur->token != NULL)
+	while (cur->token != NULL && cur->type != T_DELM)
 	{
 		if (cur->type != T_SQUOTE)
 			expanded = expansion(mshell, ft_strdup(cur->token));
 		else
 			expanded = ft_strdup(cur->token);
-			
+
 		tmp = ret;
 		ret = ft_strjoin(ret, expanded);
 		free(expanded);
@@ -100,6 +100,45 @@ char	*concat_expanded_tokens(t_mshell *mshell, t_token *head)
 		cur = cur->next;
 	}
 	return (ret);
+}
+
+/*
+* 正直、めちゃくちゃ非効率なことをやっている。
+* tokenに$が含まれるか含まれないかを無視してexpansion操作をしているので無駄な操作が多分に含まれている。
+* 概要としては、tokenを手前から見て行ってダブルクオートならcur->tokenをexpansionした値に置き換えている。
+* (expansion関数の中で展開される前のcur->tokenはfreeされている)
+* あとは、シングルクオートとdelimiter以外のトークンはexpansionして得られた文字列を再度トークン化して、expansionした
+* トークンの手前にそれらトークン(複数の場合もあれば一つの場合もある)を挿入(add_front_tokens)して、expansionする前のトークンは
+* delete_one_tokenで削除した。
+* expansionする必要のないトークンもexpansionして全く同じものを作ってから挿入した上で前の複製元のトークンを消すという謎操作をしている。
+* 構造体に$を持っているかという情報を持たせればこれらは回避できると思うが、ひとまず動くので全体が動くようになってから時間
+* がある時に改良したいと思う。
+*/
+t_token	*expand_and_retokenize(t_mshell *mshell, t_token *head)
+{
+	t_token	*pre;
+	t_token	*cur;
+	t_token	*retoken;
+	char	*expanded;
+
+	cur = head;
+	pre = NULL;
+	while (cur && cur->type != T_END)
+	{
+		if (cur->type == T_DQUOTE)
+			cur->token = expansion(mshell, cur->token);
+		else if (cur->type != T_SQUOTE && cur->type != T_DELM)
+		{
+			expanded = expansion(mshell, ft_strdup(cur->token));
+			retoken = verbose_tokenizer(expanded, retoken);
+			cur = add_front_tokens(&head, retoken, pre, cur);
+			delete_one_token(&head, cur, cur->next, cur->next->next);
+			free(expanded);
+		}
+		pre = cur;
+		cur = cur->next;
+	}
+	return (head);
 }
 /*char	*expansion(t_mshell *mshell, char *str)
 {
