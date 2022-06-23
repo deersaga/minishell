@@ -13,7 +13,7 @@ char	*ft_strreplace(char *src, char *target, char *implant, size_t *start)
 	if (!ret)
 		exit(EXIT_FAILURE);
 	i = 0;
-	tar = ft_strnstr(src, target, ft_strlen(src));
+	tar = ft_strnstr(src + (*start), target, ft_strlen(src));
 	while (*src)
 	{
 		if (src == tar)
@@ -105,14 +105,20 @@ char	*concat_expanded_tokens(t_mshell *mshell, t_token *head)
 /*
 * 正直、めちゃくちゃ非効率なことをやっている。
 * tokenに$が含まれるか含まれないかを無視してexpansion操作をしているので無駄な操作が多分に含まれている。
-* 概要としては、tokenを手前から見て行ってダブルクオートならcur->tokenをexpansionした値に置き換えている。
+* 概要としては、tokenを手前から見て行ってダブルクオートならcur->token(文字列)をexpansionした値に置き換えている。
 * (expansion関数の中で展開される前のcur->tokenはfreeされている)
-* あとは、シングルクオートとdelimiter以外のトークンはexpansionして得られた文字列を再度トークン化して、expansionした
+* あとは、ダブルクオートとシングルクオートとdelimiter以外のトークンはexpansionして得られた文字列を再度トークン化して、expansionした
 * トークンの手前にそれらトークン(複数の場合もあれば一つの場合もある)を挿入(add_front_tokens)して、expansionする前のトークンは
-* delete_one_tokenで削除した。
+* delete_one_tokenで削除した(下図)。
 * expansionする必要のないトークンもexpansionして全く同じものを作ってから挿入した上で前の複製元のトークンを消すという謎操作をしている。
 * 構造体に$を持っているかという情報を持たせればこれらは回避できると思うが、ひとまず動くので全体が動くようになってから時間
 * がある時に改良したいと思う。
+*
+* 図
+* A,B,Cはトークン　curがBの時の操作について簡単に説明する
+* A->B->C   				Bを展開後B1->B2->B3に再トークン化
+* A->B1->B2->B3->B->C   	Bの手前に再トークン化されたものを挿入。
+* A->B1->B2->B3->C       	Bを削除してCに対して同様の操作をする。
 */
 t_token	*expand_and_retokenize(t_mshell *mshell, t_token *head)
 {
@@ -140,43 +146,7 @@ t_token	*expand_and_retokenize(t_mshell *mshell, t_token *head)
 	}
 	return (head);
 }
-/*char	*expansion(t_mshell *mshell, char *str)
-{
-	char	**splited;
-	char	**replace;
-	char	*tmp;
-	char	*val;
-	char	*expanded;
-	size_t i;
 
-
-	if (!ft_strchr(str, '$'))
-		return (ft_strdup(str));
-	splited = ft_split(str, '$');
-	i = 0;
-	while(splited[i])
-	{
-		if (str[0] != '$' && i == 0)
-		{
-			i++;
-			continue ;
-		}
-		replace = ft_split_extend(splited[i], " \t\n");
-		tmp = replace[0];
-		val = get_env(mshell, replace[0]);
-		if (!val)
-			val = "";
-		replace[0] = ft_strdup(val);
-		free(tmp);
-		free(splited[i]);
-		splited[i] = ft_multistrjoin(replace);
-		free_array(replace);
-		i++;
-	}
-	tmp = ft_multistrjoin(splited);
-	free_array(splited);
-	return tmp;
-}*/
 /*
 int	main(int argc, char **argv)
 {
