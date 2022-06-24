@@ -8,28 +8,14 @@ void	print_redir(t_command *cmd)
 	printf("redir_in\n");
 	while (cur)
 	{
-		printf("file %s fd %d\n", cur->file, cur->fd);
+		printf("file %s fd %d type %d\n", cur->file, cur->fd, cur->type);
 		cur = cur->next;
 	}
 	cur = cmd->redir_out;
 	printf("redir_out\n");
 	while (cur)
 	{
-		printf("file %s fd %d\n", cur->file, cur->fd);
-		cur = cur->next;
-	}
-	cur = cmd->redir_append;
-	printf("redir_append\n");
-	while (cur)
-	{
-		printf("file %s fd %d\n", cur->file, cur->fd);
-		cur = cur->next;
-	}
-	cur = cmd->heredoc;
-	printf("heredoc\n");
-	while (cur)
-	{
-		printf("file %s fd %d\n", cur->file, cur->fd);
+		printf("file %s fd %d type %d\n", cur->file, cur->fd, cur->type);
 		cur = cur->next;
 	}
 }
@@ -66,8 +52,6 @@ void	free_command(t_command *cmd)
 {
 	free_redir(cmd->redir_in);
 	free_redir(cmd->redir_out);
-	free_redir(cmd->redir_append);
-	free_redir(cmd->heredoc);
 	free_all_token(cmd->token);
 	free(cmd);
 }
@@ -103,29 +87,17 @@ t_redir	*get_redir_last(t_command *cmd, type_token type)
 {
 	t_redir *last;
 
-	if (type == T_REDIR_IN)
+	if (type == T_REDIR_IN || type == T_HEREDOC)
 	{
 		if (!cmd->redir_in)
 			cmd->redir_in = ft_calloc(1, sizeof(t_redir));
 		last = cmd->redir_in;
 	}
-	else if (type == T_REDIR_OUT)
+	else if (type == T_REDIR_OUT || type == T_APPEND)
 	{
 		if (!cmd->redir_out)
 			cmd->redir_out = ft_calloc(1, sizeof(t_redir));
 		last = cmd->redir_out;
-	}
-	else if (type == T_APPEND)
-	{
-		if (!cmd->redir_append)
-			cmd->redir_append = ft_calloc(1, sizeof(t_redir));
-		last = cmd->redir_append;
-	}
-	else if (type == T_HEREDOC)
-	{
-		if (!cmd->heredoc)
-			cmd->heredoc = ft_calloc(1, sizeof(t_redir));
-		last = cmd->heredoc;
 	}
 	while (last->next)
 		last = last->next;

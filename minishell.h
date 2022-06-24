@@ -52,8 +52,6 @@ typedef struct s_command {
 	char				**argv;
 	struct s_redir		*redir_in;
 	struct s_redir		*redir_out;
-	struct s_redir		*redir_append;
-	struct s_redir		*heredoc;
 	struct s_command	*next;
 	int					num_token;
 } t_command;
