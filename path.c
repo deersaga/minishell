@@ -14,6 +14,18 @@ void	free_array(char **array)
 	free(array);
 }
 
+void	print_array(char **array)
+{
+	size_t	i;
+
+	i = 0;
+	while (array[i])
+	{
+		printf("argv%zu %s\n", i, array[i]);
+		i++;
+	}
+}
+
 char	*search_cmd_path(char **paths, char *cmd)
 {
 	size_t	i;
@@ -143,7 +155,7 @@ char	*get_abs_path(char	*path)
 	return (path);
 }
 
-
+/*
 int main(int argc, char **argv)
 {
 	t_mshell mshell;
@@ -153,14 +165,14 @@ int main(int argc, char **argv)
 	path = get_abs_path(path);
 	printf("path %s\n", path);
 	free(path);
-	/*init_env(&mshell);
+	init_env(&mshell);
 	path = get_cmd_path(&mshell, "ls");
 	delete_all_env(&mshell);
 	if (!path)
 		exit(EXIT_FAILURE);
 	printf("path %s\n", path);
-	free(path);*/
-}
+	free(path);
+}*/
 /*__attribute__((destructor)) static void destructor()
 {
 	system("leaks -q a.out");
