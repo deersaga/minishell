@@ -73,6 +73,7 @@ t_token	*terminate_command(t_mshell *mshell, t_token *cur, t_command **cmd)
 {
 	t_token	*next;
 
+	(void)mshell;
 	next = cur->next;
 	cur->type = T_END;
 	free(cur->token);
@@ -93,7 +94,7 @@ t_redir	*get_redir_last(t_command *cmd, type_token type)
 			cmd->redir_in = ft_calloc(1, sizeof(t_redir));
 		last = cmd->redir_in;
 	}
-	else if (type == T_REDIR_OUT || type == T_APPEND)
+	else
 	{
 		if (!cmd->redir_out)
 			cmd->redir_out = ft_calloc(1, sizeof(t_redir));

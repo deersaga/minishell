@@ -70,7 +70,7 @@ void	sort_env(t_envList *head);
 void	delete_one_env(t_mshell *mshell, char *del_key);
 void	print_env(t_envList *env);
 t_token	*tokenizer(t_mshell *mshell, char *cmdline);
-t_token	*verbose_tokenizer(char	*cmdline, t_token *head);
+t_token	*verbose_tokenizer(char	*cmdline);
 void	delete_one_token(t_token **head, t_token *pre, t_token *cur, t_token *next);
 void	print_tokens(t_token *head);
 void	free_all_token(t_token *head);

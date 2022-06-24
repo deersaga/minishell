@@ -39,6 +39,7 @@ void	print_env(t_envList *env)
 	t_envList	*cur;
 	char		*val;
 
+	(void)val;
 	cur = env;
 	while (cur->key)
 	{

@@ -5,6 +5,7 @@ int	ft_echo(int argc, char **argv, t_mshell *mshell)
 	int		n_opt;
 	size_t	i;
 
+	(void)mshell;
 	n_opt = 0;
 	i = 1;
 	if (!argv[1])
@@ -16,10 +17,10 @@ int	ft_echo(int argc, char **argv, t_mshell *mshell)
 			n_opt = 1;
 			i++;
 		}
-		while (i < argc)
+		while (i < (size_t)argc)
 		{
 			ft_putstr_fd(argv[i], STDOUT_FILENO);
-			if (i != argc - 1)
+			if (i != (size_t)(argc - 1))
 				write(STDOUT_FILENO, " ", 1);
 			i++;
 		}

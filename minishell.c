@@ -50,18 +50,19 @@ void	free_array(char **array)
 
 void	init_mshell(t_mshell *mshell)
 {
-
+	(void)mshell;
 }
 
 int main(int argc, char **argv)
 {
-	pid_t	child_pid;
+	//pid_t	child_pid;
 	t_mshell mshell;
 	char	*cmdline;
 	char	**splited_cmd;
-	int		status;
+	//int		status;
 	struct sigaction	act;
 
+	(void)argv;
 	sigemptyset(&act.sa_mask);
 	//act.sa_handler = SIG_IGN;
 	act.sa_handler = SIG_DFL;

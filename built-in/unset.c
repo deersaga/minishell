@@ -4,6 +4,7 @@ int	ft_unset(int argc, char **argv, t_mshell *mshell)
 {
 	size_t	i;
 
+	(void)argc;
 	i = 1;
 	while (argv[i])
 	{

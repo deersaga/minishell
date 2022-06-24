@@ -188,14 +188,15 @@ void	free_all_token(t_token *head)
 * 
 * 追記　3>みたいなケースには対応しなくていいとpedagoに記載があるので必須ではないが一応対応しようと思えばできる状態。
 */
-t_token	*verbose_tokenizer(char	*cmdline, t_token *head)
+t_token	*verbose_tokenizer(char	*cmdline)
 {
 	size_t	i;
 	size_t	len;
 	t_token	*cur;
 	size_t	start;
 	type_token type;
-
+	t_token *head;
+	
 	i = 0;
 	start = 0;
 	head = ft_calloc(1, sizeof(t_token));
@@ -232,7 +233,8 @@ t_token	*tokenizer(t_mshell *mshell, char *cmdline)
 {
 	t_token	*head;
 
-	head = verbose_tokenizer(cmdline, head);
+	(void)mshell;
+	head = verbose_tokenizer(cmdline);
 	//print_tokens(head);
 	head = format_tokens(head);
 	//print_tokens(head);

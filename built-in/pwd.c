@@ -4,6 +4,8 @@ int	ft_pwd(int argc, char **argv, t_mshell *mshell)
 {
 	char	*pwd;
 
+	(void)argc;
+	(void)argv;
 	pwd = get_env(mshell, "PWD");
 	if (!pwd || *pwd == '\0')
 	{

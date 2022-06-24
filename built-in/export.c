@@ -25,7 +25,6 @@ int	ft_export(int argc, char **argv, t_mshell *mshell)
 	char		*trimed;
 	char		*eq_pos;
 	char		*key;
-	char		*tmp;
 	char		*val;
 	size_t		i;
 
