@@ -121,10 +121,6 @@ int	all_num(char *s)
 	size_t	i;
 
 	i = 0;
-	if (s[i] == '+' || s[i] == '-')
-		i++;
-	if (!s[i])
-		return (0);
 	while (s[i])
 	{
 		if (s[i] < '0' || s[i] > '9')
