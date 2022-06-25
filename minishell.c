@@ -71,7 +71,8 @@ int main(int argc, char **argv)
 		}
 		splited_cmd = ft_split(cmdline, ' ');
 		parser(&mshell, cmdline);
-		argv = create_argv(&mshell, &(mshell.commands->token));
+		mshell.commands->token = (&mshell, mshell.commands->token);
+		argv = create_argv(&mshell, mshell.commands->token);
 		print_array(argv);
 		free_array(argv);
 		print_commands(&mshell);

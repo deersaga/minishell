@@ -26,20 +26,17 @@ static size_t	get_size(t_token *head)
 	return (size);
 }
 
-char	**create_argv(t_mshell *mshell, t_token **head)
+char	**create_argv(t_mshell *mshell, t_token *head)
 {
 	size_t	len;
 	size_t	i;
 	t_token	*cur;
 	char	**argv;
 
-	len = get_size(*head);
-	*head = expand_and_retokenize(mshell, *head);
-	argv = (char **)malloc(sizeof(char *) * (len + 1));
-	if (!argv)
-		exit(EXIT_FAILURE);
+	len = get_size(head);
+	argv = ft_calloc(len + 1, sizeof(char *));
 	i = 0;
-	cur = *head;
+	cur = head;
 	while (i < len)
 	{
 		cur = skip_delimiter_token(cur);

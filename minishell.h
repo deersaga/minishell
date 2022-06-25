@@ -93,8 +93,10 @@ t_token	*skip_by_next_delimiter_token(t_token *cur);
 char	*concat_tokens(t_mshell *mshell, t_token *head);
 void	free_array(char **array);
 char	*ft_strreplace(char *src, char *target, char *implant, size_t *start);
-char	**create_argv(t_mshell *mshell, t_token **head);
+char	**create_argv(t_mshell *mshell, t_token *head);
 void	print_array(char **array);
 void	print_commands(t_mshell *mshell);
+int		ft_exit(t_mshell *mshell, t_command *cmd);
+int		ft_env(t_mshell *mshell, t_command *cmd);
 
 #endif
