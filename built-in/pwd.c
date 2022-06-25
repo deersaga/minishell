@@ -1,9 +1,10 @@
 #include "../minishell.h"
 
-int	ft_pwd(int argc, char **argv, t_mshell *mshell)
+int	ft_pwd(t_mshell *mshell, t_command *cmd)
 {
 	char	*pwd;
 
+	(void)cmd;
 	pwd = get_env(mshell, "PWD");
 	if (!pwd || *pwd == '\0')
 	{
