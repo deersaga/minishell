@@ -26,17 +26,18 @@ static size_t	get_size(t_token *head)
 	return (size);
 }
 
-char	**create_argv(t_mshell *mshell, t_token *head)
+char	**create_argv(t_mshell *mshell, t_command *cmd)
 {
 	size_t	len;
 	size_t	i;
 	t_token	*cur;
 	char	**argv;
 
-	len = get_size(head);
+	len = get_size(cmd->token);
+	cmd->argc = len;
 	argv = ft_calloc(len + 1, sizeof(char *));
 	i = 0;
-	cur = head;
+	cur = cmd->token;
 	while (i < len)
 	{
 		cur = skip_delimiter_token(cur);
@@ -61,7 +62,7 @@ char	**create_argv(t_mshell *mshell, t_token *head)
 	mshell.commands->token = expand_and_retokenize(&mshell, mshell.commands->token);
 	//cur = head;
 	print_tokens(mshell.commands->token);
-	argv = create_argv(&mshell, mshell.commands->token);
+	argv = create_argv(&mshell, mshell.commands);
 	while (*argv)
 	{
 		printf("argv %s\n", *argv);
