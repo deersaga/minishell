@@ -35,22 +35,12 @@ void	exec_cmd(char *cmd)
 
 }
 
-void	free_array(char **array)
-{
-	size_t i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 void	init_mshell(t_mshell *mshell)
 {
-
+	mshell->commands = NULL;
+	mshell->env = NULL;
+	mshell->num_commands = 0;
 }
 
 int main(int argc, char **argv)
@@ -81,6 +71,11 @@ int main(int argc, char **argv)
 		}
 		splited_cmd = ft_split(cmdline, ' ');
 		parser(&mshell, cmdline);
+		argv = create_argv(&mshell, &(mshell.commands->token));
+		print_array(argv);
+		free_array(argv);
+		print_commands(&mshell);
+		free_commands(mshell.commands);
 		//tokenizer(&mshell, cmdline);
 		if (!ft_strcmp(splited_cmd[0], "print_env"))
 			print_env(mshell.env);

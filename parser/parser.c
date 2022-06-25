@@ -96,6 +96,7 @@ t_token	*terminate_command(t_mshell *mshell, t_token *cur, t_command **cmd)
 	cur->next = NULL;
 	(*cmd)->next = ft_calloc(1, sizeof(t_command));
 	*cmd = (*cmd)->next;
+	mshell->num_commands += 1;
 	return (next);
 }
 
