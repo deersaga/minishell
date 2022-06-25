@@ -50,6 +50,7 @@ typedef struct s_redir {
 typedef struct s_command {
 	struct s_token		*token;
 	char				**argv;
+	int					argc;
 	struct s_redir		*redir_in;
 	struct s_redir		*redir_out;
 	struct s_redir		*redir_append;
@@ -64,7 +65,7 @@ typedef struct s_mshell {
 	struct s_envList	*env;
 } t_mshell;
 
-int		ft_cd(int argc, char **argv, t_mshell *mshell);
+int		ft_cd(t_mshell *mshell, t_command *cmd);
 void	init_env(t_mshell *mshell);
 void	register_or_update_env(t_mshell *mshell, char *tar_key, char *tar_val);
 char	*get_env(t_mshell *mshell, char *key);
@@ -93,10 +94,11 @@ t_token	*skip_by_next_delimiter_token(t_token *cur);
 char	*concat_tokens(t_mshell *mshell, t_token *head);
 void	free_array(char **array);
 char	*ft_strreplace(char *src, char *target, char *implant, size_t *start);
-char	**create_argv(t_mshell *mshell, t_token *head);
+char	**create_argv(t_mshell *mshell, t_command *cmd);
 void	print_array(char **array);
 void	print_commands(t_mshell *mshell);
 int		ft_exit(t_mshell *mshell, t_command *cmd);
 int		ft_env(t_mshell *mshell, t_command *cmd);
+int		ft_echo(t_mshell *mshell, t_command *cmd);
 
 #endif

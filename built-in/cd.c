@@ -1,5 +1,12 @@
 #include "../minishell.h"
 
+static void	free_all(char *path, char *oldpwd, char **argv)
+{
+	free(path);
+	free(oldpwd);
+	free_array(argv);
+}
+
 static int	get_path(char **argv, char **path, t_mshell *mshell)
 {
 	char	*tmp;
@@ -42,29 +49,35 @@ static void	update_dir_env(t_mshell *mshell, char *path, char *oldpwd)
 	free(pwd);
 }
 
-int	ft_cd(int argc, char **argv, t_mshell *mshell)
+int	ft_cd(t_mshell *mshell, t_command *cmd)
 {
 	char	*path;
 	char	*oldpwd;
+	char	**argv;
 
-	if (argc > 2)
+	argv = create_argv(mshell, cmd);
+	if (cmd->argc > 2)
+	{
+		free_array(argv);
 		return (EXIT_FAILURE);
+	}
 	oldpwd = getcwd(NULL,0);
 	if (!oldpwd)
 		perror("getcwd");
 	if (get_path(argv, &path, mshell))
+	{
+		free_all(path, oldpwd, argv);
 		return (EXIT_FAILURE);
+	}
 	if (chdir(path) == -1)
 	{
 		perror("cd");
 		if (!ft_strcmp(argv[1], ".") || !ft_strcmp(argv[1], ".."))
 			register_or_update_env(mshell, "PWD", path);
-		free(path);
-		free(oldpwd);
+		free_all(path, oldpwd, argv);
 		return (EXIT_FAILURE);
 	}
 	update_dir_env(mshell, path, oldpwd);
-	free(path);
-	free(oldpwd);
+	free_all(path, oldpwd, argv);
 	return (EXIT_SUCCESS);
 }
