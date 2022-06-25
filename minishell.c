@@ -2,9 +2,6 @@
 
 extern char **environ;
 
-//int ft_cd(int argc, char **argv, t_mshell *mshell);
-int ft_pwd(int argc, char **argv, t_mshell *mshell);
-
 void	exec_cmd(char *cmd)
 {
 	char	*argv[5];
@@ -69,46 +66,61 @@ int main(int argc, char **argv)
 			delete_all_env(&mshell);
 			return(0);
 		}
-		splited_cmd = ft_split(cmdline, ' ');
 		parser(&mshell, cmdline);
-		mshell.commands->token = (&mshell, mshell.commands->token);
-		argv = create_argv(&mshell, mshell.commands->token);
+		mshell.commands->token = expand_and_retokenize(&mshell, mshell.commands->token);
+		argv = create_argv(&mshell, mshell.commands);
 		print_array(argv);
-		free_array(argv);
 		print_commands(&mshell);
-		free_commands(mshell.commands);
-		//tokenizer(&mshell, cmdline);
-		if (!ft_strcmp(splited_cmd[0], "print_env"))
+		if (!argv[0])
+		{
+			free(cmdline);
+			free_array(argv);
+			free_commands(mshell.commands);
+			continue ;
+		}
+		if (!ft_strcmp(mshell.commands->token->token, "print_env"))
 			print_env(mshell.env);
-		if (!ft_strcmp(splited_cmd[0], "cd"))
+		if (!ft_strcmp(mshell.commands->token->token, "cd"))
 		{
-			ft_cd(2, splited_cmd, &mshell);
-			free_array(splited_cmd);
+			ft_cd(&mshell, mshell.commands);
 			free(cmdline);
+			free_array(argv);
+			free_commands(mshell.commands);
 			continue ;
 		}
-		if (!ft_strcmp(splited_cmd[0], "pwd"))
+		if (!ft_strcmp(mshell.commands->token->token, "pwd"))
 		{
-			ft_pwd(1, splited_cmd, &mshell);
-			free_array(splited_cmd);
+			ft_pwd(&mshell, mshell.commands);
 			free(cmdline);
+			free_array(argv);
+			free_commands(mshell.commands);
 			continue ;
 		}
-		if (!ft_strcmp(splited_cmd[0], "unset"))
+		if (!ft_strcmp(mshell.commands->token->token, "echo"))
 		{
-			ft_unset(argc, splited_cmd, &mshell);
-			free_array(splited_cmd);
+			ft_echo(&mshell, mshell.commands);
 			free(cmdline);
+			free_array(argv);
+			free_commands(mshell.commands);
 			continue ;
 		}
-		if (!ft_strcmp(splited_cmd[0], "export"))
+		if (!ft_strcmp(mshell.commands->token->token, "unset"))
 		{
-			char *arg[3] = {"export", "test!=\"$PWD\"\'$PWD\'", NULL};
+			ft_unset(&mshell, mshell.commands);
+			free(cmdline);
+			free_array(argv);
+			free_commands(mshell.commands);
+			continue ;
+		}
+		if (!ft_strcmp(mshell.commands->token->token, "export"))
+		{
+			/*char *arg[3] = {"export", "test!=\"$PWD\"\'$PWD\'", NULL};
 			ft_export(2, arg, &mshell);
-			char *ar[3] = {"export", "hello!", NULL};
-			ft_export(2, ar, &mshell);
-			free_array(splited_cmd);
+			char *ar[3] = {"export", "hello!", NULL};*/
+			ft_export(&mshell, mshell.commands);
 			free(cmdline);
+			free_array(argv);
+			free_commands(mshell.commands);
 			continue ;
 		}
 		/*child_pid = fork();
@@ -127,7 +139,8 @@ int main(int argc, char **argv)
 				exit(1);
 			}
 		}*/
-		free_array(splited_cmd);
+		free_array(argv);
+		free_commands(mshell.commands);
 		free(cmdline);
 	}
 	return (0);
