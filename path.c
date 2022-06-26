@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 #include <limits.h>
 
 void	free_array(char **array)

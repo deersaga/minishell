@@ -82,6 +82,7 @@ void	sort_env(t_envList *head);
 void	delete_one_env(t_mshell *mshell, char *del_key);
 void	print_env(t_envList *env);
 void	delete_all_env(t_mshell *mshell);
+char	**make_environ(t_mshell *mshell);
 
 //tokenizer
 t_token	*tokenizer(t_mshell *mshell, char *cmdline);
@@ -110,5 +111,7 @@ int		check_syntax(t_token *head);
 void	free_array(char **array);
 char	**create_argv(t_mshell *mshell, t_command *cmd);
 void	print_array(char **array);
+char	*get_cmd_path(t_mshell *mshell, char *cmd);
+int		execute_a_command(t_mshell *mshell, t_command *cmd);
 
 #endif

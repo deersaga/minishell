@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 			free_commands(mshell.commands);
 			continue ;
 		}
-		if (!ft_strcmp(mshell.commands->token->token, "print_env"))
+		/*if (!ft_strcmp(mshell.commands->token->token, "print_env"))
 			print_env(mshell.env);
 		if (!ft_strcmp(mshell.commands->token->token, "cd"))
 		{
@@ -114,15 +114,17 @@ int main(int argc, char **argv)
 		}
 		if (!ft_strcmp(mshell.commands->token->token, "export"))
 		{
-			/*char *arg[3] = {"export", "test!=\"$PWD\"\'$PWD\'", NULL};
-			ft_export(2, arg, &mshell);
-			char *ar[3] = {"export", "hello!", NULL};*/
+			//char *arg[3] = {"export", "test!=\"$PWD\"\'$PWD\'", NULL};
+			//ft_export(2, arg, &mshell);
+			//char *ar[3] = {"export", "hello!", NULL};
 			ft_export(&mshell, mshell.commands);
 			free(cmdline);
 			free_array(argv);
 			free_commands(mshell.commands);
 			continue ;
-		}
+		}*/
+		printf("kokodayo\n");
+		execute_a_command(&mshell, mshell.commands);
 		/*child_pid = fork();
 		if (child_pid < 0)
 		{
