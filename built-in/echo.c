@@ -26,21 +26,21 @@ int	ft_echo(t_mshell *mshell, t_command *cmd)
 	(void)mshell;
 	n_opt = 0;
 	i = 1;
-	argv = create_argv(mshell, cmd);
-	if (!argv[1])
+	create_argv(mshell, cmd);
+	if (!cmd->argv[1])
 		write(STDOUT_FILENO, "\n", 1);
 	else
 	{
-		while (*argv[i] ==  '-')
+		while (*(cmd->argv[i]) ==  '-')
 		{
-			if (!is_all_n(argv[i]))
+			if (!is_all_n(cmd->argv[i]))
 				break;
 			n_opt = 1;
 			i++;
 		}
 		while (i < cmd->argc)
 		{
-			ft_putstr_fd(argv[i], STDOUT_FILENO);
+			ft_putstr_fd(cmd->argv[i], STDOUT_FILENO);
 			if (i != cmd->argc - 1)
 				write(STDOUT_FILENO, " ", 1);
 			i++;
@@ -48,6 +48,6 @@ int	ft_echo(t_mshell *mshell, t_command *cmd)
 		if (!n_opt)
 			write(STDOUT_FILENO, "\n", 1);
 	}
-	free_array(argv);
+	//free_array(cmd->argv);
 	return (EXIT_SUCCESS);
 }

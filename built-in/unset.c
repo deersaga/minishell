@@ -6,12 +6,12 @@ int	ft_unset(t_mshell *mshell, t_command *cmd)
 	char	**argv;
 
 	i = 1;
-	argv = create_argv(mshell, cmd);
-	while (argv[i])
+	create_argv(mshell, cmd);
+	while (cmd->argv[i])
 	{
-		delete_one_env(mshell, argv[i]);
+		delete_one_env(mshell, cmd->argv[i]);
 		i++;
 	}
-	free_array(argv);
+	//free_array(argv);
 	return (0);
 }

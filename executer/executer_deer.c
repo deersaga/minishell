@@ -67,7 +67,7 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 	pid = fork();
 	if (pid == 0)
 	{
-		argv = create_argv(mshell, cmd);
+		create_argv(mshell, cmd);
 		path = get_cmd_path(mshell, cmd->argv[0]);
 		printf("path %s\n",path);
 		if (path)
@@ -75,12 +75,11 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 			free(cmd->argv[0]);
 			argv[0] = path;
 		}
-		print_array(argv);
+		print_array(cmd->argv);
 		env = make_environ(mshell);
 		print_array(env);
 		printf("here\n");
 		execve(cmd->argv[0], cmd->argv, env);
-		free_array(argv);
 		free_array(env);
 		free_commands(mshell->commands);
 		printf("here2\n");

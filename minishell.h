@@ -111,11 +111,11 @@ int		check_syntax(t_token *head);
 
 //other
 void	free_array(char **array);
-char	**create_argv(t_mshell *mshell, t_command *cmd);
+void	create_argv(t_mshell *mshell, t_command *cmd);
 void	print_array(char **array);
 char	*get_cmd_path(t_mshell *mshell, char *cmd);
 int		execute_a_command(t_mshell *mshell, t_command *cmd);
 void	execute_commands(t_mshell *mshell);
-int	openfile (char *filename, e_type_token mode);
+int		openfile (char *filename, e_type_token mode);
 
 #endif

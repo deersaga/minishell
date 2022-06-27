@@ -26,7 +26,7 @@ static size_t	get_size(t_token *head)
 	return (size);
 }
 
-char	**create_argv(t_mshell *mshell, t_command *cmd)
+void	create_argv(t_mshell *mshell, t_command *cmd)
 {
 	size_t	len;
 	size_t	i;
@@ -47,7 +47,6 @@ char	**create_argv(t_mshell *mshell, t_command *cmd)
 	}
 	argv[i] = NULL;
 	cmd->argv = argv;
-	return (argv);
 }
 
 /*int main(int argc, char **argv)

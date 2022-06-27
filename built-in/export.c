@@ -29,7 +29,7 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 	size_t		i;
 
 	
-	cmd->argv = create_argv(mshell, cmd);
+	create_argv(mshell, cmd);
 	if (cmd->argc == 1)
 	{
 		sort_env(mshell->env);

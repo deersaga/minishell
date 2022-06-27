@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/27 23:01:38 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/06/27 23:14:23 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_pipe_list(t_mshell *mshell, int **pipe_list)
 	i = 0;
 	pipe_list_num = mshell->num_commands - 1;
 	while (i < pipe_list_num)
-		free(pipe_list[i]);
+		free(pipe_list[i++]);
 	free(pipe_list);
 }
 
@@ -127,7 +127,9 @@ void	reconnect_redir_with_stdio(\
 
 void	wait_childs(int tmp)
 {
-	;
+	int	status;
+
+	while (wait(&status) >= 0);
 }
 
 void	execute_command(t_mshell *mshell, size_t cur_idx, \
@@ -153,7 +155,9 @@ void	execute_commands(t_mshell *mshell)
 
 	//num_command > 0という前提で考えている
 	printf("num cmds %d\n", mshell->num_commands);
-	if (mshell->num_commands == 1)
+	if (mshell->num_commands == 0)
+		return;
+	else if (mshell->num_commands == 1)
 	{
 		execute_a_command(mshell, mshell->commands);
 		return ;
@@ -164,16 +168,20 @@ void	execute_commands(t_mshell *mshell)
 	cur_com = mshell->commands;
 	while (cur_idx < mshell->num_commands)
 	{
-		argv = create_argv(mshell, cur_com);
+		create_argv(mshell, cur_com);
 		child_pid_list[cur_idx] = fork();
 		if (child_pid_list[cur_idx] == 0)
 			execute_command(mshell, cur_idx, cur_com, pipe_list);
 		cur_idx++;
 		cur_com = cur_com->next;
-		free(argv);
 	}
+	printf("exec後\n");
 	close_pipe_list(mshell, pipe_list);
+	printf("here1\n");
 	wait_childs(0);
+	printf("here2\n");
 	free(child_pid_list);
+	printf("here3\n");
 	free_pipe_list(mshell, pipe_list);
+	printf("last\n");
 }

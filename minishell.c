@@ -71,21 +71,13 @@ int main(int argc, char **argv)
 		}
 		parser(&mshell, cmdline);
 		mshell.commands->token = expand_and_retokenize(&mshell, mshell.commands->token);
-		printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-		print_tokens(mshell.commands->token);
-		argv = create_argv(&mshell, mshell.commands);
-		print_commands(&mshell);
-		if (!argv[0])
-		{
-			free(cmdline);
-			//free_array(argv);
-			free_commands(mshell.commands);
-			continue ;
-		}
+		//printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+		//print_tokens(mshell.commands->token);
+		//print_commands(&mshell);
 		execute_commands(&mshell);
 		//execute_a_command(&mshell, mshell.commands);
 		printf("minishell\n");
-		free_array(argv);
+		//free_array(argv);
 		free_commands(mshell.commands);
 		free(cmdline);
 	}

@@ -55,29 +55,29 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 	char	*oldpwd;
 	char	**argv;
 
-	argv = create_argv(mshell, cmd);
+	create_argv(mshell, cmd);
 	if (cmd->argc > 2)
 	{
-		free_array(argv);
+		//free_array(cmd->argv);
 		return (EXIT_FAILURE);
 	}
 	oldpwd = getcwd(NULL,0);
 	if (!oldpwd)
 		perror("getcwd");
-	if (get_path(argv, &path, mshell))
+	if (get_path(cmd->argv, &path, mshell))
 	{
-		free_all(path, oldpwd, argv);
+		free_all(path, oldpwd, cmd->argv);
 		return (EXIT_FAILURE);
 	}
 	if (chdir(path) == -1)
 	{
 		perror("cd");
-		if (!ft_strcmp(argv[1], ".") || !ft_strcmp(argv[1], ".."))
+		if (!ft_strcmp(cmd->argv[1], ".") || !ft_strcmp(cmd->argv[1], ".."))
 			register_or_update_env(mshell, "PWD", path);
-		free_all(path, oldpwd, argv);
+		free_all(path, oldpwd, cmd->argv);
 		return (EXIT_FAILURE);
 	}
 	update_dir_env(mshell, path, oldpwd);
-	free_all(path, oldpwd, argv);
+	free_all(path, oldpwd, cmd->argv);
 	return (EXIT_SUCCESS);
 }
