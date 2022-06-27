@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/27 23:14:23 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/06/27 23:20:50 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	execute_commands(t_mshell *mshell)
 
 	//num_command > 0という前提で考えている
 	printf("num cmds %d\n", mshell->num_commands);
-	if (mshell->num_commands == 0)
+	if (skip_delimiter_token(mshell->commands->token)->token == NULL)
 		return;
 	else if (mshell->num_commands == 1)
 	{
