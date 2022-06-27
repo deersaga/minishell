@@ -1,6 +1,7 @@
 #include "../minishell.h"
 #include <fcntl.h>
 
+extern char **environ;
 /*int	execute_commands(t_mshell *mshell, t_command *cmd)
 {
 	int		status;
@@ -155,3 +156,4 @@ int	execute_a_command(t_mshell *mshell, t_command *cmd)
             waitpid(child2_pid, NULL, 0);
     return 0;
 }*/
+

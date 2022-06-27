@@ -212,14 +212,14 @@ char	**make_environ(t_mshell *mshell)
 		if (cur->val)
 		{
 			tmp = env[i];
-			env[i] = ft_strjoin(env[i], "=\"");
+			env[i] = ft_strjoin(env[i], "=");
 			free(tmp);
 			tmp = env[i];
 			env[i] = ft_strjoin(env[i], cur->val);
 			free(tmp);
-			tmp = env[i];
+			/*tmp = env[i];
 			env[i] = ft_strjoin(env[i], "\"");
-			free(tmp);
+			free(tmp);*/
 		}
 		i++;
 		cur = cur->next;

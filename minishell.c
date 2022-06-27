@@ -52,6 +52,7 @@ int main(int argc, char **argv)
 	sigemptyset(&act.sa_mask);
 	//act.sa_handler = SIG_IGN;
 	act.sa_handler = SIG_DFL;
+	printf("minishell\n");
 	sigaction(SIGINT, &act, NULL);
 	init_mshell(&mshell);
 	init_env(&mshell);

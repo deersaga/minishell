@@ -53,3 +53,4 @@ dkms.conf
 built-in/test.c
 *.pdf
 .DS_Store
+test.c
