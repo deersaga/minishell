@@ -116,7 +116,7 @@ int main(int argc, char **argv)
 			free(cmdline);
 			continue ;
 		}
-		do_commands(&mshell);
+		execute_commands(&mshell);
 		/*child_pid = fork();
 		if (child_pid < 0)
 		{

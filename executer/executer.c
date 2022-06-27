@@ -6,29 +6,11 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/27 17:57:28 by kaou             ###   ########.fr       */
+/*   Updated: 2022/06/27 18:58:04 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-/*
-typedef struct s_mshell {
-	struct s_command	*commands;
-	int					num_commands;
-	struct s_envList	*env;
-} t_mshell;
-*/
-
-/*
-typedef struct s_command {
-	struct s_token		*token;
-	char				**argv;
-	struct s_redir		*redir_in;
-	struct s_redir		*redir_out;
-	struct s_command	*next;
-	int					num_token;
-} t_command;
-*/
 
 void	free_pipe_list(t_mshell *mshell, int **pipe_list)
 {
@@ -78,6 +60,81 @@ int	**make_pipe_list(t_mshell *mshell)
 	return (pipe_list);
 }
 
+void	close_pipe_list(t_mshell *mshell, int **pipe_list)
+{
+	size_t	i;
+	size_t	num_pipe_list;
+
+	num_pipe_list = mshell->num_commands - 1;
+	i = 0;
+	while (i < num_pipe_list)
+	{
+		close(pipe_list[i][0]);
+		close(pipe_list[i][1]);
+		i++;
+	}
+}
+
+void	reconnect_pipe_with_stdio(\
+	t_mshell *mshell, size_t cur_idx, int **pipe_list)
+{
+	if (cur_idx > 0)
+		dup2(pipe_list[cur_idx - 1][0], STDIN_FILENO);
+	if (cur_idx + 1 < mshell->num_commands)
+		dup2(pipe_list[cur_idx][1], STDOUT_FILENO);
+	close_pipe_list(mshell, pipe_list);
+}
+
+void	reconnect_redir_with_stdio(\
+	t_mshell *mshell, t_command *cur_com, size_t cur_idx, int **pipe_list)
+{
+	int		fd;
+	t_redir	*cur_redir_in;
+	t_redir	*cur_redir_out;
+
+	cur_redir_in = cur_com->redir_in;
+	//現状のredir_inは終端がnullになっていないため問題が起きる
+	while (cur_redir_in)
+	{
+		if (cur_redir_in->type == T_REDIR_IN)
+		{
+			//redir_inがひとつならこれでいいはず
+			//複数あるときに上書きしていけるのかは未確認
+			fd = openfile(cur_redir_in->file, T_REDIR_IN);
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
+		else if (cur_redir_in->type == T_HEREDOC)
+		{
+			//todo;
+		}else
+			exit(EXIT_FAILURE || !ft_printf("reconnect_redir_with_stdio error\n"));
+		cur_redir_in = cur_redir_in->next;
+	}
+	cur_redir_out = cur_com->redir_out;
+	while (cur_redir_out)
+	{
+		if (cur_redir_out->type != T_REDIR_OUT && cur_redir_out->type != T_APPEND)
+			exit(EXIT_FAILURE || !ft_printf("reconnect_redir_with_stdio error\n"));
+		fd = openfile(cur_redir_out->file, cur_redir_out->type);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+		cur_redir_out = cur_redir_out->next;
+	}
+}
+
+void	execute_command(t_mshell *mshell, size_t cur_idx, \
+					t_command *cur_com, int **pipe_list)
+{
+	extern char	**environ;
+	char		*command_path;
+
+	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
+	reconnect_redir_with_stdio(mshell, cur_com, cur_idx, pipe_list);
+	command_path = get_command_path(cur_com->argv[0]);
+	execve(command_path, cur_com->argv, environ);
+}
+
 void	execute_commands(t_mshell *mshell)
 {
 	int			**pipe_list;
@@ -94,11 +151,11 @@ void	execute_commands(t_mshell *mshell)
 	{
 		child_pid_list[cur_idx] = fork();
 		if (child_pid_list[cur_idx] == 0)
-			execute_command(cur_idx, cur_com, pipe_list);
+			execute_command(mshell, cur_idx, cur_com, pipe_list);
 		cur_idx++;
 		cur_com = cur_com->next;
 	}
-	close_pipe_list();
+	close_pipe_list(mshell, pipe_list);
 	wait_childs();
 	free(child_pid_list);
 	free_pipe_list(mshell, pipe_list);

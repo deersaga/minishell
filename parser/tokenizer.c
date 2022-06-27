@@ -31,7 +31,7 @@ t_token	*new_token(t_token *cur, char *token, type_token type)
 	return (cur->next);
 }
 
-type_token	get_token_type(char	*cur, size_t *i)
+e_type_token	get_token_type(char	*cur, size_t *i)
 {
 	if (cur[0] == '>' && cur[1] == '>')
 	{
@@ -120,7 +120,7 @@ int	all_num(char *s)
 	return (1);
 }
 
-int	is_redirect_token(type_token type)
+int	is_redirect_token(e_type_token type)
 {
 	if (type == T_REDIR_IN || type == T_REDIR_OUT)
 		return (1);
@@ -129,7 +129,7 @@ int	is_redirect_token(type_token type)
 	return (0);
 }
 
-int	is_operator_token(type_token type)
+int	is_operator_token(e_type_token type)
 {
 	if (type == T_REDIR_IN || type == T_REDIR_OUT)
 		return (1);

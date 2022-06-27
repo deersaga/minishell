@@ -84,7 +84,7 @@ t_token	*terminate_command(t_mshell *mshell, t_token *cur, t_command **cmd)
 	return (next);
 }
 
-t_redir	*get_redir_last(t_command *cmd, type_token type)
+t_redir	*get_redir_last(t_command *cmd, e_type_token type)
 {
 	t_redir *last;
 
@@ -120,7 +120,7 @@ int	get_fd(t_token *op)
 	return (-1);
 }
 
-void	new_redir(t_command *cmd, t_token *op, type_token type)
+void	new_redir(t_command *cmd, t_token *op, e_type_token type)
 {
 	t_redir *last;
 	t_token	*file;

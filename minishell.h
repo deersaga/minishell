@@ -87,7 +87,7 @@ int		check_syntax(t_token *head);
 int		parser(t_mshell *mshell, char *cmdline);
 int		is_redirect_token(e_type_token type);
 int		openfile (char *filename, e_type_token mode);
-void	do_commands(t_mshell *mshell);
+void	execute_commands(t_mshell *mshell);
 void	free_pipe_list(t_mshell *mshell, int **pipe_list);
 
 
