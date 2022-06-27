@@ -9,7 +9,11 @@
 # include <signal.h>
 # include <string.h>
 # include <stdbool.h>
+# include <fcntl.h>
+# include <err.h>
+# include <errno.h>
 # include <sys/signalvar.h>
+# include <sys/wait.h>
 # include "./libftx/libft.h"
 
 typedef enum {
@@ -23,7 +27,7 @@ typedef enum {
 	T_APPEND,	//7
 	T_HEREDOC,	//8
 	T_END,
-} type_token;
+} e_type_token;
 
 typedef struct s_envList {
 	char				*key;
@@ -33,7 +37,7 @@ typedef struct s_envList {
 
 typedef struct s_token {
 	char			*token;
-	type_token		type;
+	e_type_token		type;
 	int				fd;
 	struct s_token	*next;
 	
@@ -41,7 +45,7 @@ typedef struct s_token {
 
 typedef struct s_redir {
 	char			*file;
-	type_token		type;
+	e_type_token	type;
 	int				fd;
 	struct s_redir	*next;
 	
@@ -81,7 +85,10 @@ char	*concat_expanded_tokens(t_mshell *mshell, t_token *head);
 void	delete_all_env(t_mshell *mshell);
 int		check_syntax(t_token *head);
 int		parser(t_mshell *mshell, char *cmdline);
-int		is_redirect_token(type_token type);
+int		is_redirect_token(e_type_token type);
+int		openfile (char *filename, e_type_token mode);
+void	do_commands(t_mshell *mshell);
+void	free_pipe_list(t_mshell *mshell, int **pipe_list);
 
 
 #endif

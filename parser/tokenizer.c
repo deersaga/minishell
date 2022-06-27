@@ -194,7 +194,7 @@ t_token	*verbose_tokenizer(char	*cmdline)
 	size_t	len;
 	t_token	*cur;
 	size_t	start;
-	type_token type;
+	e_type_token type;
 	t_token *head;
 	
 	i = 0;

@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 		}
 		splited_cmd = ft_split(cmdline, ' ');
 		parser(&mshell, cmdline);
-		//tokenizer(&mshell, cmdline);
+		tokenizer(&mshell, cmdline);
 		if (!ft_strcmp(splited_cmd[0], "print_env"))
 			print_env(mshell.env);
 		if (!ft_strcmp(splited_cmd[0], "cd"))
@@ -116,6 +116,7 @@ int main(int argc, char **argv)
 			free(cmdline);
 			continue ;
 		}
+		do_commands(&mshell);
 		/*child_pid = fork();
 		if (child_pid < 0)
 		{
