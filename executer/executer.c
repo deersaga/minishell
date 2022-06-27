@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/27 23:56:51 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/06/28 01:44:06 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,11 +151,15 @@ void	execute_commands(t_mshell *mshell)
 	t_command	*cur_com;
 
 	//num_command > 0という前提で考えている
-	printf("num cmds %d\n", mshell->num_commands);
 	if (skip_delimiter_token(mshell->commands->token)->token == NULL)
+	{
+		mshell->commands->argv = NULL;
 		return;
+	}
 	else if (mshell->num_commands == 1)
 	{
+		mshell->commands->token = expand_and_retokenize(mshell, mshell->commands->token);
+		create_argv(mshell, mshell->commands);
 		execute_a_command(mshell, mshell->commands);
 		return ;
 	}
@@ -165,6 +169,7 @@ void	execute_commands(t_mshell *mshell)
 	cur_com = mshell->commands;
 	while (cur_idx < mshell->num_commands)
 	{
+		cur_com->token = expand_and_retokenize(mshell, cur_com->token);
 		create_argv(mshell, cur_com);
 		child_pid_list[cur_idx] = fork();
 		if (child_pid_list[cur_idx] == 0)

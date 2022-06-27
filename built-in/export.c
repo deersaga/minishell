@@ -56,7 +56,7 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 		free(key);
 		free(val);
 	}
-	free_array(cmd->argv);
+	//free_array(cmd->argv);
 	return (0);
 }
 

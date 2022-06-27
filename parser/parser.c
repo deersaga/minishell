@@ -53,6 +53,8 @@ void	free_command(t_command *cmd)
 	free_redir(cmd->redir_in);
 	free_redir(cmd->redir_out);
 	free_all_token(cmd->token);
+	if (cmd->argv)
+		free_array(cmd->argv);
 	free(cmd);
 }
 
@@ -162,7 +164,7 @@ int	parser(t_mshell *mshell, char *cmdline)
 	t_token		*cur;
 	t_command	*cmd;
 
-	printf("here\n");
+	//printf("here\n");
 	head = tokenizer(mshell, cmdline);
 	if (check_syntax(head))
 	{
