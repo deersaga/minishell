@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 	sigaction(SIGINT, &act, NULL);
 	init_mshell(&mshell);
 	init_env(&mshell);
-	register_or_update_env(&mshell, "test", "sekai");
+	register_or_update_env(&mshell, "test", "cho hello");
 	register_or_update_env(&mshell, "test1", "sekai");
 	while (1)
 	{
@@ -71,7 +71,10 @@ int main(int argc, char **argv)
 		}
 		parser(&mshell, cmdline);
 		mshell.commands->token = expand_and_retokenize(&mshell, mshell.commands->token);
-		//argv = create_argv(&mshell, mshell.commands);
+		printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+		print_tokens(mshell.commands->token);
+
+		argv = create_argv(&mshell, mshell.commands);
 		//print_array(argv);
 		print_commands(&mshell);
 		if (!argv[0])
@@ -83,7 +86,8 @@ int main(int argc, char **argv)
 		}
 		execute_commands(&mshell);
 		//execute_a_command(&mshell, mshell.commands);
-		//free_array(argv);
+		printf("minishell\n");
+		free_array(argv);
 		free_commands(mshell.commands);
 		free(cmdline);
 	}
@@ -94,3 +98,5 @@ int main(int argc, char **argv)
 {
 	system("leaks -q a.out");
 }*/
+
+

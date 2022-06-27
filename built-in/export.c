@@ -39,7 +39,7 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 	while (cmd->argv[++i])
 	{
 		tokens = verbose_tokenizer(cmd->argv[i]);
-		trimed = concat_expanded_tokens(mshell, tokens);
+		trimed = concat_tokens(mshell, tokens);
 		free_all_token(tokens);
 		if (!is_valid(trimed))
 		{

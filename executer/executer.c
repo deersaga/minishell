@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/27 21:52:50 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/06/27 22:23:52 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	**make_array_2d_int(size_t h, size_t w)
 	while (i < h)
 	{
 		array[i] = ft_calloc(w, sizeof(int));
+		i++;
 	}
 	return (array);
 }
@@ -94,7 +95,7 @@ void	reconnect_redir_with_stdio(\
 
 	cur_redir_in = cur_com->redir_in;
 	//現状のredir_inは終端がnullになっていないため問題が起きる
-	while (cur_redir_in)
+	while (cur_redir_in->file)
 	{
 		if (cur_redir_in->type == T_REDIR_IN)
 		{
@@ -112,7 +113,7 @@ void	reconnect_redir_with_stdio(\
 		cur_redir_in = cur_redir_in->next;
 	}
 	cur_redir_out = cur_com->redir_out;
-	while (cur_redir_out)
+	while (cur_redir_out->file)
 	{
 		if (cur_redir_out->type != T_REDIR_OUT && cur_redir_out->type != T_APPEND)
 			exit(EXIT_FAILURE || !printf("reconnect_redir_with_stdio error\n"));
@@ -134,10 +135,13 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 	extern char	**environ;
 	char		*command_path;
 
+	printf("koko\n");
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
 	reconnect_redir_with_stdio(mshell, cur_com, cur_idx, pipe_list);
 	command_path = get_cmd_path(mshell, cur_com->argv[0]);
+	print_array(cur_com->argv);
 	execve(command_path, cur_com->argv, environ);
+	printf("fail \n");
 }
 
 void	execute_commands(t_mshell *mshell)
@@ -168,6 +172,8 @@ void	execute_commands(t_mshell *mshell)
 	}
 	close_pipe_list(mshell, pipe_list);
 	wait_childs(0);
+	printf("here1\n");
 	free(child_pid_list);
+	printf("here2\n");
 	free_pipe_list(mshell, pipe_list);
 }
