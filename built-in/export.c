@@ -19,7 +19,7 @@ int	is_valid(char *s)
 }
 
 
-int	ft_export(int argc, char **argv, t_mshell *mshell)
+int	ft_export(t_mshell *mshell, t_command *cmd)
 {
 	t_token		*tokens;
 	char		*trimed;
@@ -28,15 +28,17 @@ int	ft_export(int argc, char **argv, t_mshell *mshell)
 	char		*val;
 	size_t		i;
 
-	i = 0;
-	if (argc == 1)
+	
+	cmd->argv = create_argv(mshell, cmd);
+	if (cmd->argc == 1)
 	{
 		sort_env(mshell->env);
 		print_env(mshell->env);
 	}
-	while (argv[++i])
+	i = 0;
+	while (cmd->argv[++i])
 	{
-		tokens = verbose_tokenizer(argv[i], tokens);
+		tokens = verbose_tokenizer(cmd->argv[i]);
 		trimed = concat_expanded_tokens(mshell, tokens);
 		free_all_token(tokens);
 		if (!is_valid(trimed))
@@ -61,6 +63,7 @@ int	ft_export(int argc, char **argv, t_mshell *mshell)
 		free(key);
 		free(val);
 	}
+	free_array(cmd->argv);
 	return (0);
 }
 

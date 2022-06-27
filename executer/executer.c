@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/27 18:58:04 by kaou             ###   ########.fr       */
+/*   Updated: 2022/06/27 21:52:50 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	**make_pipe_list(t_mshell *mshell)
 		if (pipe(pipe_list[i]) == -1)
 		{
 			//todo 標準エラー?
-			ft_printf("make pipe error\n");
+			printf("make pipe error\n");
 			exit(EXIT_FAILURE);
 		}
 		i++;
@@ -108,19 +108,24 @@ void	reconnect_redir_with_stdio(\
 		{
 			//todo;
 		}else
-			exit(EXIT_FAILURE || !ft_printf("reconnect_redir_with_stdio error\n"));
+			exit(EXIT_FAILURE || !printf("reconnect_redir_with_stdio error\n"));
 		cur_redir_in = cur_redir_in->next;
 	}
 	cur_redir_out = cur_com->redir_out;
 	while (cur_redir_out)
 	{
 		if (cur_redir_out->type != T_REDIR_OUT && cur_redir_out->type != T_APPEND)
-			exit(EXIT_FAILURE || !ft_printf("reconnect_redir_with_stdio error\n"));
+			exit(EXIT_FAILURE || !printf("reconnect_redir_with_stdio error\n"));
 		fd = openfile(cur_redir_out->file, cur_redir_out->type);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 		cur_redir_out = cur_redir_out->next;
 	}
+}
+
+void	wait_childs(int tmp)
+{
+	;
 }
 
 void	execute_command(t_mshell *mshell, size_t cur_idx, \
@@ -131,7 +136,7 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
 	reconnect_redir_with_stdio(mshell, cur_com, cur_idx, pipe_list);
-	command_path = get_command_path(cur_com->argv[0]);
+	command_path = get_cmd_path(mshell, cur_com->argv[0]);
 	execve(command_path, cur_com->argv, environ);
 }
 
@@ -143,6 +148,12 @@ void	execute_commands(t_mshell *mshell)
 	t_command	*cur_com;
 
 	//num_command > 0という前提で考えている
+	printf("num cmds %d\n", mshell->num_commands);
+	if (mshell->num_commands == 1)
+	{
+		execute_a_command(mshell, mshell->commands);
+		return ;
+	}
 	child_pid_list = ft_calloc(mshell->num_commands, sizeof(pid_t));
 	pipe_list = make_pipe_list(mshell);
 	cur_idx = 0;
@@ -156,7 +167,7 @@ void	execute_commands(t_mshell *mshell)
 		cur_com = cur_com->next;
 	}
 	close_pipe_list(mshell, pipe_list);
-	wait_childs();
+	wait_childs(0);
 	free(child_pid_list);
 	free_pipe_list(mshell, pipe_list);
 }

@@ -2,9 +2,6 @@
 
 extern char **environ;
 
-//int ft_cd(int argc, char **argv, t_mshell *mshell);
-int ft_pwd(int argc, char **argv, t_mshell *mshell);
-
 void	exec_cmd(char *cmd)
 {
 	char	*argv[5];
@@ -35,22 +32,12 @@ void	exec_cmd(char *cmd)
 
 }
 
-void	free_array(char **array)
-{
-	size_t i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 void	init_mshell(t_mshell *mshell)
 {
-	(void)mshell;
+	mshell->commands = NULL;
+	mshell->env = NULL;
+	mshell->num_commands = 0;
 }
 
 int main(int argc, char **argv)
@@ -66,6 +53,7 @@ int main(int argc, char **argv)
 	sigemptyset(&act.sa_mask);
 	//act.sa_handler = SIG_IGN;
 	act.sa_handler = SIG_DFL;
+	printf("minishell\n");
 	sigaction(SIGINT, &act, NULL);
 	init_mshell(&mshell);
 	init_env(&mshell);
@@ -75,71 +63,34 @@ int main(int argc, char **argv)
 	{
 		cmdline = readline("minishell$>");
 		add_history(cmdline);
+		mshell.num_commands = 0;
 		if (!cmdline)
 		{
 			delete_all_env(&mshell);
 			return(0);
 		}
-		splited_cmd = ft_split(cmdline, ' ');
 		parser(&mshell, cmdline);
-		tokenizer(&mshell, cmdline);
-		if (!ft_strcmp(splited_cmd[0], "print_env"))
-			print_env(mshell.env);
-		if (!ft_strcmp(splited_cmd[0], "cd"))
+		mshell.commands->token = expand_and_retokenize(&mshell, mshell.commands->token);
+		//argv = create_argv(&mshell, mshell.commands);
+		//print_array(argv);
+		print_commands(&mshell);
+		if (!argv[0])
 		{
-			ft_cd(2, splited_cmd, &mshell);
-			free_array(splited_cmd);
 			free(cmdline);
-			continue ;
-		}
-		if (!ft_strcmp(splited_cmd[0], "pwd"))
-		{
-			ft_pwd(1, splited_cmd, &mshell);
-			free_array(splited_cmd);
-			free(cmdline);
-			continue ;
-		}
-		if (!ft_strcmp(splited_cmd[0], "unset"))
-		{
-			ft_unset(argc, splited_cmd, &mshell);
-			free_array(splited_cmd);
-			free(cmdline);
-			continue ;
-		}
-		if (!ft_strcmp(splited_cmd[0], "export"))
-		{
-			char *arg[3] = {"export", "test!=\"$PWD\"\'$PWD\'", NULL};
-			ft_export(2, arg, &mshell);
-			char *ar[3] = {"export", "hello!", NULL};
-			ft_export(2, ar, &mshell);
-			free_array(splited_cmd);
-			free(cmdline);
+			//free_array(argv);
+			free_commands(mshell.commands);
 			continue ;
 		}
 		execute_commands(&mshell);
-		/*child_pid = fork();
-		if (child_pid < 0)
-		{
-			perror("fork");
-			exit(1);
-		}
-		if (child_pid == 0)
-			exec_cmd(cmdline);
-		else
-		{
-			if (waitpid(child_pid, &status, 0) < 0)
-			{
-				perror("waitpid");
-				exit(1);
-			}
-		}*/
-		free_array(splited_cmd);
+		//execute_a_command(&mshell, mshell.commands);
+		//free_array(argv);
+		free_commands(mshell.commands);
 		free(cmdline);
 	}
 	return (0);
 }
 
-__attribute__((destructor)) static void destructor()
+/*__attribute__((destructor)) static void destructor()
 {
 	system("leaks -q a.out");
-}
+}*/

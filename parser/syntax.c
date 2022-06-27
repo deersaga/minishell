@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	is_redir(type_token	type)
+int	is_redir(e_type_token	type)
 {
 	if (type == T_REDIR_IN || type == T_REDIR_OUT \
 	|| type == T_APPEND || type == T_HEREDOC)
@@ -12,7 +12,7 @@ int	check_syntax(t_token *head)
 {
 	t_token		*cur;
 	t_token		*next;
-	type_token	type;
+	e_type_token	type;
 
 	cur = head;
 	if (cur->type == T_PIPE)

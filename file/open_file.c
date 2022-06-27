@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:10:56 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/27 17:17:51 by kaou             ###   ########.fr       */
+/*   Updated: 2022/06/27 21:48:36 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	openfile (char *filename, e_type_token mode)
 		//標準エラーに出さないとダメかも
 		if (access(filename, F_OK))
 		{
-			ft_printf("%s: No such file or directory\n", filename);
+			printf("%s: No such file or directory\n", filename);
 			exit(EXIT_FAILURE);
 		}
 		fd = (open(filename, O_RDONLY));
@@ -34,7 +34,7 @@ int	openfile (char *filename, e_type_token mode)
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH));
 	else
 	{
-		ft_printf("jissou miss : openfile mode error\n");
+		printf("jissou miss : openfile mode error\n");
 		exit(EXIT_FAILURE);
 	}
 	if (fd < 0)

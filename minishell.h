@@ -54,6 +54,7 @@ typedef struct s_redir {
 typedef struct s_command {
 	struct s_token		*token;
 	char				**argv;
+	int					argc;
 	struct s_redir		*redir_in;
 	struct s_redir		*redir_out;
 	struct s_command	*next;
@@ -66,29 +67,55 @@ typedef struct s_mshell {
 	struct s_envList	*env;
 } t_mshell;
 
-int		ft_cd(int argc, char **argv, t_mshell *mshell);
+//built-in
+int		ft_cd(t_mshell *mshell, t_command *cmd);
+int		ft_pwd(t_mshell *mshell, t_command *cmd);
+int		ft_unset(t_mshell *mshell, t_command *cmd);
+int		ft_export(t_mshell *mshell, t_command *cmd);
+int		ft_exit(t_mshell *mshell, t_command *cmd);
+int		ft_env(t_mshell *mshell, t_command *cmd);
+int		ft_echo(t_mshell *mshell, t_command *cmd);
+
+//environment
 void	init_env(t_mshell *mshell);
 void	register_or_update_env(t_mshell *mshell, char *tar_key, char *tar_val);
 char	*get_env(t_mshell *mshell, char *key);
 void	sort_env(t_envList *head);
 void	delete_one_env(t_mshell *mshell, char *del_key);
 void	print_env(t_envList *env);
+void	delete_all_env(t_mshell *mshell);
+char	**make_environ(t_mshell *mshell);
+
+//tokenizer
 t_token	*tokenizer(t_mshell *mshell, char *cmdline);
 t_token	*verbose_tokenizer(char	*cmdline);
 void	delete_one_token(t_token **head, t_token *pre, t_token *cur, t_token *next);
 void	print_tokens(t_token *head);
 void	free_all_token(t_token *head);
-int		ft_unset(int argc, char **argv, t_mshell *mshell);
-int		ft_export(int argc, char **argv, t_mshell *mshell);
-char	*expansion(t_mshell *mshell, char *str);
 char	*concat_expanded_tokens(t_mshell *mshell, t_token *head);
-void	delete_all_env(t_mshell *mshell);
-int		check_syntax(t_token *head);
-int		parser(t_mshell *mshell, char *cmdline);
 int		is_redirect_token(e_type_token type);
-int		openfile (char *filename, e_type_token mode);
-void	execute_commands(t_mshell *mshell);
-void	free_pipe_list(t_mshell *mshell, int **pipe_list);
+t_token	*add_front_tokens(t_token **head, t_token *retoken, t_token *pre, t_token *cur);
+t_token	*expand_and_retokenize(t_mshell *mshell, t_token *head);
+t_token	*format_tokens(t_token *head);
+t_token	*skip_delimiter_token(t_token *cur);
+t_token	*skip_by_next_delimiter_token(t_token *cur);
+char	*concat_tokens(t_mshell *mshell, t_token *head);
 
+//parser内のtokenizer以外
+int		parser(t_mshell *mshell, char *cmdline);
+void	free_commands(t_command *cmd);
+void	print_commands(t_mshell *mshell);
+char	*expansion(t_mshell *mshell, char *str);
+char	*ft_strreplace(char *src, char *target, char *implant, size_t *start);
+int		check_syntax(t_token *head);
+
+//other
+void	free_array(char **array);
+char	**create_argv(t_mshell *mshell, t_command *cmd);
+void	print_array(char **array);
+char	*get_cmd_path(t_mshell *mshell, char *cmd);
+int		execute_a_command(t_mshell *mshell, t_command *cmd);
+void	execute_commands(t_mshell *mshell);
+int	openfile (char *filename, e_type_token mode);
 
 #endif

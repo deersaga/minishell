@@ -81,6 +81,7 @@ t_token	*terminate_command(t_mshell *mshell, t_token *cur, t_command **cmd)
 	cur->next = NULL;
 	(*cmd)->next = ft_calloc(1, sizeof(t_command));
 	*cmd = (*cmd)->next;
+	mshell->num_commands += 1;
 	return (next);
 }
 
@@ -176,8 +177,6 @@ int	parser(t_mshell *mshell, char *cmdline)
 	cmd->token = head;
 	while(cur->token)
 	{
-		//print_tokens(cur);
-		//printf("cur token %s\n", cur->token);
 		if (cur->type == T_PIPE)
 		{
 			cur = terminate_command(mshell, cur, &cmd);
@@ -196,8 +195,8 @@ int	parser(t_mshell *mshell, char *cmdline)
 		
 	}
 	cur = terminate_command(mshell, cur, &cmd);
-	print_commands(mshell);
+	//print_commands(mshell);
 	//print_redir(mshell->commands);
-	free_commands(mshell->commands);
 	return (0);
 }
+

@@ -84,8 +84,16 @@ void	init_env(t_mshell *mshell)
 	while (environ[i])
 	{
 		eq_pos = ft_strchr(environ[i], '=');
-		cur->key = ft_substr(environ[i], 0, eq_pos - environ[i]);
-		cur->val = ft_substr(eq_pos + 1, 0, ft_strlen(environ[i]));
+		if (!eq_pos)
+		{
+			cur->key = ft_strdup(environ[i]);
+			cur->val = NULL;
+		}
+		else
+		{
+			cur->key = ft_substr(environ[i], 0, eq_pos - environ[i]);
+			cur->val = ft_substr(eq_pos + 1, 0, ft_strlen(environ[i]));
+		}
 		cur->next = (t_envList *)malloc(sizeof(t_envList));
 		if (!cur->next)
 			exit(EXIT_FAILURE);
@@ -168,7 +176,60 @@ void	register_or_update_env(t_mshell *mshell, char *tar_key, char *tar_val)
 	if (!cur->next)
 		exit(EXIT_FAILURE);
 	cur->next->key = NULL;
+	cur->next->val = NULL;
 }
+
+static size_t get_env_size(t_envList *head)
+{
+	size_t		size;
+	t_envList	*cur;
+
+	cur = head;
+	size = 0;
+	while (cur)
+	{
+		size++;
+		cur = cur->next;
+	}
+	return (size);
+}
+
+char	**make_environ(t_mshell *mshell)
+{
+	t_envList	*cur;
+	size_t		size;
+	size_t		i;
+	char		*tmp;
+	char		**env;
+
+	size = get_env_size(mshell->env);
+	env = ft_calloc(size + 1, sizeof(char *));
+	cur = mshell->env;
+	i = 0;
+	
+	while (cur->key)
+	{
+		env[i] = ft_strdup(cur->key);
+		if (cur->val)
+		{
+			tmp = env[i];
+			env[i] = ft_strjoin(env[i], "=");
+			free(tmp);
+			tmp = env[i];
+			env[i] = ft_strjoin(env[i], cur->val);
+			free(tmp);
+			/*tmp = env[i];
+			env[i] = ft_strjoin(env[i], "\"");
+			free(tmp);*/
+		}
+		i++;
+		cur = cur->next;
+	}
+	printf("here1\n");
+	env[i] = NULL;
+	return (env);
+}
+
 /*
 int	main(void)
 {
