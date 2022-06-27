@@ -66,12 +66,23 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 	pid = fork();
 	if (pid == 0)
 	{
-		path = get_cmd_path(mshell, cmd->token->token);
 		argv = create_argv(mshell, cmd);
-		free(argv[0]);
-		argv[0] = path;
+		path = get_cmd_path(mshell, argv[0]);
+		printf("path %s\n",path);
+		if (path)
+		{
+			free(argv[0]);
+			argv[0] = path;
+		}
+		print_array(argv);
 		env = make_environ(mshell);
+		print_array(env);
+		printf("here\n");
 		execve(argv[0], argv, env);
+		free_array(argv);
+		free_array(env);
+		free_commands(mshell->commands);
+		printf("here2\n");
 		exit(1);
 	}
 	return (0);

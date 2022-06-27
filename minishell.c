@@ -68,25 +68,25 @@ int main(int argc, char **argv)
 		}
 		parser(&mshell, cmdline);
 		mshell.commands->token = expand_and_retokenize(&mshell, mshell.commands->token);
-		argv = create_argv(&mshell, mshell.commands);
-		print_array(argv);
+		//argv = create_argv(&mshell, mshell.commands);
+		//print_array(argv);
 		print_commands(&mshell);
 		if (!argv[0])
 		{
 			free(cmdline);
-			free_array(argv);
+			//free_array(argv);
 			free_commands(mshell.commands);
 			continue ;
 		}
 		execute_a_command(&mshell, mshell.commands);
-		free_array(argv);
+		//free_array(argv);
 		free_commands(mshell.commands);
 		free(cmdline);
 	}
 	return (0);
 }
 
-__attribute__((destructor)) static void destructor()
+/*__attribute__((destructor)) static void destructor()
 {
 	system("leaks -q a.out");
-}
+}*/
