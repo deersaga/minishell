@@ -28,7 +28,8 @@ int	check_builtin(t_mshell *mshell, t_command *cmd)
 	t_token	*cur;
 
 	cur = skip_delimiter_token(cmd->token);
-	if (!ft_strcmp("cd", cur->token) || !ft_strcmp("echo ", cur->token) || !ft_strcmp("pwd", cur->token) \
+	printf("command %s\n", cur->token);
+	if (!ft_strcmp("cd", cur->token) || !ft_strcmp("echo", cur->token) || !ft_strcmp("pwd", cur->token) \
 	|| !ft_strcmp("export", cur->token) || !ft_strcmp("unset", cur->token) || !ft_strcmp("env", cur->token) \
 	|| !ft_strcmp("exit", cur->token))
 		return (1);
@@ -73,7 +74,7 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 		if (path)
 		{
 			free(cmd->argv[0]);
-			argv[0] = path;
+			cmd->argv[0] = path;
 		}
 		print_array(cmd->argv);
 		env = make_environ(mshell);

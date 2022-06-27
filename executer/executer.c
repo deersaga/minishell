@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/27 23:20:50 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/06/27 23:56:51 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	reconnect_redir_with_stdio(\
 	t_redir	*cur_redir_in;
 	t_redir	*cur_redir_out;
 
-	return ;
 	cur_redir_in = cur_com->redir_in;
 	//現状のredir_inは終端がnullになっていないため問題が起きる
 	while (cur_redir_in && cur_redir_in->file)
@@ -142,7 +141,6 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 	reconnect_redir_with_stdio(mshell, cur_com, cur_idx, pipe_list);
 	command_path = get_cmd_path(mshell, cur_com->argv[0]);
 	execve(command_path, cur_com->argv, environ);
-	printf("fail \n");
 }
 
 void	execute_commands(t_mshell *mshell)
@@ -151,7 +149,6 @@ void	execute_commands(t_mshell *mshell)
 	pid_t		*child_pid_list;
 	size_t		cur_idx;
 	t_command	*cur_com;
-	char		**argv;
 
 	//num_command > 0という前提で考えている
 	printf("num cmds %d\n", mshell->num_commands);
@@ -175,13 +172,8 @@ void	execute_commands(t_mshell *mshell)
 		cur_idx++;
 		cur_com = cur_com->next;
 	}
-	printf("exec後\n");
 	close_pipe_list(mshell, pipe_list);
-	printf("here1\n");
 	wait_childs(0);
-	printf("here2\n");
 	free(child_pid_list);
-	printf("here3\n");
 	free_pipe_list(mshell, pipe_list);
-	printf("last\n");
 }

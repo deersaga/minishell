@@ -21,8 +21,6 @@ int	is_valid(char *s)
 
 int	ft_export(t_mshell *mshell, t_command *cmd)
 {
-	t_token		*tokens;
-	char		*trimed;
 	char		*eq_pos;
 	char		*key;
 	char		*val;
@@ -38,27 +36,22 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 	i = 0;
 	while (cmd->argv[++i])
 	{
-		tokens = verbose_tokenizer(cmd->argv[i]);
-		trimed = concat_tokens(mshell, tokens);
-		free_all_token(tokens);
-		if (!is_valid(trimed))
+		if (!is_valid(cmd->argv[i]))
 		{
 			ft_putstr_fd("export: not a valid identifier\n", 2);
-			free(trimed);
 			continue;
 		}		
-		eq_pos = ft_strchr(trimed, '=');
+		eq_pos = ft_strchr(cmd->argv[i], '=');
 		if (!eq_pos)
 		{
-			key = ft_strdup(trimed);
+			key = ft_strdup(cmd->argv[i]);
 			val = NULL;
 		}
 		else
 		{
-			key = ft_substr(trimed, 0, eq_pos - trimed);
-			val = ft_substr(eq_pos + 1, 0, ft_strlen(trimed));
+			key = ft_substr(cmd->argv[i], 0, eq_pos - cmd->argv[i]);
+			val = ft_substr(eq_pos + 1, 0, ft_strlen(cmd->argv[i]));
 		}
-		free(trimed);
 		register_or_update_env(mshell, key, val);
 		free(key);
 		free(val);

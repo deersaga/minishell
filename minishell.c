@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 	sigaction(SIGINT, &act, NULL);
 	init_mshell(&mshell);
 	init_env(&mshell);
-	register_or_update_env(&mshell, "test", "cho hello");
+	register_or_update_env(&mshell, "test", "sekai");
 	register_or_update_env(&mshell, "test1", "sekai");
 	while (1)
 	{
@@ -76,7 +76,6 @@ int main(int argc, char **argv)
 		//print_commands(&mshell);
 		execute_commands(&mshell);
 		//execute_a_command(&mshell, mshell.commands);
-		printf("minishell\n");
 		//free_array(argv);
 		free_commands(mshell.commands);
 		free(cmdline);

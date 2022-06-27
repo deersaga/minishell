@@ -19,7 +19,6 @@ static int	is_all_n(char *s)
 int	ft_echo(t_mshell *mshell, t_command *cmd)
 {
 	int		n_opt;
-	char	**argv;
 	size_t	i;
 	size_t	j;
 
