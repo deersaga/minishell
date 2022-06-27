@@ -73,9 +73,7 @@ int main(int argc, char **argv)
 		mshell.commands->token = expand_and_retokenize(&mshell, mshell.commands->token);
 		printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
 		print_tokens(mshell.commands->token);
-
 		argv = create_argv(&mshell, mshell.commands);
-		//print_array(argv);
 		print_commands(&mshell);
 		if (!argv[0])
 		{

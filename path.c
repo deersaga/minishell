@@ -19,6 +19,11 @@ void	print_array(char **array)
 	size_t	i;
 
 	i = 0;
+	if (!array)
+	{
+		printf("array = NULL\n");
+		return ;
+	}
 	while (array[i])
 	{
 		printf("argv%zu %s\n", i, array[i]);
