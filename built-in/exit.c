@@ -1,5 +1,21 @@
 #include "../minishell.h"
 
+static int	all_signed_num(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (s[i] == '+' || s[i] == '-')
+		i++;
+	while (s[i])
+	{
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 static void	msg_exit(int status)
 {
 	ft_putstr_fd("exit\n", 2);
