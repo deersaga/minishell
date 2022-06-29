@@ -315,6 +315,14 @@ char	*concat_expanded_tokens(t_mshell *mshell, t_token *head)
 	return (ret);
 }
 
+t_token	*get_first_non_delimiter_token(t_token *head)
+{
+	t_token	*cur;
+
+	cur = head;
+	return (skip_delimiter_token(cur));
+}
+
 /*
 * 正直、めちゃくちゃ非効率なことをやっている。
 * tokenに$が含まれるか含まれないかを無視してexpansion操作をしているので無駄な操作が多分に含まれている。

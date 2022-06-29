@@ -42,8 +42,13 @@ char	*search_param(char *str, size_t *start)
 			(*start)++;
 			continue ;
 		}
-		while (ft_isalnum(str[(*start) + j]) || str[(*start) + j] == '_')
+		if (str[(*start) + j] == '?')
 			j++;
+		else
+		{
+			while (ft_isalnum(str[(*start) + j]) || str[(*start) + j] == '_')
+				j++;
+		}
 		break ;
 	}
 	if ((*start) >= ft_strlen(str))
@@ -64,6 +69,8 @@ char	*expansion(t_mshell *mshell, char *str)
 	{
 		if (!target[1])
 			implant = "$";
+		else if (target[1] == '?')
+			implant = ft_itoa(mshell->exit_status);
 		else
 			implant = get_env(mshell, &target[1]);
 		if (!implant)
