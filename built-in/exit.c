@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/29 12:36:35 by katakagi          #+#    #+#             */
+/*   Updated: 2022/06/29 12:36:37 by katakagi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static int	all_signed_num(char *s)
@@ -18,7 +30,7 @@ static int	all_signed_num(char *s)
 
 static void	msg_exit(int status)
 {
-	ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("exit\n", 1);
 	exit(status);
 }
 
@@ -43,5 +55,5 @@ int	ft_exit(t_mshell *mshell, t_command *cmd)
 		msg_exit(255);
 	}
 	msg_exit(EXIT_SUCCESS);
-	return(0);
+	return (0);
 }
