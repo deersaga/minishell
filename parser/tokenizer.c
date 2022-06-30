@@ -83,7 +83,7 @@ void	print_tokens(t_token *head)
 	t_token	*cur;
 
 	cur = head;
-	while (cur->token)
+	while (cur)
 	{
 		if (cur->token)
 			printf("%-20s type: %u  fd %d x %x\n", cur->token, cur->type, cur->fd, cur->token[0]);
@@ -194,18 +194,35 @@ t_token	*add_front_tokens(t_token **head, t_token *retoken, t_token *pre, t_toke
 	return (tmp);
 }
 
-t_token	*skip_delimiter_token(t_token *cur)
+t_token	*skip_delimiter_token(t_token *token)
 {
+	t_token *cur;
+
+	cur = token;
 	while (cur->type == T_DELM && cur->token != NULL)
 		cur = cur->next;
 	return (cur);
 }
 
-t_token	*skip_by_next_delimiter_token(t_token *cur)
+t_token	*skip_by_next_delimiter_token(t_token *token)
 {
+	t_token *cur;
+
+	cur = token;
 	while (cur->type != T_DELM && cur->token != NULL)
 		cur = cur->next;
 	return (cur);
+}
+t_token	*skip_word_quote_token(t_token *token)
+{
+	t_token *cur;
+
+	cur = token;
+	while ((cur->type == T_WORD || cur->type == T_SQUOTE || cur->type == T_DQUOTE) && cur->token != NULL)
+	{
+		cur = cur->next;
+	}
+;	return (cur);
 }
 
 /*
@@ -270,8 +287,26 @@ t_token	*tokenizer(t_mshell *mshell, char *cmdline)
 	//free_all_token(head);
 	return (head);
 }
+char	*subtoken(t_token *start, t_token *end)
+{
+	t_token	*cur;
+	char	*ret;
+	char	*tmp;
 
-char	*concat_tokens(t_mshell *mshell, t_token *head)
+	cur = start;
+	ret = ft_strdup("");
+	while (cur != end)
+	{
+		//printf("HERE\n");
+		tmp = ret;
+		ret = ft_strjoin(ret, cur->token);
+		free(tmp);
+		cur = cur->next;
+	}
+	return (ret);
+}
+
+char	*concat_tokens(t_token *head)
 {
 	char	*ret;
 	char	*tmp;

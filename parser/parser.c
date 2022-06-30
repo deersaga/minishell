@@ -8,14 +8,14 @@ void	print_redir(t_command *cmd)
 	printf("redir_in\n");
 	while (cur)
 	{
-		printf("file %s fd %d type %d\n", cur->file, cur->fd, cur->type);
+		printf("file %s fd %d type %d has_qupte %d\n", cur->file, cur->fd, cur->type, cur->has_quote);
 		cur = cur->next;
 	}
 	cur = cmd->redir_out;
 	printf("redir_out\n");
 	while (cur)
 	{
-		printf("file %s fd %d type %d\n", cur->file, cur->fd, cur->type);
+		printf("file %s fd %d type %d has_qupte %d\n", cur->file, cur->fd, cur->type, cur->has_quote);
 		cur = cur->next;
 	}
 }
@@ -123,15 +123,32 @@ int	get_fd(t_token *op)
 	return (-1);
 }
 
+int	has_quote(t_token *start, t_token *end)
+{
+	t_token	*cur;
+
+	cur = start;
+	while (cur != end)
+	{
+		if (cur->type == T_DQUOTE || cur->type == T_SQUOTE)
+			return (1);
+		cur = cur->next;
+	}
+	return (0);
+}
+
 void	new_redir(t_command *cmd, t_token *op, e_type_token type)
 {
 	t_redir *last;
 	t_token	*file;
+	t_token	*end;
 
 	file = op->next;
+	end = skip_word_quote_token(file);
 	last = get_redir_last(cmd, type);
 	last->type = type;
-	last->file = ft_strdup(file->token);
+	last->has_quote = has_quote(file, end);
+	last->file = subtoken(file, end);
 	last->fd = get_fd(op);
 	last->next = ft_calloc(1, sizeof(t_redir));
 }
@@ -148,13 +165,23 @@ void	add_redir_info(t_command *cmd, t_token *cur)
 		new_redir(cmd, cur, cur->type);
 }
 
-void	delete_redir_token(t_command *cmd, t_token *pre, t_token *cur)
+t_token	*delete_redir_token(t_command *cmd, t_token *previous, t_token *current)
 {
-	t_token	*file;
-
-	file = cur->next;
-	delete_one_token(&(cmd->token), pre, cur, cur->next);
-	delete_one_token(&(cmd->token), pre, file, file->next);
+	
+	
+	t_token	*end;
+	t_token	*cur;
+	t_token	*pre;
+	
+	end = skip_word_quote_token(current->next);
+	pre = previous;
+	cur = current;
+	while (cur != end)
+	{
+		delete_one_token(&(cmd->token), pre, cur, cur->next);
+		cur = pre->next;
+	}
+	return (cur);
 }
 
 int	parser(t_mshell *mshell, char *cmdline)
@@ -164,7 +191,6 @@ int	parser(t_mshell *mshell, char *cmdline)
 	t_token		*cur;
 	t_command	*cmd;
 
-	//printf("here\n");
 	head = tokenizer(mshell, cmdline);
 	if (check_syntax(head))
 	{
@@ -177,7 +203,7 @@ int	parser(t_mshell *mshell, char *cmdline)
 	mshell->commands = ft_calloc(1, sizeof(t_command));
 	cmd = mshell->commands;
 	cmd->token = head;
-	while(cur->token)
+	while(cur && cur->token)
 	{
 		if (cur->type == T_PIPE)
 		{
@@ -188,8 +214,7 @@ int	parser(t_mshell *mshell, char *cmdline)
 		if (is_redirect_token(cur->type))
 		{
 			add_redir_info(cmd, cur);
-			delete_redir_token(cmd, pre, cur);
-			cur = cur->next->next;
+			cur = delete_redir_token(cmd, pre, cur);
 			continue ;
 		}
 		pre = cur;
