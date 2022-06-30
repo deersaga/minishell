@@ -41,7 +41,7 @@ void	create_argv(t_mshell *mshell, t_command *cmd)
 	while (i < len)
 	{
 		cur = skip_delimiter_token(cur);
-		argv[i] = concat_tokens(mshell, cur);
+		argv[i] = concat_tokens(cur);
 		cur = skip_by_next_delimiter_token(cur);
 		i++;
 	}
