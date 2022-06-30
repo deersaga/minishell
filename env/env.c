@@ -43,12 +43,35 @@ void	print_env(t_envList *env)
 	cur = env;
 	while (cur->key)
 	{
-		printf("declare -x %s", cur->key);
+		printf("%s", cur->key);
 		if (cur->val)
-			printf("=\"%s\"", cur->val);
+			printf("=%s", cur->val);
 		printf("\n");
 		cur = cur->next;
 	}
+}
+
+t_envList *copy_env(t_envList *env)
+{
+	t_envList	*copy;
+	t_envList	*cur;
+	t_envList	*copy_cur;
+
+	copy = ft_calloc(1, sizeof(t_envList));
+	copy_cur = copy;
+	cur = env;
+	while (cur && cur->key)
+	{
+		//printf("cur->key      %s\n", cur->key);
+		copy_cur->key = ft_strdup(cur->key);
+		//printf("copy cur->key %s\n", copy_cur->key);
+		if (cur->val)
+			copy_cur->val = ft_strdup(cur->val);
+		cur = cur->next;
+		copy_cur->next = ft_calloc(1, sizeof(t_envList));
+		copy_cur = copy_cur->next;
+	}
+	return (copy);
 }
 
 void	delete_all_env(t_mshell *mshell)
@@ -225,7 +248,6 @@ char	**make_environ(t_mshell *mshell)
 		i++;
 		cur = cur->next;
 	}
-	printf("here1\n");
 	env[i] = NULL;
 	return (env);
 }
