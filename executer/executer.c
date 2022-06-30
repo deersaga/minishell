@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/28 01:44:06 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:30:55 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void	wait_childs(int tmp)
 	int	status;
 
 	while (wait(&status) >= 0);
+	printf("status %d\n", WEXITSTATUS(status));
 }
 
 void	execute_command(t_mshell *mshell, size_t cur_idx, \
@@ -141,6 +142,7 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 	reconnect_redir_with_stdio(mshell, cur_com, cur_idx, pipe_list);
 	command_path = get_cmd_path(mshell, cur_com->argv[0]);
 	execve(command_path, cur_com->argv, environ);
+	exit(1);
 }
 
 void	execute_commands(t_mshell *mshell)
@@ -151,15 +153,11 @@ void	execute_commands(t_mshell *mshell)
 	t_command	*cur_com;
 
 	//num_command > 0という前提で考えている
+	//printf("num cmds %d\n", mshell->num_commands);
 	if (skip_delimiter_token(mshell->commands->token)->token == NULL)
-	{
-		mshell->commands->argv = NULL;
 		return;
-	}
 	else if (mshell->num_commands == 1)
 	{
-		mshell->commands->token = expand_and_retokenize(mshell, mshell->commands->token);
-		create_argv(mshell, mshell->commands);
 		execute_a_command(mshell, mshell->commands);
 		return ;
 	}
@@ -169,7 +167,6 @@ void	execute_commands(t_mshell *mshell)
 	cur_com = mshell->commands;
 	while (cur_idx < mshell->num_commands)
 	{
-		cur_com->token = expand_and_retokenize(mshell, cur_com->token);
 		create_argv(mshell, cur_com);
 		child_pid_list[cur_idx] = fork();
 		if (child_pid_list[cur_idx] == 0)

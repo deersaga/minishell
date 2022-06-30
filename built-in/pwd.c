@@ -5,7 +5,7 @@ int	ft_pwd(t_mshell *mshell, t_command *cmd)
 	char	*pwd;
 
 	(void)cmd;
-	pwd = get_env(mshell, "PWD");
+	pwd = getcwd(NULL, 0);
 	if (!pwd || *pwd == '\0')
 	{
 		perror("getcwd");
@@ -13,5 +13,6 @@ int	ft_pwd(t_mshell *mshell, t_command *cmd)
 	}
 	ft_putstr_fd(pwd, STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
+	free(pwd);
 	return (EXIT_SUCCESS);
 }

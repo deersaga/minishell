@@ -12,6 +12,5 @@ int	ft_unset(t_mshell *mshell, t_command *cmd)
 		delete_one_env(mshell, cmd->argv[i]);
 		i++;
 	}
-	//free_array(argv);
 	return (0);
 }

@@ -4,7 +4,6 @@ static void	free_all(char *path, char *oldpwd, char **argv)
 {
 	free(path);
 	free(oldpwd);
-	free_array(argv);
 }
 
 static int	get_path(char **argv, char **path, t_mshell *mshell)
@@ -56,11 +55,6 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 	char	**argv;
 
 	create_argv(mshell, cmd);
-	if (cmd->argc > 2)
-	{
-		//free_array(cmd->argv);
-		return (EXIT_FAILURE);
-	}
 	oldpwd = getcwd(NULL,0);
 	if (!oldpwd)
 		perror("getcwd");
@@ -81,3 +75,4 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 	free_all(path, oldpwd, cmd->argv);
 	return (EXIT_SUCCESS);
 }
+

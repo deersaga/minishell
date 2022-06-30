@@ -54,3 +54,6 @@ built-in/test.c
 *.pdf
 .DS_Store
 test.c
+executer/executer_copy.c
+redir_test.c
+output.txt

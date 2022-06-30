@@ -28,7 +28,7 @@ int	check_builtin(t_mshell *mshell, t_command *cmd)
 	t_token	*cur;
 
 	cur = skip_delimiter_token(cmd->token);
-	printf("command %s\n", cur->token);
+	//printf("command %s\n", cur->token);
 	if (!ft_strcmp("cd", cur->token) || !ft_strcmp("echo", cur->token) || !ft_strcmp("pwd", cur->token) \
 	|| !ft_strcmp("export", cur->token) || !ft_strcmp("unset", cur->token) || !ft_strcmp("env", cur->token) \
 	|| !ft_strcmp("exit", cur->token))
@@ -64,10 +64,16 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 	char	*path;
 	char	**argv;
 	char	**env;
+	int		fd;
 
 	pid = fork();
 	if (pid == 0)
 	{
+		//signal(SIGINT, SIG_DFL);
+		//signal(SIGQUIT, SIG_DFL);
+		/*fd = open("out", O_RDWR | O_CREAT | O_TRUNC);
+		dup2(fd, 1);
+		close(fd);*/
 		create_argv(mshell, cmd);
 		path = get_cmd_path(mshell, cmd->argv[0]);
 		//printf("path %s\n",path);
@@ -76,13 +82,14 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 			free(cmd->argv[0]);
 			cmd->argv[0] = path;
 		}
+		else
+			exit(127);
 		//print_array(cmd->argv);
 		env = make_environ(mshell);
 		//print_array(env);
 		execve(cmd->argv[0], cmd->argv, env);
 		free_array(env);
 		free_commands(mshell->commands);
-		exit(1);
 	}
 	return (0);
 }
@@ -90,15 +97,39 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 int	execute_a_command(t_mshell *mshell, t_command *cmd)
 {
 	int		status;
+	int		pipe[2];
+	int		fd[2];
 
 	status = 0;
+
+	
+	//dup2(fd[1],1);
+	if (ft_strcmp(get_first_non_delimiter_token(cmd->token)->token, "export"))
+		cmd->token = expand_and_retokenize(mshell, cmd->token);
 	if (check_builtin(mshell, cmd))
-		execute_a_builtin(mshell, cmd);
+	{
+		/*fd[0] = dup(1);
+		close(1);
+		
+		fd[1] = open("out", O_RDWR | O_CREAT | O_TRUNC);*/
+		status = execute_a_builtin(mshell, cmd);
+		/*close(fd[1]);
+		dup2(fd[0], STDOUT_FILENO);
+		close(fd[0]);*/
+		return (status);
+	}
 	else
+	{
+		//redir_set(mshell, cmd);
+
 		execute_a_add_on(mshell, cmd);
+		//exit(127);
+	}
 	while (wait(&status) >= 0);
-	printf("status %d\n", status);
-	return (0);
+	//printf("status %d\n", status / 256);
+	mshell->exit_status = WEXITSTATUS(status);
+	//printf("status %d\n", status);
+	return (mshell->exit_status);
 }
 
 

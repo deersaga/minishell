@@ -2,42 +2,39 @@
 
 extern char **environ;
 
-void	exec_cmd(char *cmd)
-{
-	char	*argv[5];
-
-	if (strcmp(cmd, "ls") == 0)
-	{
-		argv[0] = "/bin/ls";
-		argv[1] = "-a";
-		argv[2] = NULL;
-		if (execve(argv[0], argv, environ) < 0)
-		{
-			perror("execve");
-			exit(1);
-		}
-	}
-	else if (strcmp(cmd, "rm") == 0)
-	{
-		argv[0] = "/bin/rm";
-		argv[1] = "-rf";
-		argv[2] = "/Users/work/42Tokyo/42cursus/3-level/minishell/test";
-		argv[3] = NULL;
-		if (execve(argv[0], argv, environ) < 0)
-		{
-			perror("execve");
-			exit(1);
-		}
-	}
-
-}
-
-
 void	init_mshell(t_mshell *mshell)
 {
 	mshell->commands = NULL;
 	mshell->env = NULL;
 	mshell->num_commands = 0;
+	mshell->exit_status = 0;
+}
+
+static int 	check_done(void)
+{
+	if (flag == 1)
+	{
+		rl_delete_text(0, rl_end);
+		rl_done = 1;
+	}
+	return (0);
+}
+void do_heredoc()
+{
+	signal(SIGINT, signal_handle_heredoc);
+	rl_event_hook = check_done;
+	while(1)
+	{
+
+		if (flag == 1)
+			break;
+		char *cmdline = readline(">");
+		/*if (!ft_strcmp("eof", cmdline))
+			break ;
+		write();*/
+	}
+	rl_event_hook = NULL;
+
 }
 
 int main(int argc, char **argv)
@@ -50,26 +47,44 @@ int main(int argc, char **argv)
 	struct sigaction	act;
 
 	(void)argv;
-	sigemptyset(&act.sa_mask);
-	act.sa_handler = SIG_IGN;
+	//sigemptyset(&act.sa_mask);
+	//act.sa_handler = SIG_IGN;
+	//act.sa_sigaction = SIG_IGN;
+	//act.sa_flags = SA_NODEFER;
+    //act.sa_restorer = NULL;
 	//act.sa = SIG_DFL;
 	//printf("minishell\n");
-	sigaction(SIGQUIT, &act, NULL);
+	//sigaction(SIGQUIT, &act, NULL);
+	//signal(SIGINT, signal_handle_int);
+	signal(SIGQUIT, SIG_IGN);
 	init_mshell(&mshell);
 	init_env(&mshell);
 	register_or_update_env(&mshell, "test", "sekai");
 	register_or_update_env(&mshell, "test1", "sekai");
+	//signal(SIGINT, signal_handle_int);
 	while (1)
 	{
 		cmdline = readline("minishell$>");
-		add_history(cmdline);
-		mshell.num_commands = 0;
 		if (!cmdline)
 		{
 			delete_all_env(&mshell);
 			return(0);
 		}
+		else if (!ft_strcmp(cmdline, ""))
+		{
+			free(cmdline);
+			continue ;
+		}
+		if (!ft_strcmp("heredoc", cmdline))
+		{
+			do_heredoc();
+			do_heredoc();
+		}
+		flag = 0;
+		add_history(cmdline);
+		mshell.num_commands = 0;
 		parser(&mshell, cmdline);
+		//print_commands(&mshell);
 		execute_commands(&mshell);
 		free_commands(mshell.commands);
 		free(cmdline);
@@ -77,9 +92,7 @@ int main(int argc, char **argv)
 	return (0);
 }
 
-__attribute__((destructor)) static void destructor()
+/*__attribute__((destructor)) static void destructor()
 {
 	system("leaks -q a.out");
-}
-
-
+}*/
