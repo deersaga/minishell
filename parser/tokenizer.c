@@ -182,12 +182,13 @@ t_token	*add_front_tokens(t_token **head, t_token *retoken, t_token *pre, t_toke
 {
 	t_token	*tmp;
 
+	
 	if (!pre)
 		*head = retoken;
 	else
 		pre->next = retoken;
 	tmp = retoken;
-	while (tmp->next->token)
+	while (tmp->next && tmp->next->token)
 		tmp = tmp->next;
 	free(tmp->next);
 	tmp->next = cur;
