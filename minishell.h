@@ -16,6 +16,8 @@
 # include <sys/wait.h>
 # include "./libftx/libft.h"
 
+volatile sig_atomic_t g_heredoc_sigint;
+
 typedef enum {
 	T_DELM,
 	T_WORD,		//1
@@ -45,7 +47,9 @@ typedef struct s_token {
 
 typedef struct s_redir {
 	char			*file;
+	char			*heredoc_eof;
 	e_type_token	type;
+	int				has_quote;
 	int				fd;
 	struct s_redir	*next;
 	
@@ -64,6 +68,7 @@ typedef struct s_command {
 typedef struct s_mshell {
 	struct s_command	*commands;
 	int					num_commands;
+	int					exit_status;
 	struct s_envList	*env;
 } t_mshell;
 
@@ -83,8 +88,10 @@ char	*get_env(t_mshell *mshell, char *key);
 void	sort_env(t_envList *head);
 void	delete_one_env(t_mshell *mshell, char *del_key);
 void	print_env(t_envList *env);
+void	print_export(t_envList *env);
 void	delete_all_env(t_mshell *mshell);
 char	**make_environ(t_mshell *mshell);
+t_envList *copy_env(t_envList *env);
 
 //tokenizer
 t_token	*tokenizer(t_mshell *mshell, char *cmdline);
@@ -99,7 +106,12 @@ t_token	*expand_and_retokenize(t_mshell *mshell, t_token *head);
 t_token	*format_tokens(t_token *head);
 t_token	*skip_delimiter_token(t_token *cur);
 t_token	*skip_by_next_delimiter_token(t_token *cur);
-char	*concat_tokens(t_mshell *mshell, t_token *head);
+t_token	*skip_word_quote_token(t_token *cur);
+char	*concat_tokens(t_token *head);
+t_token	*get_first_non_delimiter_token(t_token *head);
+void	print_redir(t_command *cmd);
+char	*subtoken(t_token *start, t_token *end);
+
 
 //parser内のtokenizer以外
 int		parser(t_mshell *mshell, char *cmdline);
@@ -117,5 +129,21 @@ char	*get_cmd_path(t_mshell *mshell, char *cmd);
 int		execute_a_command(t_mshell *mshell, t_command *cmd);
 void	execute_commands(t_mshell *mshell);
 int		openfile (char *filename, e_type_token mode);
+void	signal_handle_int(int sig);
+void	signal_handle_heredoc(int sig);
+void	signal_handle_quit(int sig);
+int		check_builtin(t_mshell *mshell, t_command *cmd);
+void	reconnect_redir_with_stdio(\
+	t_mshell *mshell, t_command *cur_com, size_t cur_idx, int **pipe_list);
+void	close_pipe_list(t_mshell *mshell, int **pipe_list);
+int	execute_a_builtin(t_mshell *mshell, t_command *cmd);
+int	**make_pipe_list(t_mshell *mshell);
+void	reconnect_pipe_with_stdio(\
+	t_mshell *mshell, size_t cur_idx, int **pipe_list);
+
+void	create_heredoc_file(t_mshell	*mshell,t_redir *heredoc);
+void	delete_heredoc_files(t_mshell	*mshell);
 
 #endif
+
+///opt/homebrew/opt/readline/include/readline
