@@ -54,7 +54,7 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 	char	*oldpwd;
 
 	create_argv(mshell, cmd);
-	oldpwd = getcwd(NULL,0);
+	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
 		perror("getcwd");
 	if (get_path(cmd->argv, &path, mshell))
@@ -75,4 +75,5 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 	return (EXIT_SUCCESS);
 }
 
-//cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+//cd: error retrieving current directory: getcwd: 
+//cannot access parent directories: No such file or directory

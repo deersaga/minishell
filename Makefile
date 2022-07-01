@@ -8,7 +8,7 @@ SRCS =  built-in/cd.c\
 		built-in/unset.c\
 		built-in/env.c\
 		built-in/exit.c\
-		env/env.c\
+		environ/environ.c\
 		parser/expander.c\
 		parser/parser.c\
 		parser/syntax.c\
