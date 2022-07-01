@@ -28,7 +28,7 @@ void do_heredoc()
 
 		if (flag == 1)
 			break;
-		char *cmdline = readline(">");
+		//char *cmdline = readline(">");
 		/*if (!ft_strcmp("eof", cmdline))
 			break ;
 		write();*/
@@ -42,11 +42,11 @@ int main(int argc, char **argv)
 	//pid_t	child_pid;
 	t_mshell mshell;
 	char	*cmdline;
-	char	**splited_cmd;
 	//int		status;
-	struct sigaction	act;
+	//struct sigaction	act;
 
 	(void)argv;
+	(void)argc;
 	//sigemptyset(&act.sa_mask);
 	//act.sa_handler = SIG_IGN;
 	//act.sa_sigaction = SIG_IGN;
@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 		add_history(cmdline);
 		mshell.num_commands = 0;
 		parser(&mshell, cmdline);
-		//print_commands(&mshell);
+		print_commands(&mshell);
 		execute_commands(&mshell);
 		free_commands(mshell.commands);
 		free(cmdline);
@@ -95,4 +95,5 @@ int main(int argc, char **argv)
 /*__attribute__((destructor)) static void destructor()
 {
 	system("leaks -q a.out");
-}*/
+}
+*/

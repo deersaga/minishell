@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-static void	free_all(char *path, char *oldpwd, char **argv)
+static void	free_all(char *path, char *oldpwd)
 {
 	free(path);
 	free(oldpwd);
@@ -52,7 +52,6 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 {
 	char	*path;
 	char	*oldpwd;
-	char	**argv;
 
 	create_argv(mshell, cmd);
 	oldpwd = getcwd(NULL,0);
@@ -60,7 +59,7 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 		perror("getcwd");
 	if (get_path(cmd->argv, &path, mshell))
 	{
-		free_all(path, oldpwd, cmd->argv);
+		free_all(path, oldpwd);
 		return (EXIT_FAILURE);
 	}
 	if (chdir(path) == -1)
@@ -68,11 +67,12 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 		perror("cd");
 		if (!ft_strcmp(cmd->argv[1], ".") || !ft_strcmp(cmd->argv[1], ".."))
 			register_or_update_env(mshell, "PWD", path);
-		free_all(path, oldpwd, cmd->argv);
+		free_all(path, oldpwd);
 		return (EXIT_FAILURE);
 	}
 	update_dir_env(mshell, path, oldpwd);
-	free_all(path, oldpwd, cmd->argv);
+	free_all(path, oldpwd);
 	return (EXIT_SUCCESS);
 }
 
+//cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory

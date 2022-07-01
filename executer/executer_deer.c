@@ -27,6 +27,7 @@ int	check_builtin(t_mshell *mshell, t_command *cmd)
 {
 	t_token	*cur;
 
+	(void)mshell;
 	cur = skip_delimiter_token(cmd->token);
 	//printf("command %s\n", cur->token);
 	if (!ft_strcmp("cd", cur->token) || !ft_strcmp("echo", cur->token) || !ft_strcmp("pwd", cur->token) \
@@ -62,9 +63,8 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 {
 	pid_t	pid;
 	char	*path;
-	char	**argv;
 	char	**env;
-	int		fd;
+	//int		fd;
 
 	pid = fork();
 	if (pid == 0)
@@ -97,8 +97,8 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 int	execute_a_command(t_mshell *mshell, t_command *cmd)
 {
 	int		status;
-	int		pipe[2];
-	int		fd[2];
+	//int		pipe[2];
+	//int		fd[2];
 
 	status = 0;
 

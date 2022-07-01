@@ -6,22 +6,11 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:19:31 by katakagi          #+#    #+#             */
-/*   Updated: 2022/06/30 13:30:25 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 11:12:09 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	delete_one_token( \
-			t_token **head, t_token *pre, t_token *cur, t_token *next)
-{
-	if (!pre)
-		*head = next;
-	else
-		pre->next = next;
-	free(cur->token);
-	free(cur);
-}
 
 void	free_all_token(t_token *head)
 {

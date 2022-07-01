@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:43:13 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 10:34:54 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 11:01:55 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ t_token	*format_tokens(t_token *head)
 int	parser(t_mshell *mshell, char *cmdline)
 {
 	t_token		*head;
-	t_token		*pre;
-	t_token		*cur;
 	t_command	*cmd;
 
 	head = tokenizer(cmdline);

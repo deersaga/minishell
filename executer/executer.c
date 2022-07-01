@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/30 12:30:55 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 11:07:16 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	**make_array_2d_int(size_t h, size_t w)
 int	**make_pipe_list(t_mshell *mshell)
 {
 	int		**pipe_list;
-	int		pipe_list_num;
+	size_t	pipe_list_num;
 	size_t	i;
 
 	pipe_list_num = mshell->num_commands - 1;
@@ -93,6 +93,9 @@ void	reconnect_redir_with_stdio(\
 	t_redir	*cur_redir_in;
 	t_redir	*cur_redir_out;
 
+	(void)mshell;
+	(void)cur_idx;
+	(void)pipe_list;
 	cur_redir_in = cur_com->redir_in;
 	//現状のredir_inは終端がnullになっていないため問題が起きる
 	while (cur_redir_in && cur_redir_in->file)
@@ -124,7 +127,7 @@ void	reconnect_redir_with_stdio(\
 	}
 }
 
-void	wait_childs(int tmp)
+void	wait_childs(void)
 {
 	int	status;
 
@@ -175,7 +178,7 @@ void	execute_commands(t_mshell *mshell)
 		cur_com = cur_com->next;
 	}
 	close_pipe_list(mshell, pipe_list);
-	wait_childs(0);
+	wait_childs();
 	free(child_pid_list);
 	free_pipe_list(mshell, pipe_list);
 }

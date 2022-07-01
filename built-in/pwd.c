@@ -5,6 +5,7 @@ int	ft_pwd(t_mshell *mshell, t_command *cmd)
 	char	*pwd;
 
 	(void)cmd;
+	(void)mshell;
 	pwd = getcwd(NULL, 0);
 	if (!pwd || *pwd == '\0')
 	{

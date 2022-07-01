@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/06/30 12:36:16 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 11:00:41 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ static void	create_export_argv(t_mshell *mshell, t_command *cmd)
 
 int	ft_export(t_mshell *mshell, t_command *cmd)
 {
-	char		*eq_pos;
 	char		*key_val[2];
 	size_t		i;
 

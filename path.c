@@ -58,9 +58,6 @@ char	*search_cmd_path(char **paths, char *cmd)
 char	*get_cmd_path(t_mshell *mshell, char *cmd)
 {
 	char	**paths;
-	char	*cand;
-	char	*tmp;
-	size_t	i;
 
 	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3) || *cmd == '/')
 	{
@@ -152,9 +149,6 @@ char	*delete_dot_slash(char *path)
 
 char	*get_abs_path(char	*path)
 {
-	char	*tmp;
-	char	*dot_slash;
-
 	path = delete_dot_slash(path);
 	path = delete_dot_dot(path);
 	return (path);

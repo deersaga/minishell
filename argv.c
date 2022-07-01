@@ -33,6 +33,7 @@ void	create_argv(t_mshell *mshell, t_command *cmd)
 	t_token	*cur;
 	char	**argv;
 
+	(void)mshell;
 	len = get_size(cmd->token);
 	cmd->argc = len;
 	argv = ft_calloc(len + 1, sizeof(char *));

@@ -3,7 +3,6 @@
 int	ft_unset(t_mshell *mshell, t_command *cmd)
 {
 	size_t	i;
-	char	**argv;
 
 	i = 1;
 	create_argv(mshell, cmd);

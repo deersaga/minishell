@@ -57,7 +57,7 @@ typedef struct s_redir {
 typedef struct s_command {
 	struct s_token		*token;
 	char				**argv;
-	int					argc;
+	size_t				argc;
 	struct s_redir		*redir_in;
 	struct s_redir		*redir_out;
 	struct s_command	*next;
@@ -66,7 +66,7 @@ typedef struct s_command {
 
 typedef struct s_mshell {
 	struct s_command	*commands;
-	int					num_commands;
+	size_t				num_commands;
 	int					exit_status;
 	struct s_envList	*env;
 } t_mshell;
@@ -93,8 +93,7 @@ char	**make_environ(t_mshell *mshell);
 t_envList *copy_env(t_envList *env);
 
 //tokenizer
-t_token	*tokenizer(t_mshell *mshell, char *cmdline);
-t_token	*verbose_tokenizer(char	*cmdline);
+t_token	*tokenizer(char	*cmdline);
 void	delete_one_token(t_token **head, t_token *pre, t_token *cur, t_token *next);
 void	print_tokens(t_token *head);
 void	free_all_token(t_token *head);
@@ -110,6 +109,15 @@ char	*concat_tokens(t_token *head);
 t_token	*get_first_non_delimiter_token(t_token *head);
 void	print_redir(t_command *cmd);
 char	*subtoken(t_token *start, t_token *end);
+e_type_token	get_token_type(char	*cur, size_t *i);
+void	get_quote_type_and_len( \
+			char *cmdline, size_t i, size_t *len, e_type_token *type);
+int	is_operator(char c);
+int	is_quote(char cur);
+int	is_delimiter(char c);
+int	is_operator_token(e_type_token type);
+int	all_num(char *s);
+t_token	*new_token(t_token *cur, char *token, e_type_token type);
 
 
 //parser内のtokenizer以外
@@ -139,6 +147,8 @@ int	execute_a_builtin(t_mshell *mshell, t_command *cmd);
 int	**make_pipe_list(t_mshell *mshell);
 void	reconnect_pipe_with_stdio(\
 	t_mshell *mshell, size_t cur_idx, int **pipe_list);
+void	add_redir_info(t_command *cmd, t_token *cur);
+t_token	*delete_redir_token(t_command *cmd, t_token *previous, t_token *current);
 
 #endif
 

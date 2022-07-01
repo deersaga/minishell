@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:26:48 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 10:34:20 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 11:03:17 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	check_syntax(t_token *head)
 		type = cur->type;
 		if (type == T_PIPE && next->type == T_PIPE)
 			return (1);
-		else if (is_redir(type) && (is_redir(next->type) \
+		else if (is_redirect_token(type) && (is_redirect_token(next->type) \
 		|| next->type == T_PIPE))
 			return (1);
-		else if ((is_redir(type) || type == T_PIPE) && !next->token)
+		else if ((is_redirect_token(type) || type == T_PIPE) && !next->token)
 			return (1);
 		cur = next;
 	}

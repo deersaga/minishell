@@ -6,23 +6,39 @@ SRCS =  built-in/cd.c\
 		built-in/export.c\
 		built-in/pwd.c\
 		built-in/unset.c\
+		built-in/env.c\
+		built-in/exit.c\
 		env/env.c\
 		parser/expander.c\
 		parser/parser.c\
 		parser/syntax.c\
+		parser/redirect.c\
 		parser/tokenizer.c\
+		parser/token_concat.c\
+		parser/token_ctrl.c\
+		parser/token_type.c\
+		parser/token_utils.c\
+		parser/print.c\
+		parser/free.c\
+		executer/executer.c\
+		executer/executer_deer.c\
+		file/open_file.c\
+		argv.c\
+		path.c\
+		signal.c\
 		minishell.c
-
-OBJS = $(SRCS:%.c=%.o)
-
+OBJ_DIR = ./obj
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 LIB = ./libftx/libft.a
 LIB_DIR = ./libftx
 CC = gcc
 CFLAGS = -I $(shell brew --prefix readline)/include
 LDFLAGS = -lreadline -lhistory -L$(shell brew --prefix readline)/lib
 
-%.o: %.c
-	@$(CC) -g -Wall -Wextra -Werror -c $< -o $@
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@);
+	@$(CC) -g -Wall -Wextra -Werror $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C $(LIB_DIR)

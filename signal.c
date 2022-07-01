@@ -3,6 +3,7 @@
 
 void	signal_handle_int(int sig)
 {
+	(void)sig;
 	flag = 1;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
@@ -20,7 +21,7 @@ void	signal_handle_int(int sig)
 
 void	signal_handle_heredoc(int sig)
 {
-
+	(void)sig;
 	flag = 1;
 	//write(STDOUT_FILENO, "\n", 1);
 	//rl_on_new_line();
@@ -31,6 +32,7 @@ void	signal_handle_heredoc(int sig)
 
 void	signal_handle_quit(int sig)
 {
+	(void)sig;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
