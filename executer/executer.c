@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 21:20:15 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/01 21:26:04 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ void	execute_commands(t_mshell *mshell)
 		if (ft_strcmp(get_first_non_delimiter_token(mshell->commands->token)->token, "export"))
    			mshell->commands->token = expand_and_retokenize(mshell, mshell->commands->token);
 		create_argv(mshell, mshell->commands);
+		a;
 		cur_com = mshell->commands;
 		if (check_builtin(mshell, cur_com))
 		{
