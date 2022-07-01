@@ -1,7 +1,6 @@
 NAME = minishell
 
 CC = gcc
-<<<<<<< HEAD
 SRCS =  built-in/cd.c\
 		built-in/echo.c\
 		built-in/export.c\
@@ -33,29 +32,6 @@ SRCS =  built-in/cd.c\
 		minishell.c
 OBJ_DIR = ./obj
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
-=======
-SRCS = minishell.c \
-env/env.c \
-parser/parser.c \
-parser/tokenizer.c \
-parser/expander.c  \
-argv.c \
-built-in/cd.c \
-built-in/echo.c \
-built-in/export.c \
-built-in/unset.c \
-built-in/pwd.c \
-path.c \
-parser/syntax.c \
-executer/executer.c \
-built-in/env.c \
-built-in/exit.c \
-file/open_file.c \
-executer/executer_deer.c
-
-OBJS = $(SRCS:%.c=%.o)
-
->>>>>>> a03cb3b6e4b5001b542d8eca4c07d04411d8276b
 LIB = ./libftx/libft.a
 LIB_DIR = ./libftx
 CC = gcc
@@ -65,7 +41,6 @@ IFLAGS = -I $(shell brew --prefix readline)/include
 LDFLAGS = -lreadline -lhistory -L $(shell brew --prefix readline)/lib
 #LDFLAGS = -lreadline -lhistory -L $(shell brew --prefix readline)/lib
 
-<<<<<<< HEAD
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(dir $@);
@@ -74,16 +49,6 @@ $(OBJ_DIR)/%.o: %.c
 $(NAME): $(OBJS)
 	@$(MAKE) -C $(LIB_DIR)
 	$(CC) $(IFLAGS) $(LDFLAGS) $(OBJS) $(LIB)  -o $(NAME)
-=======
-#IFLAGS = -I 
-%.o: %.c
-	@$(CC) $(IFLAGS) -g -c $< -o $@
-#	@$(CC) $(CFLAGS) -g -c $< -o $@
-
-$(NAME): $(OBJS)
-	@$(MAKE) -C $(LIB_DIR)
-	$(CC) $(OBJS) $(LIB) $(LDFLAGS) -o $(NAME)
->>>>>>> a03cb3b6e4b5001b542d8eca4c07d04411d8276b
 #	$(CC) $(IFLAGS)  $(LDFLAGS)  $(OBJS) $(LIB) -o $(NAME)
 #	$(CC) $(IFLAGS) -lreadline  $(OBJS) $(LIB) -o $(NAME)
 #	$(CC)  $(LDFLAGS) $(IFLAGS) $(OBJS) $(LIB) -o $(NAME)
