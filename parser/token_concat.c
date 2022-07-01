@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:54:02 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 16:33:35 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/01 17:50:40 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,49 @@ t_token	*expand_and_retokenize(t_mshell *mshell, t_token *head)
 		pre = cur;
 		cur = cur->next;
 	}
+	//printf("expand_and_retokenize\n");
+	//print_tokens(head);
+	return (head);
+}
+/*
+bool	is_determined_export_before_expansion(t_mshell *mshell, t_token *head)
+{
+	t_token	*com;
+
+	com = skip_delimiter_token(head);
+	if (com == NULL || ft_strcmp(com->token, "export"))
+		return (false);
+	return (com->next && com->next->type == T_DELM);
+}
+
+t_token	*expand_and_retokenize_ktada(t_mshell *mshell, t_token *head)
+{
+	t_token	*pre;
+	t_token	*cur;
+	t_token	*retoken;
+	char	*expanded;
+	bool	head_is_export;
+
+	cur = head;
+	pre = NULL;
+	head_is_export = is_determined_export_before_expansion(mshell, head);
+	while (cur && cur->type != T_END)
+	{
+		if (cur->type == T_DQUOTE)
+			cur->token = expansion(mshell, cur->token);
+		else if (cur->type != T_SQUOTE && cur->type != T_DELM)
+		{
+			expanded = expansion(mshell, ft_strdup(cur->token));
+			retoken = tokenizer(expanded);
+			cur = add_front_tokens(&head, retoken, pre, cur);
+			delete_one_token(&head, cur, cur->next, cur->next->next);
+			free(expanded);
+		}
+		pre = cur;
+		cur = cur->next;
+	}
 	printf("expand_and_retokenize\n");
 	print_tokens(head);
 	return (head);
 }
+*/

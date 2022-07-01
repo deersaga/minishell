@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 16:12:50 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/01 19:03:28 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void	reconnect_redir_with_stdio(\
 	(void)cur_idx;
 	(void)pipe_list;
 	cur_redir_in = cur_com->redir_in;
-	//現状のredir_inは終端がnullになっていないため問題が起きる
 	while (cur_redir_in && cur_redir_in->file)
 	{
 		if (cur_redir_in->type == T_REDIR_IN || cur_redir_in->type == T_HEREDOC)
@@ -182,9 +181,13 @@ void	execute_commands(t_mshell *mshell)
 	create_heredoc_files(mshell);
 	if (mshell->num_commands == 1)
 	{
-		mshell->commands->token = expand_and_retokenize(mshell, mshell->commands->token);
+	//	printf("in execute cmds 185\n");
+		if (ft_strcmp(get_first_non_delimiter_token(mshell->commands->token)->token, "export"))
+   			mshell->commands->token = expand_and_retokenize(mshell, mshell->commands->token);
+	//	print_tokens(mshell->commands->token);
 		create_argv(mshell, mshell->commands);
 		execute_a_command(mshell, mshell->commands);
+		fprintf(stderr, "end execue a cmd \n");
 		//heredocの一時ファイルが消されないことがあるかも
 		delete_heredoc_files(mshell);
 		return ;
@@ -195,7 +198,9 @@ void	execute_commands(t_mshell *mshell)
 	cur_com = mshell->commands;
 	while (cur_idx < mshell->num_commands)
 	{
-		cur_com->token = expand_and_retokenize(mshell, cur_com->token);
+		if (ft_strcmp(get_first_non_delimiter_token(cur_com->token)->token, "export"))
+   			cur_com->token = expand_and_retokenize(mshell, cur_com->token);
+		//cur_com->token = expand_and_retokenize(mshell, cur_com->token);
 		create_argv(mshell, cur_com);
 		child_pid_list[cur_idx] = fork();
 		if (child_pid_list[cur_idx] == 0)
