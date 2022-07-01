@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 14:23:56 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 16:12:50 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,10 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
 	reconnect_redir_with_stdio(mshell, cur_com, cur_idx, pipe_list);
+	if (check_builtin(mshell, cur_com))
+		exit(execute_a_builtin(mshell, cur_com));
 	command_path = get_cmd_path(mshell, cur_com->argv[0]);
 	execve(command_path, cur_com->argv, environ);
-	exit(1);
 }
 
 void	create_heredoc_files(t_mshell *mshell)
@@ -184,7 +185,7 @@ void	execute_commands(t_mshell *mshell)
 		mshell->commands->token = expand_and_retokenize(mshell, mshell->commands->token);
 		create_argv(mshell, mshell->commands);
 		execute_a_command(mshell, mshell->commands);
-		//これが呼ばれないことがあるのか
+		//heredocの一時ファイルが消されないことがあるかも
 		delete_heredoc_files(mshell);
 		return ;
 	}

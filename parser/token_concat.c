@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_concat.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:54:02 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 10:32:27 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 16:33:35 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,7 @@ t_token	*expand_and_retokenize(t_mshell *mshell, t_token *head)
 		pre = cur;
 		cur = cur->next;
 	}
+	printf("expand_and_retokenize\n");
+	print_tokens(head);
 	return (head);
 }
