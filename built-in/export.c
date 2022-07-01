@@ -6,11 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/07/01 13:39:04 by katakagi         ###   ########.fr       */
-=======
-/*   Updated: 2022/06/29 13:44:28 by katakagi         ###   ########.fr       */
->>>>>>> a03cb3b6e4b5001b542d8eca4c07d04411d8276b
+/*   Updated: 2022/07/01 13:58:28 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +29,6 @@ void	print_export(t_envList *env)
 	}
 }
 
-<<<<<<< HEAD
-=======
-void	get_key_val(char *key_eq_val, char *key_val[2])
-{
-	char	*eq;
-
-	eq = ft_strchr(key_eq_val, '=');
-	if (!eq)
-	{
-		key_val[0] = ft_strdup(key_eq_val);
-		key_val[1] = NULL;
-	}
-	else
-	{
-		key_val[0] = ft_substr(key_eq_val, 0, eq - key_eq_val);
-		key_val[1] = ft_substr(eq + 1, 0, ft_strlen(key_eq_val));
-	}
-}
-
->>>>>>> a03cb3b6e4b5001b542d8eca4c07d04411d8276b
 static int	is_valid(char *s)
 {
 	char	*eq_pos;
@@ -97,10 +73,6 @@ static void	create_export_argv(t_mshell *mshell, t_command *cmd)
 
 int	ft_export(t_mshell *mshell, t_command *cmd)
 {
-<<<<<<< HEAD
-=======
-	char		*eq_pos;
->>>>>>> a03cb3b6e4b5001b542d8eca4c07d04411d8276b
 	char		*key_val[2];
 	size_t		i;
 
