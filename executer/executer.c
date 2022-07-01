@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 19:03:28 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/01 21:20:15 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	**make_pipe_list(t_mshell *mshell)
 	size_t	i;
 
 	pipe_list_num = mshell->num_commands - 1;
+	if (pipe_list_num == 0)
+		return (NULL);
 	pipe_list = make_array_2d_int(pipe_list_num, 2);
 	i = 0;
 	while (i < pipe_list_num)
@@ -181,16 +183,16 @@ void	execute_commands(t_mshell *mshell)
 	create_heredoc_files(mshell);
 	if (mshell->num_commands == 1)
 	{
-	//	printf("in execute cmds 185\n");
 		if (ft_strcmp(get_first_non_delimiter_token(mshell->commands->token)->token, "export"))
    			mshell->commands->token = expand_and_retokenize(mshell, mshell->commands->token);
-	//	print_tokens(mshell->commands->token);
 		create_argv(mshell, mshell->commands);
-		execute_a_command(mshell, mshell->commands);
-		fprintf(stderr, "end execue a cmd \n");
-		//heredocの一時ファイルが消されないことがあるかも
-		delete_heredoc_files(mshell);
-		return ;
+		cur_com = mshell->commands;
+		if (check_builtin(mshell, cur_com))
+		{
+			execute_a_builtin_command(mshell, mshell->commands);
+			delete_heredoc_files(mshell);
+			return ;
+		}
 	}
 	child_pid_list = ft_calloc(mshell->num_commands, sizeof(pid_t));
 	pipe_list = make_pipe_list(mshell);
@@ -198,10 +200,13 @@ void	execute_commands(t_mshell *mshell)
 	cur_com = mshell->commands;
 	while (cur_idx < mshell->num_commands)
 	{
-		if (ft_strcmp(get_first_non_delimiter_token(cur_com->token)->token, "export"))
-   			cur_com->token = expand_and_retokenize(mshell, cur_com->token);
-		//cur_com->token = expand_and_retokenize(mshell, cur_com->token);
-		create_argv(mshell, cur_com);
+		//num_commands==1の時は上で既にやっている
+		if (mshell->num_commands > 1)
+		{
+			if (ft_strcmp(get_first_non_delimiter_token(cur_com->token)->token, "export"))
+   				cur_com->token = expand_and_retokenize(mshell, cur_com->token);
+			create_argv(mshell, cur_com);
+		}
 		child_pid_list[cur_idx] = fork();
 		if (child_pid_list[cur_idx] == 0)
 			execute_command(mshell, cur_idx, cur_com, pipe_list);

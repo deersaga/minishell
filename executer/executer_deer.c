@@ -95,40 +95,23 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 	return (0);
 }
 
-int	execute_a_command(t_mshell *mshell, t_command *cmd)
+int	execute_a_builtin_command(t_mshell *mshell, t_command *cmd)
 {
 	int		status;
 	int		dup_stdio_fd[2];
 
 	status = 0;
-	if (ft_strcmp(get_first_non_delimiter_token(cmd->token)->token, "export"))
-		cmd->token = expand_and_retokenize(mshell, cmd->token);
-	if (check_builtin(mshell, cmd))
-	{
-		dup_stdio_fd[0] = dup(0);
-		dup_stdio_fd[1] = dup(1);
-		reconnect_redir_with_stdio(mshell, cmd, 0, NULL);
-		status = execute_a_builtin(mshell, cmd);
-		close(STDIN_FILENO);
-		close(STDOUT_FILENO);
-		dup2(dup_stdio_fd[0], STDIN_FILENO);
-		dup2(dup_stdio_fd[1], STDOUT_FILENO);
-		close(dup_stdio_fd[0]);
-		close(dup_stdio_fd[1]);
-		return (status);
-	}
-	else
-	{
-		//todo
-		//redir_set(mshell, cmd);
-		execute_a_add_on(mshell, cmd);
-		//exit(127);
-	}
-	while (wait(&status) >= 0);
-	//printf("status %d\n", status / 256);
-	mshell->exit_status = WEXITSTATUS(status);
-	//printf("status %d\n", status);
-	return (mshell->exit_status);
+	dup_stdio_fd[0] = dup(0);
+	dup_stdio_fd[1] = dup(1);
+	reconnect_redir_with_stdio(mshell, cmd, 0, NULL);
+	status = execute_a_builtin(mshell, cmd);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	dup2(dup_stdio_fd[0], STDIN_FILENO);
+	dup2(dup_stdio_fd[1], STDOUT_FILENO);
+	close(dup_stdio_fd[0]);
+	close(dup_stdio_fd[1]);
+	return (status);
 }
 
 int	____past__execute_a_command(t_mshell *mshell, t_command *cmd)

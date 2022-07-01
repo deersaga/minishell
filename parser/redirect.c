@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:21:42 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 14:03:25 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 20:58:07 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,10 @@ t_token	*delete_redir_token(t_command *cmd, t_token *previous, t_token *current)
 	while (cur != end)
 	{
 		delete_one_token(&(cmd->token), pre, cur, cur->next);
-		cur = pre->next;
+		if (pre == NULL)
+			cur = cmd->token;
+		else
+			cur = pre->next;
 	}
 	return (cur);
 }
