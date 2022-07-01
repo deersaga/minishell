@@ -79,9 +79,19 @@ int main(int argc, char **argv)
 	}
 	return (0);
 }
+<<<<<<< HEAD
 /*
 __attribute__((destructor)) static void destructor()
 {
 	system("leaks -q minishell");
 }
 */
+=======
+
+__attribute__((destructor)) static void destructor()
+{
+	system("leaks -q a.out");
+}
+
+
+>>>>>>> a03cb3b6e4b5001b542d8eca4c07d04411d8276b
