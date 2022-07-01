@@ -6,13 +6,13 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:10:56 by kaou              #+#    #+#             */
-/*   Updated: 2022/06/27 21:48:36 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 12:23:14 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	openfile (char *filename, e_type_token mode)
+int	openfile (char *filename, t_type_token mode)
 {
 	int	fd;
 

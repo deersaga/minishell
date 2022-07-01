@@ -6,13 +6,13 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:21:42 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 10:34:24 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 12:23:14 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_redir	*get_redir_last(t_command *cmd, e_type_token type)
+t_redir	*get_redir_last(t_command *cmd, t_type_token type)
 {
 	t_redir	*last;
 
@@ -63,7 +63,7 @@ int	has_quote(t_token *start, t_token *end)
 }
 
 //last->fd = get_fd(op);は対応しなくても良さそうなので外した。
-void	new_redir(t_command *cmd, t_token *op, e_type_token type)
+void	new_redir(t_command *cmd, t_token *op, t_type_token type)
 {
 	t_redir	*last;
 	t_token	*file;

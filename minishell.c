@@ -12,7 +12,7 @@ void	init_mshell(t_mshell *mshell)
 
 static int 	check_done(void)
 {
-	if (flag == 1)
+	if (g_flag == 1)
 	{
 		rl_delete_text(0, rl_end);
 		rl_done = 1;
@@ -21,12 +21,12 @@ static int 	check_done(void)
 }
 void do_heredoc()
 {
-	signal(SIGINT, signal_handle_heredoc);
+	signal(SIGINT, signal_handler_heredoc);
 	rl_event_hook = check_done;
 	while(1)
 	{
 
-		if (flag == 1)
+		if (g_flag == 1)
 			break;
 		//char *cmdline = readline(">");
 		/*if (!ft_strcmp("eof", cmdline))
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
 			do_heredoc();
 			do_heredoc();
 		}
-		flag = 0;
+		g_flag = 0;
 		add_history(cmdline);
 		mshell.num_commands = 0;
 		parser(&mshell, cmdline);

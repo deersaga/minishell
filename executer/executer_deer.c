@@ -110,7 +110,6 @@ int	execute_a_command(t_mshell *mshell, t_command *cmd)
 	{
 		/*fd[0] = dup(1);
 		close(1);
-		
 		fd[1] = open("out", O_RDWR | O_CREAT | O_TRUNC);*/
 		status = execute_a_builtin(mshell, cmd);
 		/*close(fd[1]);
@@ -121,7 +120,6 @@ int	execute_a_command(t_mshell *mshell, t_command *cmd)
 	else
 	{
 		//redir_set(mshell, cmd);
-
 		execute_a_add_on(mshell, cmd);
 		//exit(127);
 	}

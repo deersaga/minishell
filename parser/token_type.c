@@ -6,13 +6,13 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:51:46 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 10:34:08 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 12:23:14 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	is_redirect_token(e_type_token type)
+int	is_redirect_token(t_type_token type)
 {
 	if (type == T_REDIR_IN || type == T_REDIR_OUT)
 		return (1);
@@ -21,7 +21,7 @@ int	is_redirect_token(e_type_token type)
 	return (0);
 }
 
-int	is_operator_token(e_type_token type)
+int	is_operator_token(t_type_token type)
 {
 	if (type == T_REDIR_IN || type == T_REDIR_OUT)
 		return (1);
@@ -32,7 +32,7 @@ int	is_operator_token(e_type_token type)
 	return (0);
 }
 
-int	is_redir(e_type_token	type)
+int	is_redir(t_type_token	type)
 {
 	if (type == T_REDIR_IN || type == T_REDIR_OUT \
 	|| type == T_APPEND || type == T_HEREDOC)
@@ -40,7 +40,7 @@ int	is_redir(e_type_token	type)
 	return (0);
 }
 
-e_type_token	get_token_type(char	*cur, size_t *i)
+t_type_token	get_token_type(char	*cur, size_t *i)
 {
 	if (cur[0] == '>' && cur[1] == '>')
 	{
@@ -68,7 +68,7 @@ e_type_token	get_token_type(char	*cur, size_t *i)
 }
 
 void	get_quote_type_and_len( \
-			char *cmdline, size_t i, size_t *len, e_type_token *type)
+			char *cmdline, size_t i, size_t *len, t_type_token *type)
 {
 	if (cmdline[i] == '\'')
 	{

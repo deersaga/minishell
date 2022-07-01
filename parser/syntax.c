@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:26:48 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 11:03:17 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 12:23:14 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_syntax(t_token *head)
 {
 	t_token			*cur;
 	t_token			*next;
-	e_type_token	type;
+	t_type_token	type;
 
 	cur = head;
 	if (cur->type == T_PIPE)

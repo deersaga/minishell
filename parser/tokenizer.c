@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:47:07 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 10:34:02 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 12:23:14 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_token	*create_quote_token( \
 	char *cmdline, size_t *start, size_t *i, t_token *cur)
 {
-	e_type_token	type;
+	t_type_token	type;
 	size_t			len;
 
 	if (*start != *i)
@@ -32,7 +32,7 @@ t_token	*create_quote_token( \
 t_token	*create_non_quote_token( \
 		char *cmdline, size_t *start, size_t *i, t_token *cur)
 {
-	e_type_token	type;
+	t_type_token	type;
 
 	if (*start != *i)
 		cur = new_token(cur, ft_substr(cmdline, *start, (*i) - (*start)),
@@ -55,7 +55,7 @@ void	delete_one_token( \
 	free(cur);
 }
 
-t_token	*new_token(t_token *cur, char *token, e_type_token type)
+t_token	*new_token(t_token *cur, char *token, t_type_token type)
 {
 	cur->token = token;
 	cur->type = type;
