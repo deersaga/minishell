@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:21:42 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 12:23:14 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 13:37:50 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,60 @@ int	has_quote(t_token *start, t_token *end)
 	return (0);
 }
 
+char	*make_heredoc_filename(size_t	heredoc_id)
+{
+	char	*file_prefix;
+	char	*file_suffix;
+	char	*file_name;
+	size_t	i;
+
+	file_prefix = ft_strdup(".minishell_tmp_heredoc_");
+	if (file_prefix == NULL)
+		exit(EXIT_FAILURE);
+	file_suffix = ft_calloc(25, sizeof(char));
+	if (file_suffix == NULL)
+		exit(EXIT_FAILURE);
+	i = 0;
+	while (i < 24)
+	{
+		file_suffix[i] = '0' + (heredoc_id % 10);
+		heredoc_id /= 10;
+		i++;
+	}
+	file_suffix[i] = '\0';
+	file_name = ft_strjoin(file_prefix, file_suffix);
+	if (file_name == NULL)
+		exit(EXIT_FAILURE);
+	free(file_prefix);
+	free(file_suffix);
+	return (file_name);
+}
+
+/*
+heredocは一時的に下のようなファイルに入力を書き込み
+.heredoc_tmp_(heredoc_id)
+以後そのファイルへのridirect_inとして受け取る
+cat <<aa <<aa | cat <<cc <<dd
+でheredoc_idはそれぞれ下のようになる
+一つ目(aa):0
+二つ目(aa):1
+三つ目(cc):2
+四つ目(dd):3
+初期化していないので、続けて下のようにすると
+cat <<bb <<aa | cat <<ee <<ff
+一つ目(bb):4
+二つ目(aa):5
+三つ目(ee):6
+四つ目(ff):7
+になる
+*/
 //last->fd = get_fd(op);は対応しなくても良さそうなので外した。
 void	new_redir(t_command *cmd, t_token *op, t_type_token type)
 {
-	t_redir	*last;
-	t_token	*file;
-	t_token	*end;
+	t_redir			*last;
+	t_token			*file;
+	t_token			*end;
+	static size_t	heredoc_id;
 
 	file = op->next;
 	end = skip_word_quote_token(file);
@@ -76,6 +124,12 @@ void	new_redir(t_command *cmd, t_token *op, t_type_token type)
 	last->has_quote = has_quote(file, end);
 	last->file = subtoken(file, end);
 	last->next = ft_calloc(1, sizeof(t_redir));
+	if (type == T_HEREDOC)
+	{
+		last->heredoc_eof = last->file;
+		last->file = make_heredoc_filename(heredoc_id);
+		heredoc_id++;
+	}
 }
 
 void	add_redir_info(t_command *cmd, t_token *cur)

@@ -9,7 +9,7 @@ void	init_mshell(t_mshell *mshell)
 	mshell->num_commands = 0;
 	mshell->exit_status = 0;
 }
-
+/*
 static int 	check_done(void)
 {
 	if (g_flag == 1)
@@ -29,13 +29,13 @@ void do_heredoc()
 		if (g_flag == 1)
 			break;
 		//char *cmdline = readline(">");
-		/*if (!ft_strcmp("eof", cmdline))
-			break ;
-		write();*/
+		//if (!ft_strcmp("eof", cmdline))
+		//	break ;
+		//write();
 	}
 	rl_event_hook = NULL;
 
-}
+}*/
 
 int main(int argc, char **argv)
 {
@@ -43,20 +43,15 @@ int main(int argc, char **argv)
 	t_mshell mshell;
 	char	*cmdline;
 	//int		status;
-	//struct sigaction	act;
+	struct sigaction	act;
 
 	(void)argv;
 	(void)argc;
-	//sigemptyset(&act.sa_mask);
-	//act.sa_handler = SIG_IGN;
-	//act.sa_sigaction = SIG_IGN;
-	//act.sa_flags = SA_NODEFER;
-    //act.sa_restorer = NULL;
+	sigemptyset(&act.sa_mask);
+	act.sa_handler = SIG_IGN;
 	//act.sa = SIG_DFL;
 	//printf("minishell\n");
-	//sigaction(SIGQUIT, &act, NULL);
-	//signal(SIGINT, signal_handle_int);
-	signal(SIGQUIT, SIG_IGN);
+	sigaction(SIGQUIT, &act, NULL);
 	init_mshell(&mshell);
 	init_env(&mshell);
 	register_or_update_env(&mshell, "test", "sekai");
@@ -75,24 +70,18 @@ int main(int argc, char **argv)
 			free(cmdline);
 			continue ;
 		}
-		if (!ft_strcmp("heredoc", cmdline))
-		{
-			do_heredoc();
-			do_heredoc();
-		}
-		g_flag = 0;
 		add_history(cmdline);
 		mshell.num_commands = 0;
 		parser(&mshell, cmdline);
-		print_commands(&mshell);
 		execute_commands(&mshell);
 		free_commands(mshell.commands);
 		free(cmdline);
 	}
 	return (0);
 }
-
+/*
 __attribute__((destructor)) static void destructor()
 {
 	system("leaks -q minishell");
 }
+*/

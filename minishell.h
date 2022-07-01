@@ -16,7 +16,7 @@
 # include <sys/wait.h>
 # include "./libftx/libft.h"
 
-volatile sig_atomic_t	g_flag;
+volatile sig_atomic_t g_heredoc_sigint;
 
 typedef enum e_type_token {
 	T_DELM,
@@ -46,6 +46,7 @@ typedef struct s_token {
 
 typedef struct s_redir {
 	char			*file;
+	char			*heredoc_eof;
 	t_type_token	type;
 	int				has_quote;
 	int				fd;
@@ -152,5 +153,9 @@ void			reconnect_pipe_with_stdio(t_mshell *mshell,
 void			add_redir_info(t_command *cmd, t_token *cur);
 t_token			*delete_redir_token(t_command *cmd,
 					t_token *previous, t_token *current);
+void			create_heredoc_file(t_mshell *mshell,t_redir *heredoc);
+void			delete_heredoc_files(t_mshell *mshell);
 
 #endif
+
+///opt/homebrew/opt/readline/include/readline

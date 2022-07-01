@@ -24,6 +24,7 @@ SRCS =  built-in/cd.c\
 		parser/free.c\
 		executer/executer.c\
 		executer/executer_deer.c\
+		executer/heredoc.c \
 		file/open_file.c\
 		argv.c\
 		path.c\
@@ -34,17 +35,24 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 LIB = ./libftx/libft.a
 LIB_DIR = ./libftx
 CC = gcc
-CFLAGS = -I $(shell brew --prefix readline)/include
-LDFLAGS = -lreadline -lhistory -L$(shell brew --prefix readline)/lib
+CFLAGS = -Wall -Wextra -Werror
+#IFLAGS = -I /usr/local/opt/readline/include
+IFLAGS = -I $(shell brew --prefix readline)/include
+LDFLAGS = -lreadline -lhistory -L $(shell brew --prefix readline)/lib
+#LDFLAGS = -lreadline -lhistory -L $(shell brew --prefix readline)/lib
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(dir $@);
-	@$(CC) -g -Wall -Wextra -Werror $(CFLAGS) -c $< -o $@
+	@$(CC) -g -Wall -Wextra -Werror $(IFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C $(LIB_DIR)
-	$(CC)  $(CFLAGS) $(LDFLAGS) $(OBJS) $(LIB) -o $(NAME)
+	$(CC) $(IFLAGS) $(LDFLAGS) $(OBJS) $(LIB)  -o $(NAME)
+#	$(CC) $(IFLAGS)  $(LDFLAGS)  $(OBJS) $(LIB) -o $(NAME)
+#	$(CC) $(IFLAGS) -lreadline  $(OBJS) $(LIB) -o $(NAME)
+#	$(CC)  $(LDFLAGS) $(IFLAGS) $(OBJS) $(LIB) -o $(NAME)
+#	$(CC)  $(IFLAGS) $(LDFLAGS) $(OBJS) $(LIB) -o $(NAME)
 
 clean:
 	$(MAKE) clean -C $(LIB_DIR)

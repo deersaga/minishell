@@ -90,6 +90,7 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 		execve(cmd->argv[0], cmd->argv, env);
 		free_array(env);
 		free_commands(mshell->commands);
+		exit(1);
 	}
 	return (0);
 }

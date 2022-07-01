@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 11:07:16 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 13:15:55 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	**make_array_2d_int(size_t h, size_t w)
 	}
 	return (array);
 }
-
 int	**make_pipe_list(t_mshell *mshell)
 {
 	int		**pipe_list;
@@ -100,18 +99,13 @@ void	reconnect_redir_with_stdio(\
 	//現状のredir_inは終端がnullになっていないため問題が起きる
 	while (cur_redir_in && cur_redir_in->file)
 	{
-		if (cur_redir_in->type == T_REDIR_IN)
+		if (cur_redir_in->type == T_REDIR_IN || cur_redir_in->type == T_HEREDOC)
 		{
-			//redir_inがひとつならこれでいいはず
-			//複数あるときに上書きしていけるのかは未確認
 			fd = openfile(cur_redir_in->file, T_REDIR_IN);
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
-		else if (cur_redir_in->type == T_HEREDOC)
-		{
-			//todo;
-		}else
+		else
 			exit(EXIT_FAILURE || !printf("reconnect_redir_with_stdio error\n"));
 		cur_redir_in = cur_redir_in->next;
 	}
@@ -148,6 +142,29 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 	exit(1);
 }
 
+void	create_heredoc_files(t_mshell *mshell)
+{
+	t_command	*cur_com;
+	t_redir		*cur_redir_in;
+	size_t		i;
+
+	cur_com = mshell->commands;
+	i = 0;
+	while (i < mshell->num_commands)
+	{
+		cur_redir_in = cur_com->redir_in;
+		while (cur_redir_in && cur_redir_in->file)
+		{
+			if (cur_redir_in->type == T_HEREDOC)
+				create_heredoc_file(mshell, cur_redir_in);
+			cur_redir_in = cur_redir_in->next;
+		}
+		cur_com = cur_com->next;
+		i++;
+	}
+	g_heredoc_sigint = 0;
+}
+
 void	execute_commands(t_mshell *mshell)
 {
 	int			**pipe_list;
@@ -156,12 +173,19 @@ void	execute_commands(t_mshell *mshell)
 	t_command	*cur_com;
 
 	//num_command > 0という前提で考えている
-	//printf("num cmds %d\n", mshell->num_commands);
 	if (skip_delimiter_token(mshell->commands->token)->token == NULL)
-		return;
-	else if (mshell->num_commands == 1)
 	{
+		mshell->commands->argv = NULL;
+		return;
+	}
+	create_heredoc_files(mshell);
+	if (mshell->num_commands == 1)
+	{
+		mshell->commands->token = expand_and_retokenize(mshell, mshell->commands->token);
+		create_argv(mshell, mshell->commands);
 		execute_a_command(mshell, mshell->commands);
+		//これが呼ばれないことがあるのか
+		delete_heredoc_files(mshell);
 		return ;
 	}
 	child_pid_list = ft_calloc(mshell->num_commands, sizeof(pid_t));
@@ -170,6 +194,7 @@ void	execute_commands(t_mshell *mshell)
 	cur_com = mshell->commands;
 	while (cur_idx < mshell->num_commands)
 	{
+		cur_com->token = expand_and_retokenize(mshell, cur_com->token);
 		create_argv(mshell, cur_com);
 		child_pid_list[cur_idx] = fork();
 		if (child_pid_list[cur_idx] == 0)
@@ -181,4 +206,5 @@ void	execute_commands(t_mshell *mshell)
 	wait_childs();
 	free(child_pid_list);
 	free_pipe_list(mshell, pipe_list);
+	delete_heredoc_files(mshell);
 }
