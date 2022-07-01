@@ -36,10 +36,8 @@ LIB = ./libftx/libft.a
 LIB_DIR = ./libftx
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-#IFLAGS = -I /usr/local/opt/readline/include
 IFLAGS = -I $(shell brew --prefix readline)/include
 LDFLAGS = -lreadline -lhistory -L $(shell brew --prefix readline)/lib
-#LDFLAGS = -lreadline -lhistory -L $(shell brew --prefix readline)/lib
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
@@ -49,10 +47,6 @@ $(OBJ_DIR)/%.o: %.c
 $(NAME): $(OBJS)
 	@$(MAKE) -C $(LIB_DIR)
 	$(CC) $(IFLAGS) $(LDFLAGS) $(OBJS) $(LIB)  -o $(NAME)
-#	$(CC) $(IFLAGS)  $(LDFLAGS)  $(OBJS) $(LIB) -o $(NAME)
-#	$(CC) $(IFLAGS) -lreadline  $(OBJS) $(LIB) -o $(NAME)
-#	$(CC)  $(LDFLAGS) $(IFLAGS) $(OBJS) $(LIB) -o $(NAME)
-#	$(CC)  $(IFLAGS) $(LDFLAGS) $(OBJS) $(LIB) -o $(NAME)
 
 clean:
 	$(MAKE) clean -C $(LIB_DIR)
