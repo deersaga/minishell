@@ -76,21 +76,15 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 		close(fd);*/
 		create_argv(mshell, cmd);
 		path = get_cmd_path(mshell, cmd->argv[0]);
-		//printf("path %s\n",path);
-		if (path)
-		{
-			free(cmd->argv[0]);
-			cmd->argv[0] = path;
-		}
-		else
-			exit(127);
+		free(cmd->argv[0]);
+		cmd->argv[0] = path;
 		//print_array(cmd->argv);
 		env = make_environ(mshell);
 		//print_array(env);
 		execve(cmd->argv[0], cmd->argv, env);
 		free_array(env);
 		free_commands(mshell->commands);
-		exit(1);
+		exit(127);
 	}
 	return (0);
 }

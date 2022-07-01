@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:58:06 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:35:30 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*search_cmd_path(char **paths, char *cmd)
 		i++;
 	}
 	free_array(paths);
-	return (NULL);
+	exit(127);
 }
 
 char	*get_cmd_path(t_mshell *mshell, char *cmd)

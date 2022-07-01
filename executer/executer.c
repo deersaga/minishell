@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 14:23:56 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:37:22 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 	reconnect_redir_with_stdio(mshell, cur_com, cur_idx, pipe_list);
 	command_path = get_cmd_path(mshell, cur_com->argv[0]);
 	execve(command_path, cur_com->argv, environ);
-	exit(1);
+	exit(127);
 }
 
 void	create_heredoc_files(t_mshell *mshell)
