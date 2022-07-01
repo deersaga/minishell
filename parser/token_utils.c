@@ -1,38 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax.c                                           :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/30 13:26:48 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 10:34:20 by katakagi         ###   ########.fr       */
+/*   Created: 2022/07/01 10:16:59 by katakagi          #+#    #+#             */
+/*   Updated: 2022/07/01 10:19:00 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_syntax(t_token *head)
+int	is_quote(char cur)
 {
-	t_token			*cur;
-	t_token			*next;
-	e_type_token	type;
-
-	cur = head;
-	if (cur->type == T_PIPE)
+	if (cur == '\'' || cur == '\"')
 		return (1);
-	while (cur->token)
-	{
-		next = cur->next;
-		type = cur->type;
-		if (type == T_PIPE && next->type == T_PIPE)
-			return (1);
-		else if (is_redir(type) && (is_redir(next->type) \
-		|| next->type == T_PIPE))
-			return (1);
-		else if ((is_redir(type) || type == T_PIPE) && !next->token)
-			return (1);
-		cur = next;
-	}
 	return (0);
+}
+
+int	is_delimiter(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n')
+		return (1);
+	return (0);
+}
+
+int	is_operator(char c)
+{
+	if (c == '|' || c == '<' || c == '>' || c == '&')
+		return (1);
+	return (0);
+}
+
+int	all_num(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
 }

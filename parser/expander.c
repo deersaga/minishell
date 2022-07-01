@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/30 13:29:59 by katakagi          #+#    #+#             */
+/*   Updated: 2022/07/01 10:25:22 by katakagi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*ft_strreplace(char *src, char *target, char *implant, size_t *start)
@@ -9,9 +21,7 @@ char	*ft_strreplace(char *src, char *target, char *implant, size_t *start)
 	char	*ret;
 
 	len = ft_strlen(src) + ft_strlen(implant) - ft_strlen(target);
-	ret = (char *)malloc(sizeof(char) * (len + 1));
-	if (!ret)
-		exit(EXIT_FAILURE);
+	ret = ft_calloc(len + 1, sizeof(char));
 	i = 0;
 	tar = ft_strnstr(src + (*start), target, ft_strlen(src));
 	while (*src)
