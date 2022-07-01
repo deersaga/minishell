@@ -91,6 +91,7 @@ void	print_export(t_envList *env);
 void	delete_all_env(t_mshell *mshell);
 char	**make_environ(t_mshell *mshell);
 t_envList *copy_env(t_envList *env);
+void	get_key_val(char *key_eq_val, char *key_val[2]);
 
 //tokenizer
 t_token	*tokenizer(char	*cmdline);

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 11:00:41 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 11:54:56 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,6 @@ void	print_export(t_envList *env)
 			printf("=\"%s\"", cur->val);
 		printf("\n");
 		cur = cur->next;
-	}
-}
-
-void	get_key_val(char *key_eq_val, char *key_val[2])
-{
-	char	*eq;
-
-	eq = ft_strchr(key_eq_val, '=');
-	if (!eq)
-	{
-		key_val[0] = ft_strdup(key_eq_val);
-		key_val[1] = NULL;
-	}
-	else
-	{
-		key_val[0] = ft_substr(key_eq_val, 0, eq - key_eq_val);
-		key_val[1] = ft_substr(eq + 1, 0, ft_strlen(key_eq_val));
 	}
 }
 
