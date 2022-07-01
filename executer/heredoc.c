@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:24:51 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 19:09:19 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/01 21:37:19 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	delete_heredoc_files(t_mshell	*mshell)
 
 	cur = mshell->commands;
 	i = 0;
-	printf("delete heredoc\n");
 	while (i < mshell->num_commands)
 	{
 		redir_in = cur->redir_in;
@@ -101,5 +100,4 @@ void	delete_heredoc_files(t_mshell	*mshell)
 		}
 		i++;
 	}
-	fprintf(stderr, "delete heredoc end\n");
 }

@@ -74,11 +74,8 @@ int main(int argc, char **argv)
 		mshell.num_commands = 0;
 		parser(&mshell, cmdline);
 		execute_commands(&mshell);
-		printf("end exe");
 		free_commands(mshell.commands);
-		printf("end freecmd");
 		free(cmdline);
-		printf("end free");
 	}
 	return (0);
 }
