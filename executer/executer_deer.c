@@ -2,26 +2,6 @@
 #include <fcntl.h>
 
 extern char **environ;
-/*int	execute_commands(t_mshell *mshell, t_command *cmd)
-{
-	int		status;
-	int		*pipefds;
-	pid_t	pid;
-	size_t	i;
-
-	
-	pipefds = init_pipe(mshell);
-	i = 0;
-	while (cmd)
-	{
-		setup_pipe(pipefds);
-		pid = fork();
-		if (pid == 0)
-		{
-
-		}
-	}
-}*/
 
 int	check_builtin(t_mshell *mshell, t_command *cmd)
 {
@@ -78,7 +58,6 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 		path = get_cmd_path(mshell, cmd->argv[0]);
 		free(cmd->argv[0]);
 		cmd->argv[0] = path;
-		//print_array(cmd->argv);
 		env = make_environ(mshell);
 		//print_array(env);
 		execve(cmd->argv[0], cmd->argv, env);

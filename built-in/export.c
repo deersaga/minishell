@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:58:28 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:46:12 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 void	print_export(t_envList *env)
 {
 	t_envList	*cur;
-	char		*val;
 
-	(void)val;
+	sort_env(env);
 	cur = env;
 	while (cur->key)
 	{
@@ -78,10 +77,7 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 
 	create_export_argv(mshell, cmd);
 	if (cmd->argc == 1)
-	{
-		sort_env(mshell->env);
 		print_export(mshell->env);
-	}
 	i = 0;
 	while (cmd->argv[++i])
 	{		

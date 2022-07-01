@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:46:48 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:45 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:51:36 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 void	sort_env(t_envList *head)
 {
 	t_envList	*cur;
-	t_envList	*tmp;
+	t_envList	*comp;
 	char		*key;
 	char		*val;
 
 	cur = head;
 	while (cur->next->key)
 	{
-		tmp = cur->next;
-		while (tmp->key)
+		comp = cur->next;
+		while (comp->key)
 		{
-			if (ft_strcmp(cur->key, tmp->key) > 0)
+			if (ft_strcmp(cur->key, comp->key) > 0)
 			{
 				key = cur->key;
 				val = cur->val;
-				cur->key = tmp->key;
-				cur->val = tmp->val;
-				tmp->key = key;
-				tmp->val = val;
+				cur->key = comp->key;
+				cur->val = comp->val;
+				comp->key = key;
+				comp->val = val;
 			}
-			tmp = tmp->next;
+			comp = comp->next;
 		}
 		cur = cur->next;
 	}
@@ -43,9 +43,8 @@ void	sort_env(t_envList *head)
 void	print_env(t_envList *env)
 {
 	t_envList	*cur;
-	char		*val;
 
-	(void)val;
+	sort_env(env);
 	cur = env;
 	while (cur->key)
 	{
