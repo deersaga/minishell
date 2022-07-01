@@ -6,11 +6,40 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:24:51 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:51 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:04:27 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*make_heredoc_filename(size_t	heredoc_id)
+{
+	char	*file_prefix;
+	char	*file_suffix;
+	char	*file_name;
+	size_t	i;
+
+	file_prefix = ft_strdup(".minishell_tmp_heredoc_");
+	if (file_prefix == NULL)
+		exit(EXIT_FAILURE);
+	file_suffix = ft_calloc(25, sizeof(char));
+	if (file_suffix == NULL)
+		exit(EXIT_FAILURE);
+	i = 0;
+	while (i < 24)
+	{
+		file_suffix[i] = '0' + (heredoc_id % 10);
+		heredoc_id /= 10;
+		i++;
+	}
+	file_suffix[i] = '\0';
+	file_name = ft_strjoin(file_prefix, file_suffix);
+	if (file_name == NULL)
+		exit(EXIT_FAILURE);
+	free(file_prefix);
+	free(file_suffix);
+	return (file_name);
+}
 
 static int	check_heredoc_sigint(void)
 {

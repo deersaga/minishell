@@ -155,7 +155,7 @@ t_token			*delete_redir_token(t_command *cmd,
 					t_token *previous, t_token *current);
 void			create_heredoc_file(t_mshell *mshell,t_redir *heredoc);
 void			delete_heredoc_files(t_mshell *mshell);
-
+char			*make_heredoc_filename(size_t heredoc_id);
 #endif
 
 ///opt/homebrew/opt/readline/include/readline
