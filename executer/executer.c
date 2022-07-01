@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:50 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:23:56 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,12 @@ void	reconnect_redir_with_stdio(\
 	}
 }
 
-void	wait_childs(void)
+void	wait_childs(t_mshell *mshell)
 {
 	int	status;
 
 	while (wait(&status) >= 0);
-	printf("status %d\n", WEXITSTATUS(status));
+	mshell->exit_status = WEXITSTATUS(status);
 }
 
 void	execute_command(t_mshell *mshell, size_t cur_idx, \
@@ -203,7 +203,7 @@ void	execute_commands(t_mshell *mshell)
 		cur_com = cur_com->next;
 	}
 	close_pipe_list(mshell, pipe_list);
-	wait_childs();
+	wait_childs(mshell);
 	free(child_pid_list);
 	free_pipe_list(mshell, pipe_list);
 	delete_heredoc_files(mshell);

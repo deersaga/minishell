@@ -6,36 +6,34 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:27 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:38 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:25:18 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	create_new_mshell(t_mshell *origin, t_mshell *copy, t_command *cmd)
+size_t	update_mshell(t_mshell *mshell, t_command *cmd)
 {
 	size_t	i;
 	char	*key_val[2];
 
-	copy->env = copy_env(origin->env);
-	copy->num_commands = 0;
+	mshell->num_commands = 0;
 	i = 1;
 	while (cmd->argv[i] && ft_strchr(cmd->argv[i], '='))
 	{
 		get_key_val(cmd->argv[i], key_val);
-		register_or_update_env(copy, key_val[0], key_val[1]);
+		register_or_update_env(mshell, key_val[0], key_val[1]);
 		free(key_val[0]);
 		free(key_val[1]);
 		i++;
 	}
+	return (i);
 }
 
 int	ft_env(t_mshell *mshell, t_command *cmd)
 {
-	t_mshell	copy;
 	size_t		i;
 	pid_t		pid;
-	char		**env;
 	char		*path;
 
 	create_argv(mshell, cmd);
@@ -43,21 +41,19 @@ int	ft_env(t_mshell *mshell, t_command *cmd)
 	i = 1;
 	if (pid == 0)
 	{
-		create_new_mshell(mshell, &copy, cmd);
-		env = make_environ(&copy);
+		i = update_mshell(mshell, cmd);
 		if (cmd->argv[i] == NULL)
-		{
-			print_env(copy.env);
-			exit(0);
-		}
+			print_env(mshell->env);
 		else
 		{
-			path = get_cmd_path(&copy, cmd->argv[i]);
+			path = get_cmd_path(mshell, cmd->argv[i]);
 			free(cmd->argv[i]);
 			cmd->argv[i] = path;
-			execve(cmd->argv[i], &(cmd->argv[i]), env);
+			execve(cmd->argv[i], &(cmd->argv[i]), make_environ(mshell));
 			exit(127);
 		}
+		exit(0);
 	}
+	wait_childs(mshell);
 	return (0);
 }
