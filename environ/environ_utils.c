@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:46:48 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:45 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/02 10:27:58 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,8 @@ void	print_env(t_envList *env)
 	cur = env;
 	while (cur->key)
 	{
-		printf("%s", cur->key);
 		if (cur->val)
-			printf("=%s", cur->val);
-		printf("\n");
+			printf("%s=%s\n", cur->key, cur->val);
 		cur = cur->next;
 	}
 }

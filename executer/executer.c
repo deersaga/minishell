@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/02 10:05:14 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/02 10:33:18 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int	is_export_cmd(t_token *head)
 	char	*cmd;
 
 	cmd = get_cmd_name(head);
-	if (ft_strcmp("export", cmd))
+	if (!ft_strcmp("export", cmd))
 	{
 		free(cmd);
 		return (1);
@@ -163,7 +163,7 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
 	reconnect_redir_with_stdio(mshell, cur_com, cur_idx, pipe_list);
-	if (is_export_cmd(cur_com->token))
+	if (!is_export_cmd(cur_com->token))
 		cur_com->token = expand_and_retokenize(mshell, cur_com->token);
 	if (check_builtin(mshell, cur_com))
 		exit(execute_a_builtin(mshell, cur_com));
@@ -215,7 +215,7 @@ void	execute_commands(t_mshell *mshell)
 	cur_com = mshell->commands;
 	if (mshell->num_commands == 1)
 	{
-		if (is_export_cmd(cur_com->token))
+		if (!is_export_cmd(cur_com->token))
 			cur_com->token = expand_and_retokenize(mshell, cur_com->token);
 		cur_com = mshell->commands;
 		if (check_builtin(mshell, cur_com))
@@ -231,12 +231,12 @@ void	execute_commands(t_mshell *mshell)
 	while (cur_idx < mshell->num_commands)
 	{
 		//num_commands==1の時は上で既にやっている
-		if (mshell->num_commands > 1)
+		/*if (mshell->num_commands > 1)
 		{
 			if (ft_strcmp(get_first_non_delimiter_token(cur_com->token)->token, "export"))
    				cur_com->token = expand_and_retokenize(mshell, cur_com->token);
-			create_argv(mshell, cur_com);
-		}
+			//create_argv(mshell, cur_com);
+		}*/
 		child_pid_list[cur_idx] = fork();
 		if (child_pid_list[cur_idx] == 0)
 			execute_command(mshell, cur_idx, cur_com, pipe_list);
