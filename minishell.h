@@ -158,6 +158,9 @@ void			create_heredoc_file(t_mshell *mshell,t_redir *heredoc);
 void			delete_heredoc_files(t_mshell *mshell);
 char			*make_heredoc_filename(size_t heredoc_id);
 void			wait_childs(t_mshell *mshell);
+char			*get_cmd_name(t_token *head);
+int				is_export_cmd(t_token *head);
+
 
 #endif
 

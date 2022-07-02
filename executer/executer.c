@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 21:33:49 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/02 10:05:14 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,31 @@ void	wait_childs(t_mshell *mshell)
 	mshell->exit_status = WEXITSTATUS(status);
 }
 
+char	*get_cmd_name(t_token *head)
+{
+	t_token	*cur;
+	char	*cmd;
+
+	cur = head;
+	cur = skip_delimiter_token(cur);
+	cmd = concat_tokens(cur);
+	return (cmd);
+}
+
+int	is_export_cmd(t_token *head)
+{
+	char	*cmd;
+
+	cmd = get_cmd_name(head);
+	if (ft_strcmp("export", cmd))
+	{
+		free(cmd);
+		return (1);
+	}
+	free(cmd);
+	return (0);
+}
+
 void	execute_command(t_mshell *mshell, size_t cur_idx, \
 					t_command *cur_com, int **pipe_list)
 {
@@ -138,10 +163,16 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
 	reconnect_redir_with_stdio(mshell, cur_com, cur_idx, pipe_list);
+	if (is_export_cmd(cur_com->token))
+		cur_com->token = expand_and_retokenize(mshell, cur_com->token);
 	if (check_builtin(mshell, cur_com))
 		exit(execute_a_builtin(mshell, cur_com));
+	create_argv(mshell, cur_com);
 	command_path = get_cmd_path(mshell, cur_com->argv[0]);
+	free(cur_com->argv[0]);
+	cur_com->argv[0] = command_path;
 	execve(command_path, cur_com->argv, environ);
+	exit(127);
 }
 
 void	create_heredoc_files(t_mshell *mshell)
@@ -181,11 +212,11 @@ void	execute_commands(t_mshell *mshell)
 		return;
 	}
 	create_heredoc_files(mshell);
+	cur_com = mshell->commands;
 	if (mshell->num_commands == 1)
 	{
-		if (ft_strcmp(get_first_non_delimiter_token(mshell->commands->token)->token, "export"))
-   			mshell->commands->token = expand_and_retokenize(mshell, mshell->commands->token);
-		create_argv(mshell, mshell->commands);
+		if (is_export_cmd(cur_com->token))
+			cur_com->token = expand_and_retokenize(mshell, cur_com->token);
 		cur_com = mshell->commands;
 		if (check_builtin(mshell, cur_com))
 		{
@@ -197,7 +228,6 @@ void	execute_commands(t_mshell *mshell)
 	child_pid_list = ft_calloc(mshell->num_commands, sizeof(pid_t));
 	pipe_list = make_pipe_list(mshell);
 	cur_idx = 0;
-	cur_com = mshell->commands;
 	while (cur_idx < mshell->num_commands)
 	{
 		//num_commands==1の時は上で既にやっている

@@ -25,38 +25,45 @@ extern char **environ;
 
 int	check_builtin(t_mshell *mshell, t_command *cmd)
 {
-	t_token	*cur;
+	char	*cmd_name;
 
 	(void)mshell;
-	cur = skip_delimiter_token(cmd->token);
+	cmd_name = get_cmd_name(cmd->token);
 	//printf("command %s\n", cur->token);
-	if (!ft_strcmp("cd", cur->token) || !ft_strcmp("echo", cur->token) || !ft_strcmp("pwd", cur->token) \
-	|| !ft_strcmp("export", cur->token) || !ft_strcmp("unset", cur->token) || !ft_strcmp("env", cur->token) \
-	|| !ft_strcmp("exit", cur->token))
+	if (!ft_strcmp("cd", cmd_name) || !ft_strcmp("echo", cmd_name) || !ft_strcmp("pwd", cmd_name) \
+	|| !ft_strcmp("export", cmd_name) || !ft_strcmp("unset", cmd_name) || !ft_strcmp("env", cmd_name) \
+	|| !ft_strcmp("exit", cmd_name))
+	{
+		free(cmd_name);
 		return (1);
+	}
+	free(cmd_name);
 	return (0);
 }
 
 int	execute_a_builtin(t_mshell *mshell, t_command *cmd)
 {
-	char	*command;
+	char	*cmd_name;
+	int		status;
 
-	command = (skip_delimiter_token(cmd->token))->token;
-	if (!ft_strcmp(command, "cd"))
-		return (ft_cd(mshell, cmd));
-	else if (!ft_strcmp(command, "pwd"))
-		return (ft_pwd(mshell, cmd));
-	else if (!ft_strcmp(command, "echo"))
-		return (ft_echo(mshell, cmd));
-	else if (!ft_strcmp(command, "export"))
-		return (ft_export(mshell, cmd));
-	else if (!ft_strcmp(command, "unset"))
-		return (ft_unset(mshell, cmd));
-	else if (!ft_strcmp(command, "env"))
-		return (ft_env(mshell, cmd));
-	else if (!ft_strcmp(command, "exit"))
-		return (ft_exit(mshell, cmd));
-	return (1);
+	status = 1;
+	cmd_name = get_cmd_name(cmd->token);
+	if (!ft_strcmp(cmd_name, "cd"))
+		status = ft_cd(mshell, cmd);
+	else if (!ft_strcmp(cmd_name, "pwd"))
+		status = ft_pwd(mshell, cmd);
+	else if (!ft_strcmp(cmd_name, "echo"))
+		status = ft_echo(mshell, cmd);
+	else if (!ft_strcmp(cmd_name, "export"))
+		status = ft_export(mshell, cmd);
+	else if (!ft_strcmp(cmd_name, "unset"))
+		status = ft_unset(mshell, cmd);
+	else if (!ft_strcmp(cmd_name, "env"))
+		status = ft_env(mshell, cmd);
+	else if (!ft_strcmp(cmd_name, "exit"))
+		status = ft_exit(mshell, cmd);
+	free(cmd_name);
+	return (status);
 }
 
 int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
