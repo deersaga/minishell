@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/03 15:33:55 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/03 16:25:42 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,17 @@ void	wait_childs(t_mshell *mshell)
 
 	while (wait(&status) >= 0);
 	if (status == SIGINT)
+	{
 		ft_putstr_fd("\n", STDERR_FILENO);
+		mshell->exit_status = 128 + status;
+	}
 	else if (status == SIGQUIT)
+	{
 		ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
-	mshell->exit_status = WEXITSTATUS(status);
+		mshell->exit_status = 128 + status;
+	}
+	else
+		mshell->exit_status = WEXITSTATUS(status);
 }
 
 char	*get_cmd_name(t_token *head)
@@ -173,8 +180,8 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 		exit(execute_a_builtin(mshell, cur_com));
 	create_argv(mshell, cur_com);
 	command_path = get_cmd_path(mshell, cur_com->argv[0]);
-	free(cur_com->argv[0]);
-	cur_com->argv[0] = command_path;
+	//free(cur_com->argv[0]);
+	//cur_com->argv[0] = command_path;
 	environ = make_environ(mshell);
 	execve(command_path, cur_com->argv, environ);
 	free_array(environ);
