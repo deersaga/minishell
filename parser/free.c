@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:19:31 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:55 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/03 16:13:20 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	free_redir(t_redir *redir)
 	{
 		tmp = redir->next;
 		free(redir->file);
+		free(redir->heredoc_eof);
 		free(redir);
 		redir = tmp;
 	}
