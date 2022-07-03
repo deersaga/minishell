@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:29:59 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:54 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/03 16:29:59 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,16 @@ char	*expansion(t_mshell *mshell, char *str)
 	while (target)
 	{
 		if (!target[1])
-			implant = "$";
+			implant = ft_strdup("$");
 		else if (target[1] == '?')
 			implant = ft_itoa(mshell->exit_status);
 		else
-			implant = get_env(mshell, &target[1]);
+			implant = ft_strdup(get_env(mshell, &target[1]));
 		if (!implant)
-			implant = "";
+			implant = ft_strdup("");
 		tmp = str;
 		str = ft_strreplace(str, target, implant, &start);
+		free(implant);
 		free(tmp);
 		free(target);
 		target = search_param(str, &start);
