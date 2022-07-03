@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:43:13 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:56 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/03 15:36:52 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ int	parser(t_mshell *mshell, char *cmdline)
 	{
 		free_all_token(head);
 		ft_putstr_fd("syntax error\n", 2);
-		return (1);
+		return (0);
 	}
 	mshell->commands = ft_calloc(1, sizeof(t_command));
 	cmd = mshell->commands;
 	cmd->token = head;
 	split_to_commands(mshell, mshell->commands);
-	return (0);
+	return (1);
 }

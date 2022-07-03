@@ -70,7 +70,8 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 {
 	pid_t	pid;
 	char	*path;
-	char	**env;
+	//char	**env;
+	extern	char	**environ;
 	//int		fd;
 
 	pid = fork();
@@ -92,10 +93,10 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 		else
 			exit(127);
 		//print_array(cmd->argv);
-		env = make_environ(mshell);
-		//print_array(env);
-		execve(cmd->argv[0], cmd->argv, env);
-		free_array(env);
+		environ = make_environ(mshell);
+		print_array(environ);
+		execve(cmd->argv[0], cmd->argv, environ);
+		//free_array(env);
 		free_commands(mshell->commands);
 		exit(1);
 	}

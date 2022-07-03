@@ -143,6 +143,7 @@ int				openfile(char *filename, t_type_token mode);
 void			signal_handler_int(int sig);
 void			signal_handler_heredoc(int sig);
 void			signal_handler_quit(int sig);
+void			signal_handler_exec_parent(int sig);
 int				check_builtin(t_mshell *mshell, t_command *cmd);
 void			reconnect_redir_with_stdio(t_mshell *mshell, t_command *cur_com,
 					size_t cur_idx, int **pipe_list);

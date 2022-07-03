@@ -43,22 +43,21 @@ int main(int argc, char **argv)
 	t_mshell mshell;
 	char	*cmdline;
 	//int		status;
-	struct sigaction	act;
+	//struct sigaction	act;
 
 	(void)argv;
 	(void)argc;
-	sigemptyset(&act.sa_mask);
-	act.sa_handler = SIG_IGN;
+	//sigemptyset(&act.sa_mask);
+	//act.sa_handler = SIG_IGN;
 	//act.sa = SIG_DFL;
 	//printf("minishell\n");
-	sigaction(SIGQUIT, &act, NULL);
+	//sigaction(SIGQUIT, &act, NULL);
 	init_mshell(&mshell);
 	init_env(&mshell);
-	register_or_update_env(&mshell, "test", "sekai");
-	register_or_update_env(&mshell, "test1", "sekai");
-	//signal(SIGINT, signal_handle_int);
 	while (1)
 	{
+		signal(SIGINT, signal_handler_int);
+		signal(SIGQUIT, SIG_IGN);
 		cmdline = readline("minishell$>");
 		if (!cmdline)
 		{
@@ -72,9 +71,11 @@ int main(int argc, char **argv)
 		}
 		add_history(cmdline);
 		mshell.num_commands = 0;
-		parser(&mshell, cmdline);
-		execute_commands(&mshell);
-		free_commands(mshell.commands);
+		if (parser(&mshell, cmdline))
+		{
+			execute_commands(&mshell);
+			free_commands(mshell.commands);
+		}
 		free(cmdline);
 	}
 	return (0);
