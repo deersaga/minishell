@@ -3,26 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:19:31 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/03 16:13:20 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/04 18:01:24 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_all_token(t_token *head)
+void	free_all_token(t_token *cur)
 {
-	t_token	*cur;
+	t_token	*nxt;
 
-	cur = head;
+	if (cur == NULL)
+		return ;
 	while (cur && cur->type != T_END)
 	{
-		free(head->token);
-		free(head);
-		head = cur->next;
-		cur = cur->next;
+		nxt = cur->next;
+		free(cur->token);
+		free(cur);
+		cur = nxt;
 	}
 	free(cur);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/03 16:25:42 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/04 18:17:06 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ void	reconnect_pipe_with_stdio(\
 		dup2(pipe_list[cur_idx - 1][0], STDIN_FILENO);
 	if (cur_idx + 1 < mshell->num_commands)
 		dup2(pipe_list[cur_idx][1], STDOUT_FILENO);
+	/*
+	if (cur_idx == 0)
+		close(STDOUT_FILENO);
+	if (cur_idx == 1)
+		close(STDIN_FILENO);
+	*/
 	close_pipe_list(mshell, pipe_list);
 }
 
@@ -176,12 +182,12 @@ void	execute_command(t_mshell *mshell, size_t cur_idx, \
 	signal(SIGQUIT, SIG_DFL);
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
 	reconnect_redir_with_stdio(mshell, cur_com, cur_idx, pipe_list);
+	if (!ft_strcmp("./minishell", cur_com->token->token) && mshell->num_commands > 1)
+		exit(0);
 	if (check_builtin(mshell, cur_com))
 		exit(execute_a_builtin(mshell, cur_com));
 	create_argv(mshell, cur_com);
 	command_path = get_cmd_path(mshell, cur_com->argv[0]);
-	//free(cur_com->argv[0]);
-	//cur_com->argv[0] = command_path;
 	environ = make_environ(mshell);
 	execve(command_path, cur_com->argv, environ);
 	free_array(environ);
@@ -251,6 +257,11 @@ void	execute_commands(t_mshell *mshell)
 		cur_idx = 0;
 		while (cur_idx < mshell->num_commands)
 		{
+			if (cur_idx > 0)
+			{
+				if (!is_export_cmd(cur_com->token))
+					cur_com->token = expand_and_retokenize(mshell, cur_com->token);
+			}
 			child_pid_list[cur_idx] = fork();
 			if (child_pid_list[cur_idx] == 0)
 				execute_command(mshell, cur_idx, cur_com, pipe_list);
@@ -265,5 +276,4 @@ void	execute_commands(t_mshell *mshell)
 	delete_heredoc_files(mshell);
 	signal(SIGINT, signal_handler_int);
 	signal(SIGQUIT, SIG_IGN);
-
 }
