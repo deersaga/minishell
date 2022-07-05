@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:51:46 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 12:23:14 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/06 08:04:27 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,24 @@ t_type_token	get_token_type(char	*cur, size_t *i)
 void	get_quote_type_and_len( \
 			char *cmdline, size_t i, size_t *len, t_type_token *type)
 {
+	char	*quote_pos;
+
+	quote_pos = 0;
 	if (cmdline[i] == '\'')
 	{
-		*len = ft_strchr(&cmdline[i + 1], '\'') - &cmdline[i + 1];
+		quote_pos = ft_strchr(&cmdline[i + 1], '\'');
+		*len = quote_pos - &cmdline[i + 1];
 		*type = T_SQUOTE;
 	}
 	else if (cmdline[i] == '\"')
 	{
-		*len = ft_strchr(&cmdline[i + 1], '\"') - &cmdline[i + 1];
+		quote_pos = ft_strchr(&cmdline[i + 1], '\"');
+		*len = quote_pos - &cmdline[i + 1];
 		*type = T_DQUOTE;
+	}
+	if (!quote_pos)
+	{
+		*len = ft_strlen(cmdline);
+		*type = T_ERR;
 	}
 }
