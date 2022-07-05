@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/04 18:17:06 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/06 07:35:13 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ void	execute_commands(t_mshell *mshell)
 		cur_com->token = expand_and_retokenize(mshell, cur_com->token);
 	cur_com = mshell->commands;
 	if (mshell->num_commands == 1 && check_builtin(mshell, cur_com))
-		execute_a_builtin_command(mshell, mshell->commands);
+		mshell->exit_status = execute_a_builtin_command(mshell, mshell->commands);
 	else
 	{
 		child_pid_list = ft_calloc(mshell->num_commands, sizeof(pid_t));

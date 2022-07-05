@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:58:06 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/06 07:27:29 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ char	*search_cmd_path(char **paths, char *cmd)
 		i++;
 	}
 	free_array(paths);
-	return (NULL);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	exit(127);
 }
 
 char	*get_cmd_path(t_mshell *mshell, char *cmd)
