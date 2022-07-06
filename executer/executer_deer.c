@@ -111,8 +111,9 @@ int	execute_a_builtin_command(t_mshell *mshell, t_command *cmd)
 	status = 0;
 	dup_stdio_fd[0] = dup(0);
 	dup_stdio_fd[1] = dup(1);
-	reconnect_redir_with_stdio(mshell, cmd, 0, NULL);
-	status = execute_a_builtin(mshell, cmd);
+	status = reconnect_redir_with_stdio(mshell, cmd, 0, NULL);
+	if (status == 0)
+		status = execute_a_builtin(mshell, cmd);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	dup2(dup_stdio_fd[0], STDIN_FILENO);

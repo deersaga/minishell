@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/06 07:35:13 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/06 21:31:17 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	**make_pipe_list(t_mshell *mshell)
 		if (pipe(pipe_list[i]) == -1)
 		{
 			//todo 標準エラー?
-			printf("make pipe error\n");
+			perror("pipe");
 			exit(EXIT_FAILURE);
 		}
 		i++;
@@ -93,7 +93,7 @@ void	reconnect_pipe_with_stdio(\
 	close_pipe_list(mshell, pipe_list);
 }
 
-void	reconnect_redir_with_stdio(\
+int	reconnect_redir_with_stdio(\
 	t_mshell *mshell, t_command *cur_com, size_t cur_idx, int **pipe_list)
 {
 	int		fd;
@@ -109,6 +109,8 @@ void	reconnect_redir_with_stdio(\
 		if (cur_redir_in->type == T_REDIR_IN || cur_redir_in->type == T_HEREDOC)
 		{
 			fd = openfile(cur_redir_in->file, T_REDIR_IN);
+			if (fd < 0)
+				return (1);
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 		}
@@ -126,6 +128,7 @@ void	reconnect_redir_with_stdio(\
 		close(fd);
 		cur_redir_out = cur_redir_out->next;
 	}
+	return (0);
 }
 
 void	wait_childs(t_mshell *mshell)

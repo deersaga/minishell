@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/06 07:27:29 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/06 19:56:59 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,24 @@ char	*search_cmd_path(char **paths, char *cmd)
 
 char	*get_cmd_path(t_mshell *mshell, char *cmd)
 {
-	char	**paths;
+	char		**paths;
+	struct stat	buff;
 
 	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3) || *cmd == '/')
 	{
 		if (!access(cmd, X_OK))
 			return (ft_strdup(cmd));
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		if (stat(cmd, &buff))
+		{
+			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+			exit(127);
+		}
+		else
+		{
+			ft_putstr_fd(": permission denied\n", STDERR_FILENO);
+			exit(126);
+		}
 		return (NULL);
 	}
 	paths = ft_split(get_env(mshell, "PATH"), ':');

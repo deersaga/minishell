@@ -13,6 +13,7 @@
 # include <err.h>
 # include <errno.h>
 # include <sys/signalvar.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include "./libftx/libft.h"
 
@@ -145,7 +146,7 @@ void			signal_handler_heredoc(int sig);
 void			signal_handler_quit(int sig);
 void			signal_handler_exec_parent(int sig);
 int				check_builtin(t_mshell *mshell, t_command *cmd);
-void			reconnect_redir_with_stdio(t_mshell *mshell, t_command *cur_com,
+int				reconnect_redir_with_stdio(t_mshell *mshell, t_command *cur_com,
 					size_t cur_idx, int **pipe_list);
 void			close_pipe_list(t_mshell *mshell, int **pipe_list);
 int				execute_a_builtin(t_mshell *mshell, t_command *cmd);

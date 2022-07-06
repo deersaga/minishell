@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:10:56 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/01 12:23:14 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/06 21:24:28 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	openfile (char *filename, t_type_token mode)
 		if (access(filename, F_OK))
 		{
 			printf("%s: No such file or directory\n", filename);
-			exit(EXIT_FAILURE);
+			return (-1);
 		}
 		fd = (open(filename, O_RDONLY));
 	}
@@ -37,7 +37,7 @@ int	openfile (char *filename, t_type_token mode)
 		printf("jissou miss : openfile mode error\n");
 		exit(EXIT_FAILURE);
 	}
-	if (fd < 0)
-		fprintf(stderr, "%s: No such file or directory\n", filename);
+	//if (fd < 0)
+	//	fprintf(stderr, "%s: No such file or directory\n", filename);
 	return (fd);
 }
