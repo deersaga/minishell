@@ -58,3 +58,5 @@ executer/executer_copy.c
 redir_test.c
 output.txt
 minishell
+sym
+test

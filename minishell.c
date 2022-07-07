@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 21:04:15 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 21:08:20 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	main(void)
 	}
 	return (0);
 }
-/*
-__attribute__((destructor)) static void destructor()
+
+/*__attribute__((destructor)) static void destructor()
 {
 	system("leaks -q minishell");
 }*/

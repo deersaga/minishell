@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:20 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 20:59:18 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 21:16:01 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,21 @@ static void	free_all(char *path, char *oldpwd)
 	free(oldpwd);
 }
 
+char	*get_simple_path(t_mshell *mshell, char *argv1)
+{
+	if (!argv1)
+		return (ft_strdup(get_env(mshell, "HOME")));
+	else if (*argv1 == '~')
+		return (ft_strjoin(get_env(mshell, "HOME"), &argv1[1]));
+	return (ft_strdup(argv1));
+}
+
 static int	get_path(char **argv, char **path, t_mshell *mshell)
 {
 	char	*tmp;
 
-	if (!argv[1])
-		*path = ft_strdup(get_env(mshell, "HOME"));
-	else if (*argv[1] == '~')
-		*path = ft_strjoin(get_env(mshell, "HOME"), &argv[1][1]);
+	if (!argv[1] || *argv[1] == '~' || *argv[1] == '/')
+		*path = get_simple_path(mshell, argv[1]);
 	else if (!ft_strcmp(argv[1], "-"))
 	{
 		*path = ft_strdup(get_env(mshell, "OLDPWD"));
@@ -36,11 +43,13 @@ static int	get_path(char **argv, char **path, t_mshell *mshell)
 		}
 		ft_putendl_fd(*path, STDOUT_FILENO);
 	}
-	else if (*argv[1] == '/')
-		*path = ft_strdup(argv[1]);
 	else
 	{
-		tmp = ft_strjoin(get_env(mshell, "PWD"), "/");
+		tmp = get_env(mshell, "PWD");
+		if (tmp[ft_strlen(tmp) - 1] != '/')
+			tmp = ft_strjoin(get_env(mshell, "PWD"), "/");
+		else
+			tmp = ft_strdup(get_env(mshell, "PWD"));
 		*path = ft_strjoin(tmp, argv[1]);
 		free(tmp);
 	}
@@ -53,7 +62,7 @@ static void	update_dir_env(t_mshell *mshell, char *path, char *oldpwd)
 
 	pwd = getcwd(NULL, 0);
 	if (pwd)
-		register_or_update_env(mshell, "PWD", pwd);
+		register_or_update_env(mshell, "PWD", path);
 	else
 		register_or_update_env(mshell, "PWD", path);
 	register_or_update_env(mshell, "OLDPWD", oldpwd);
@@ -66,17 +75,18 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 	char	*oldpwd;
 
 	create_argv(mshell, cmd);
-	oldpwd = getcwd(NULL, 0);
+	oldpwd = ft_strdup(get_env(mshell, "PWD"));
 	if (!oldpwd)
-		perror("getcwd");
+		perror("cd");
 	if (get_path(cmd->argv, &path, mshell))
 	{
 		free_all(path, oldpwd);
 		return (EXIT_FAILURE);
 	}
+	path = get_abs_path(path);
 	if (chdir(path) == -1)
 	{
-		perror("cd");
+		perror("chdir");
 		if (!ft_strcmp(cmd->argv[1], ".") || !ft_strcmp(cmd->argv[1], ".."))
 			register_or_update_env(mshell, "PWD", path);
 		free_all(path, oldpwd);

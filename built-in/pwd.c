@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:14:22 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 20:59:12 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 21:07:46 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,20 @@ int	ft_pwd(t_mshell *mshell, t_command *cmd)
 
 	(void)cmd;
 	(void)mshell;
-	pwd = getcwd(NULL, 0);
-	if (!pwd || *pwd == '\0')
+	pwd = get_env(mshell, "PWD");
+	if (!pwd)
 	{
-		perror("getcwd");
-		return (EXIT_FAILURE);
+		pwd = getcwd(NULL, 0);
+		if (!pwd)
+		{
+			perror("getcwd");
+			return (EXIT_FAILURE);
+		}
+		ft_putstr_fd(pwd, STDOUT_FILENO);
+		free(pwd);
 	}
-	ft_putstr_fd(pwd, STDOUT_FILENO);
+	else
+		ft_putstr_fd(pwd, STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
-	free(pwd);
 	return (EXIT_SUCCESS);
 }
