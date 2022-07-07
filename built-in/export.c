@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/02 10:28:45 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 01:38:47 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static int	is_valid(char *s)
 	if (!eq_pos)
 		eq_pos = ft_strchr(s, '\0');
 	cur = s;
+	if (!(ft_isalpha(*cur) || *cur == '_') || cur == eq_pos)
+		return (0);
 	while (cur != eq_pos)
 	{
 		if (!(ft_isalnum(*cur) || *cur == '_'))
@@ -76,8 +78,6 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 	char		*key_val[2];
 	size_t		i;
 
-	printf("called ft_export\n");
-	print_tokens(cmd->token);
 	create_export_argv(mshell, cmd);
 	if (cmd->argc == 1)
 	{
