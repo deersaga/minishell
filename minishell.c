@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/07 17:06:18 by kaou              #+#    #+#             */
+/*   Updated: 2022/07/07 17:09:48 by kaou             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-extern char **environ;
+extern char	**environ;
 
 void	init_mshell(t_mshell *mshell)
 {
@@ -8,6 +20,23 @@ void	init_mshell(t_mshell *mshell)
 	mshell->env = NULL;
 	mshell->num_commands = 0;
 	mshell->exit_status = 0;
+}
+
+char	*get_read_line(void)
+{
+	char	*cmdlind;
+
+	cmdline = readline("minishell$>");
+	if (!cmdline)
+	{
+		delete_all_env(&mshell);
+		return (NULL);
+	}
+	else if (!ft_strcmp(cmdline, ""))
+	{
+		free(cmdline);
+		continue ;
+	}
 }
 
 int	main(void)

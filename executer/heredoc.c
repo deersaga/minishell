@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:24:51 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 16:53:19 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 17:13:05 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*make_heredoc_filename(size_t	heredoc_id)
 	return (file_name);
 }
 
-
 void	create_heredoc_files(t_mshell *mshell)
 {
 	t_command	*cur_com;
@@ -64,6 +63,7 @@ void	create_heredoc_files(t_mshell *mshell)
 	}
 	g_heredoc_sigint = 0;
 }
+
 static int	check_heredoc_sigint(void)
 {
 	if (g_heredoc_sigint == 1)
@@ -74,7 +74,7 @@ static int	check_heredoc_sigint(void)
 	return (0);
 }
 
-void create_heredoc_file(t_mshell *mshell, t_redir *heredoc)
+void	create_heredoc_file(t_mshell *mshell, t_redir *heredoc)
 {
 	char	*cmdline;
 	int		fd;
@@ -82,8 +82,7 @@ void create_heredoc_file(t_mshell *mshell, t_redir *heredoc)
 	fd = open(heredoc->file, O_CREAT | O_WRONLY | O_TRUNC, S_IWUSR | S_IRUSR);
 	signal(SIGINT, signal_handler_heredoc);
 	rl_event_hook = check_heredoc_sigint;
-	printf("create_heredoc_file  eof is {%s}\n", heredoc->heredoc_eof);
-	while(1)
+	while (1)
 	{
 		if (g_heredoc_sigint == 1)
 			break ;

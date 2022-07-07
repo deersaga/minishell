@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
+/*   Updated: 2022/07/07 17:06:01 by kaou             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -16,7 +28,7 @@
 # include <sys/wait.h>
 # include "./libftx/libft.h"
 
-volatile sig_atomic_t g_heredoc_sigint;
+volatile sig_atomic_t	g_heredoc_sigint;
 
 typedef enum e_type_token {
 	T_DELM,
@@ -168,7 +180,7 @@ void			reconnect_pipe_with_stdio(t_mshell *mshell,
 void			add_redir_info(t_command *cmd, t_token *cur);
 t_token			*delete_redir_token(t_command *cmd,
 					t_token *previous, t_token *current);
-void			create_heredoc_file(t_mshell *mshell,t_redir *heredoc);
+void			create_heredoc_file(t_mshell *mshell, t_redir *heredoc);
 void			delete_heredoc_files(t_mshell *mshell);
 char			*make_heredoc_filename(size_t heredoc_id);
 void			wait_childs(t_mshell *mshell);

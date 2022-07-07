@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:30:19 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 16:34:18 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 17:13:20 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	is_builtin_cmd(t_mshell *mshell, t_command *cmd)
 	free(cmd_name);
 	return (0);
 }
-
 
 int	is_export_cmd(t_token *head)
 {

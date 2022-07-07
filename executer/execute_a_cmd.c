@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_a_cmd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/07 17:12:42 by kaou              #+#    #+#             */
+/*   Updated: 2022/07/07 17:12:57 by kaou             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 #include <fcntl.h>
 
-extern char **environ;
+extern char	**environ;
 
 int	execute_a_builtin(t_mshell *mshell, t_command *cmd)
 {
