@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:02:55 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 18:17:56 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strdup(const char *src)
 {
 	char	*ptr;
 
-	ptr = (char *)malloc((ft_strlen((const char *)src) + 1) * sizeof(char));
+	ptr = (char *)ft_malloc((ft_strlen((const char *)src) + 1) * sizeof(char));
 	if (ptr == NULL)
 		return (NULL);
 	ft_strcpy(ptr, src);

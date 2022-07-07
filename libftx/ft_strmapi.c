@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:03:06 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 18:17:56 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 
 	if (s == NULL)
 		return (NULL);
-	ret = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	ret = (char *)ft_malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (ret == NULL)
 		return (NULL);
 	i = 0;

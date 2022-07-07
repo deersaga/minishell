@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:03:17 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 18:17:56 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (s_len < len + start)
 		len = s_len - start;
-	ret = (char *)malloc(sizeof(char) * (len + 1));
+	ret = (char *)ft_malloc(sizeof(char) * (len + 1));
 	if (ret == NULL)
 		return (NULL);
 	i = 0;

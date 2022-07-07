@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:02:47 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 18:17:56 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	**make_storage(char **storage, const char *str, char sep)
 			j = 0;
 			while (str[i + j] != sep && str[i + j])
 				j++;
-			storage[count] = (char *)malloc((j + 1) * sizeof(char));
+			storage[count] = (char *)ft_malloc((j + 1) * sizeof(char));
 			if (!storage[count])
 				return (free_storage(storage, count));
 			ft_strlcpy(storage[count], &str[i], j + 1);
@@ -71,7 +71,7 @@ char	**ft_split(char const *str, char sep)
 			count++;
 		i++;
 	}
-	storage = (char **)malloc((count + 1) * sizeof(char *));
+	storage = (char **)ft_malloc((count + 1) * sizeof(char *));
 	if (!storage)
 		return (NULL);
 	return (make_storage(storage, str, sep));

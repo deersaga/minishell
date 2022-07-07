@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:03:24 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 18:17:56 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_uitoa(unsigned int n, int base)
 	if (base < 2 || base > 16)
 		return (NULL);
 	size = get_size(n, base);
-	result = (char *)malloc((size + 1) * sizeof(char));
+	result = (char *)ft_malloc((size + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
 	result[size] = 0;

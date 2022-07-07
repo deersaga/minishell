@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:54:04 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:46 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:17:56 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	register_or_update_env(t_mshell *mshell, char *tar_key, char *tar_val)
 	cur->key = ft_strdup(tar_key);
 	if (tar_val != NULL)
 		cur->val = ft_strdup(tar_val);
-	cur->next = (t_envList *)malloc(sizeof(t_envList));
+	cur->next = (t_envList *)ft_malloc(sizeof(t_envList));
 	if (!cur->next)
 		exit(EXIT_FAILURE);
 	cur->next->key = NULL;

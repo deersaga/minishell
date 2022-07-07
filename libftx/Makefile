@@ -3,7 +3,8 @@ CC 	= gcc
 CFLAG = -Wall -Wextra -Werror
 DEBUGF	= -g -fsanitize=undefined -fsanitize=address 
 OBJ_DIR = ./obj
-SRCS =	ft_strlcpy.c \
+SRCS =	ft_malloc.c \
+		ft_strlcpy.c \
 		ft_strlen.c \
 		ft_strlcat.c \
 		ft_strrchr.c \

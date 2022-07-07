@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:02:22 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 18:17:56 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_ltoa(long n, int base)
 	if (base < 2 || base > 16)
 		return (NULL);
 	size = get_size(n, base);
-	result = (char *)malloc((size + 1) * sizeof(char));
+	result = (char *)ft_malloc((size + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
 	if (n < 0)
