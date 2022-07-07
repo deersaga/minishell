@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:24:51 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/03 16:04:40 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 16:53:19 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,29 @@ char	*make_heredoc_filename(size_t	heredoc_id)
 	return (file_name);
 }
 
+
+void	create_heredoc_files(t_mshell *mshell)
+{
+	t_command	*cur_com;
+	t_redir		*cur_redir_in;
+	size_t		i;
+
+	cur_com = mshell->commands;
+	i = 0;
+	while (i < mshell->num_commands)
+	{
+		cur_redir_in = cur_com->redir_in;
+		while (cur_redir_in && cur_redir_in->file)
+		{
+			if (cur_redir_in->type == T_HEREDOC)
+				create_heredoc_file(mshell, cur_redir_in);
+			cur_redir_in = cur_redir_in->next;
+		}
+		cur_com = cur_com->next;
+		i++;
+	}
+	g_heredoc_sigint = 0;
+}
 static int	check_heredoc_sigint(void)
 {
 	if (g_heredoc_sigint == 1)

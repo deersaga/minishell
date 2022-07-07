@@ -131,22 +131,35 @@ char			*ft_strreplace(char *src, char *target,
 					char *implant, size_t *start);
 int				check_syntax(t_token *head);
 
+//executer
+int				execute_a_builtin_cmd(t_mshell *mshell, t_command *cmd);
+void			free_pipe_list(t_mshell *mshell, int **pipe_list);
+int				**make_array_2d_int(size_t h, size_t w);
+int				**make_pipe_list(t_mshell *mshell);
+void			close_pipe_list(t_mshell *mshell, int **pipe_list);
+void			reconnect_pipe_with_stdio(\
+					t_mshell *mshell, size_t cur_idx, int **pipe_list);
+void			execute_any_cmd(t_mshell *mshell);
+
+//heredoc.c
+char			*make_heredoc_filename(size_t	heredoc_id);
+void			create_heredoc_files(t_mshell *mshell);
+//static int		check_heredoc_sigint(void);
+void			create_heredoc_file(t_mshell *mshell, t_redir *heredoc);
+void			delete_heredoc_files(t_mshell	*mshell);
+
 //other
 void			free_array(char **array);
 void			create_argv(t_mshell *mshell, t_command *cmd);
 void			print_array(char **array);
 char			*get_cmd_path(t_mshell *mshell, char *cmd);
-int				execute_a_builtin_command(t_mshell *mshell, t_command *cmd);
-int				execute_a_add_on(t_mshell *mshell, t_command *cmd);
-void			execute_commands(t_mshell *mshell);
 int				openfile(char *filename, t_type_token mode);
 void			signal_handler_int(int sig);
 void			signal_handler_heredoc(int sig);
 void			signal_handler_quit(int sig);
 void			signal_handler_exec_parent(int sig);
-int				check_builtin(t_mshell *mshell, t_command *cmd);
-void			reconnect_redir_with_stdio(t_mshell *mshell, t_command *cur_com,
-					size_t cur_idx, int **pipe_list);
+int				is_builtin_cmd(t_mshell *mshell, t_command *cmd);
+void			reconnect_redir_with_stdio(t_command *cur_com);
 void			close_pipe_list(t_mshell *mshell, int **pipe_list);
 int				execute_a_builtin(t_mshell *mshell, t_command *cmd);
 int				**make_pipe_list(t_mshell *mshell);
@@ -164,5 +177,3 @@ int				is_export_cmd(t_token *head);
 
 
 #endif
-
-///opt/homebrew/opt/readline/include/readline

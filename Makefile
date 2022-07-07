@@ -22,9 +22,13 @@ SRCS =  built-in/cd.c\
 		parser/token_utils.c\
 		parser/print.c\
 		parser/free.c\
-		executer/executer.c\
-		executer/executer_deer.c\
+		executer/check_cmd.c\
+		executer/execute_a_cmd.c\
+		executer/execute_cmds.c\
 		executer/heredoc.c \
+		executer/pipe.c \
+		executer/redirect.c \
+		executer/wait.c \
 		file/open_file.c\
 		argv.c\
 		path.c\

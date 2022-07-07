@@ -9,49 +9,12 @@ void	init_mshell(t_mshell *mshell)
 	mshell->num_commands = 0;
 	mshell->exit_status = 0;
 }
-/*
-static int 	check_done(void)
+
+int	main(void)
 {
-	if (g_flag == 1)
-	{
-		rl_delete_text(0, rl_end);
-		rl_done = 1;
-	}
-	return (0);
-}
-void do_heredoc()
-{
-	signal(SIGINT, signal_handler_heredoc);
-	rl_event_hook = check_done;
-	while(1)
-	{
+	t_mshell	mshell;
+	char		*cmdline;
 
-		if (g_flag == 1)
-			break;
-		//char *cmdline = readline(">");
-		//if (!ft_strcmp("eof", cmdline))
-		//	break ;
-		//write();
-	}
-	rl_event_hook = NULL;
-
-}*/
-
-int main(int argc, char **argv)
-{
-	//pid_t	child_pid;
-	t_mshell mshell;
-	char	*cmdline;
-	//int		status;
-	//struct sigaction	act;
-
-	(void)argv;
-	(void)argc;
-	//sigemptyset(&act.sa_mask);
-	//act.sa_handler = SIG_IGN;
-	//act.sa = SIG_DFL;
-	//printf("minishell\n");
-	//sigaction(SIGQUIT, &act, NULL);
 	init_mshell(&mshell);
 	init_env(&mshell);
 	while (1)
@@ -62,7 +25,7 @@ int main(int argc, char **argv)
 		if (!cmdline)
 		{
 			delete_all_env(&mshell);
-			return(0);
+			return (0);
 		}
 		else if (!ft_strcmp(cmdline, ""))
 		{
@@ -73,7 +36,7 @@ int main(int argc, char **argv)
 		mshell.num_commands = 0;
 		if (parser(&mshell, cmdline))
 		{
-			execute_commands(&mshell);
+			execute_any_cmd(&mshell);
 			free_commands(mshell.commands);
 		}
 		free(cmdline);
