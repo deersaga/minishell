@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/02 10:28:45 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 17:50:56 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 	char		*key_val[2];
 	size_t		i;
 
-	printf("called ft_export\n");
-	print_tokens(cmd->token);
 	create_export_argv(mshell, cmd);
 	if (cmd->argc == 1)
 	{

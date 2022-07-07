@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:38:15 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 17:47:40 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,5 @@ char			*make_heredoc_filename(size_t heredoc_id);
 void			wait_childs(t_mshell *mshell);
 char			*get_cmd_name(t_token *head);
 int				is_export_cmd(t_token *head);
-
 
 #endif

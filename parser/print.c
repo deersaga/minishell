@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:20:38 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 10:34:32 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 17:50:33 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	print_tokens(t_token *head)
 	{
 		if (cur->token)
 			printf("%-20s type: %u  fd %d x %x\n",
-				 cur->token, cur->type, cur->fd, cur->token[0]);
+				cur->token, cur->type, cur->fd, cur->token[0]);
 		else
 			printf("%-20s type: %u  fd %d\n",
-				 cur->token, cur->type, cur->fd);
+				cur->token, cur->type, cur->fd);
 		cur = cur->next;
 	}
 }

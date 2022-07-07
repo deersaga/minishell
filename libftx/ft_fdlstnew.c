@@ -6,13 +6,13 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:01:32 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 17:49:10 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_fdlist	*ft_fdlstnew(int	fd)
+t_fdlist	*ft_fdlstnew(int fd)
 {
 	t_fdlist	*new;
 	size_t		i;

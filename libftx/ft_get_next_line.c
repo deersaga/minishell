@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:01:36 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 17:49:26 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*return_line(char *result, char *nl_pos, char *buf)
 }
 
 static char	*read_line(int count, t_fdlist *cur_list,
-						 char *result, t_fdlist *list)
+						char *result, t_fdlist *list)
 {
 	char	*tmp;
 
