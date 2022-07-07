@@ -42,22 +42,17 @@ int main(int argc, char **argv)
 	//pid_t	child_pid;
 	t_mshell mshell;
 	char	*cmdline;
-	//int		status;
-	//struct sigaction	act;
+	int		status;
 
 	(void)argv;
 	(void)argc;
-	//sigemptyset(&act.sa_mask);
-	//act.sa_handler = SIG_IGN;
-	//act.sa = SIG_DFL;
-	//printf("minishell\n");
-	//sigaction(SIGQUIT, &act, NULL);
 	init_mshell(&mshell);
 	init_env(&mshell);
 	while (1)
 	{
-		signal(SIGINT, signal_handler_int);
-		signal(SIGQUIT, SIG_IGN);
+		if (signal(SIGINT, signal_handler_int) == -1 || \
+		signal(SIGQUIT, SIG_IGN) == -1)
+			return (1);
 		cmdline = readline("minishell$>");
 		if (!cmdline)
 		{
@@ -70,8 +65,10 @@ int main(int argc, char **argv)
 			continue ;
 		}
 		add_history(cmdline);
-		mshell.num_commands = 0;
-		if (parser(&mshell, cmdline))
+		status = parser(&mshell, cmdline);
+		if (status)
+			mshell.exit_status = status;
+		else
 		{
 			execute_commands(&mshell);
 			free_commands(mshell.commands);
@@ -84,5 +81,5 @@ int main(int argc, char **argv)
 __attribute__((destructor)) static void destructor()
 {
 	system("leaks -q minishell");
-}*/
-
+}
+*/
