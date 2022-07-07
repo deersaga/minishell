@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 16:56:01 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 17:38:27 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execute_one_of_cmds(t_mshell *mshell, size_t cur_idx, \
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
-	reconnect_redir_with_stdio(cur_com, pipe_list);
+	reconnect_redir_with_stdio(cur_com);
 	if (!ft_strcmp("./minishell", cur_com->token->token) \
 		&& mshell->num_commands > 1)
 		exit(0);
@@ -41,7 +41,7 @@ void	execute_empty_cmd(t_mshell *mshell, t_command *cmd)
 
 	dup_stdio_fd[0] = dup(0);
 	dup_stdio_fd[1] = dup(1);
-	reconnect_redir_with_stdio(cmd, NULL);
+	reconnect_redir_with_stdio(cmd);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	dup2(dup_stdio_fd[0], STDIN_FILENO);

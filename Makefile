@@ -30,8 +30,10 @@ SRCS =  built-in/cd.c\
 		executer/redirect.c \
 		executer/wait.c \
 		file/open_file.c\
+		path/delete_dot_dot.c\
+		path/get_abs_path.c\
+		path/get_cmd_path.c\
 		argv.c\
-		path.c\
 		signal.c\
 		minishell.c
 OBJ_DIR = ./obj

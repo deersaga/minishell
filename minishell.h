@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:06:01 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 17:38:15 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <errno.h>
 # include <sys/signalvar.h>
 # include <sys/wait.h>
+# include <limits.h>
 # include "./libftx/libft.h"
 
 volatile sig_atomic_t	g_heredoc_sigint;

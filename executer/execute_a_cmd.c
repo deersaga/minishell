@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:12:42 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:12:57 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 17:37:38 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 #include <fcntl.h>
 
 extern char	**environ;
+
+void	print_array(char **array)
+{
+	size_t	i;
+
+	i = 0;
+	if (!array)
+	{
+		printf("array = NULL\n");
+		return ;
+	}
+	while (array[i])
+	{
+		printf("argv%zu %s\n", i, array[i]);
+		i++;
+	}
+}
 
 int	execute_a_builtin(t_mshell *mshell, t_command *cmd)
 {
@@ -75,7 +92,7 @@ int	execute_a_builtin_cmd(t_mshell *mshell, t_command *cmd)
 	status = 0;
 	dup_stdio_fd[0] = dup(0);
 	dup_stdio_fd[1] = dup(1);
-	reconnect_redir_with_stdio(cmd, NULL);
+	reconnect_redir_with_stdio(cmd);
 	status = execute_a_builtin(mshell, cmd);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
