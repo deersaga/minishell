@@ -6,7 +6,11 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2022/07/06 21:31:17 by katakagi         ###   ########.fr       */
+=======
+/*   Updated: 2022/07/07 13:11:43 by katakagi         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +75,16 @@ void	close_pipe_list(t_mshell *mshell, int **pipe_list)
 	i = 0;
 	while (i < num_pipe_list)
 	{
-		close(pipe_list[i][0]);
-		close(pipe_list[i][1]);
+		if (close(pipe_list[i][0]) == -1)
+		{
+			perror("close");
+			exit(1);
+		}
+		if (close(pipe_list[i][1]) == -1)
+		{
+			perror("close");
+			exit(1);
+		}
 		i++;
 	}
 }
@@ -81,15 +93,21 @@ void	reconnect_pipe_with_stdio(\
 	t_mshell *mshell, size_t cur_idx, int **pipe_list)
 {
 	if (cur_idx > 0)
-		dup2(pipe_list[cur_idx - 1][0], STDIN_FILENO);
+	{
+		if (dup2(pipe_list[cur_idx - 1][0], STDIN_FILENO) == -1)
+		{
+			perror("dup2");
+			exit(1);
+		}
+	}
 	if (cur_idx + 1 < mshell->num_commands)
-		dup2(pipe_list[cur_idx][1], STDOUT_FILENO);
-	/*
-	if (cur_idx == 0)
-		close(STDOUT_FILENO);
-	if (cur_idx == 1)
-		close(STDIN_FILENO);
-	*/
+	{
+		if (dup2(pipe_list[cur_idx][1], STDOUT_FILENO) == -1)
+		{
+			perror("dup2");
+			exit(1);
+		}
+	}
 	close_pipe_list(mshell, pipe_list);
 }
 
