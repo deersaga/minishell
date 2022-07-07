@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 18:03:00 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 20:57:48 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,15 @@ int	main(void)
 {
 	t_mshell	mshell;
 	char		*cmdline;
+	int			status;
 
 	init_mshell(&mshell);
 	init_env(&mshell);
 	while (1)
 	{
-		signal(SIGINT, signal_handler_int);
-		signal(SIGQUIT, SIG_IGN);
+		if (signal(SIGINT, signal_handler_int) == -1 || \
+		signal(SIGQUIT, SIG_IGN) == -1)
+			return (1);
 		cmdline = readline("minishell$>");
 		if (!is_valid_cmdline(&mshell, cmdline))
 		{
@@ -53,8 +55,10 @@ int	main(void)
 			continue ;
 		}
 		add_history(cmdline);
-		mshell.exit_status = parser(&mshell, cmdline);
-		if (mshell.exit_status == 0)
+		status = parser(&mshell, cmdline);
+		if (status)
+			mshell.exit_status = status;
+		else
 		{
 			execute_any_cmd(&mshell);
 			free_commands(mshell.commands);

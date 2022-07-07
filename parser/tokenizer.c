@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:47:07 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:58 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:31:50 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ t_token	*new_token(t_token *cur, char *token, t_type_token type)
 {
 	cur->token = token;
 	cur->type = type;
-	cur->next = (t_token *)calloc(1, sizeof(t_token));
-	if (!cur->next)
-		exit(EXIT_FAILURE);
+	cur->next = (t_token *)ft_calloc(1, sizeof(t_token));
 	return (cur->next);
 }
 

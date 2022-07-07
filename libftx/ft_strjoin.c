@@ -40,7 +40,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
 	ptr = (char *)ft_malloc(size * sizeof(char));
 	if (!ptr)
-		return (NULL);
+	{
+		perror("malloc");
+		exit(1);
+	}
 	ptr[0] = '\0';
 	ft_strcat(ptr, s1);
 	ft_strcat(ptr, s2);

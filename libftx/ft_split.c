@@ -23,7 +23,8 @@ static char	**free_storage(char **storage, size_t count)
 		i++;
 	}
 	free(storage);
-	return (NULL);
+	perror("malloc");
+	exit(1);
 }
 
 static char	**make_storage(char **storage, const char *str, char sep)
@@ -73,6 +74,9 @@ char	**ft_split(char const *str, char sep)
 	}
 	storage = (char **)ft_malloc((count + 1) * sizeof(char *));
 	if (!storage)
-		return (NULL);
+	{
+		perror("malloc");
+		exit(1);
+	}
 	return (make_storage(storage, str, sep));
 }

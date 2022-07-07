@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:36:35 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:39 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/06 07:51:10 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,22 @@ int	ft_exit(t_mshell *mshell, t_command *cmd)
 	long	status;
 
 	create_argv(mshell, cmd);
-	if (cmd->argc > 2)
-	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		return (1);
-	}
-	else if (cmd->argc == 2)
+	if (cmd->argc == 2)
 	{
 		if (all_signed_num(cmd->argv[1]))
 		{
 			status = ft_atol(cmd->argv[1]);
 			msg_exit(status % 256);
 		}
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 		msg_exit(255);
 	}
-	msg_exit(EXIT_SUCCESS);
+	else if (cmd->argc > 2)
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		return (1);
+	}
+	else 
+		msg_exit(EXIT_SUCCESS);
 	return (0);
 }
