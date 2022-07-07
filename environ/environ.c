@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:54:04 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:46 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:34:57 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ void	register_or_update_env(t_mshell *mshell, char *tar_key, char *tar_val)
 	cur->key = ft_strdup(tar_key);
 	if (tar_val != NULL)
 		cur->val = ft_strdup(tar_val);
-	cur->next = (t_envList *)malloc(sizeof(t_envList));
-	if (!cur->next)
-		exit(EXIT_FAILURE);
+	cur->next = (t_envList *)ft_calloc(1, sizeof(t_envList));
 	cur->next->key = NULL;
 	cur->next->val = NULL;
 }
