@@ -53,8 +53,8 @@ int	main(void)
 			continue ;
 		}
 		add_history(cmdline);
-		mshell.num_commands = 0;
-		if (parser(&mshell, cmdline))
+		mshell.exit_status = parser(&mshell, cmdline);
+		if (mshell.exit_status == 0)
 		{
 			execute_any_cmd(&mshell);
 			free_commands(mshell.commands);

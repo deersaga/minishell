@@ -42,6 +42,7 @@ typedef enum e_type_token {
 	T_APPEND,
 	T_HEREDOC,
 	T_END,
+	T_ERR,
 }	t_type_token;
 
 typedef struct s_envList {
