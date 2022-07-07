@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:47:40 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 21:03:32 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,19 +173,11 @@ void			signal_handler_int(int sig);
 void			signal_handler_heredoc(int sig);
 void			signal_handler_quit(int sig);
 void			signal_handler_exec_parent(int sig);
-<<<<<<< HEAD
-int				is_builtin_cmd(t_mshell *mshell, t_command *cmd);
-void			reconnect_redir_with_stdio(t_command *cur_com);
-=======
 int				check_builtin(t_mshell *mshell, t_command *cmd);
-int				reconnect_redir_with_stdio(t_mshell *mshell, t_command *cur_com,
-					size_t cur_idx, int **pipe_list);
->>>>>>> exit_status
+int				reconnect_redir_with_stdio(t_command *cmd);
 void			close_pipe_list(t_mshell *mshell, int **pipe_list);
 int				execute_a_builtin(t_mshell *mshell, t_command *cmd);
 int				**make_pipe_list(t_mshell *mshell);
-void			reconnect_pipe_with_stdio(t_mshell *mshell,
-					size_t cur_idx, int **pipe_list);
 void			add_redir_info(t_command *cmd, t_token *cur);
 t_token			*delete_redir_token(t_command *cmd,
 					t_token *previous, t_token *current);
@@ -195,5 +187,6 @@ char			*make_heredoc_filename(size_t heredoc_id);
 void			wait_childs(t_mshell *mshell);
 char			*get_cmd_name(t_token *head);
 int				is_export_cmd(t_token *head);
+int				is_builtin_cmd(t_mshell *mshell, t_command *cur_com);
 
 #endif

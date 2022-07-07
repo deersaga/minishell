@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:48:57 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 18:17:56 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 21:04:58 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # define LLMAX 9223372036854775807
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 # define BASE "0123456789abcdef"
 # define BUFFER_SIZE 1024
 

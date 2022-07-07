@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:31:36 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 16:56:23 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/07 21:04:00 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	reconnect_redir_with_stdio(t_command *cur_com)
+int	reconnect_redir_with_stdio(t_command *cur_com)
 {
 	int		fd;
 	t_redir	*cur_redir_in;
@@ -37,4 +37,5 @@ void	reconnect_redir_with_stdio(t_command *cur_com)
 		close(fd);
 		cur_redir_out = cur_redir_out->next;
 	}
+	return (0);
 }

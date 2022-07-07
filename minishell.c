@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 20:57:48 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/07 21:04:15 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	main(void)
 	init_env(&mshell);
 	while (1)
 	{
-		if (signal(SIGINT, signal_handler_int) == -1 || \
-		signal(SIGQUIT, SIG_IGN) == -1)
+		if (signal(SIGINT, signal_handler_int) == SIG_ERR || \
+		signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 			return (1);
 		cmdline = readline("minishell$>");
 		if (!is_valid_cmdline(&mshell, cmdline))
