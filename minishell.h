@@ -12,6 +12,7 @@
 # include <fcntl.h>
 # include <err.h>
 # include <errno.h>
+# include <limits.h>
 # include <sys/signalvar.h>
 # include <sys/wait.h>
 # include "./libftx/libft.h"

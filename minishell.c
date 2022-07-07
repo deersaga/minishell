@@ -50,8 +50,8 @@ int main(int argc, char **argv)
 	init_env(&mshell);
 	while (1)
 	{
-		if (signal(SIGINT, signal_handler_int) == -1 || \
-		signal(SIGQUIT, SIG_IGN) == -1)
+		if (signal(SIGINT, signal_handler_int) == SIG_ERR || \
+		signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 			return (1);
 		cmdline = readline("minishell$>");
 		if (!cmdline)

@@ -2,6 +2,7 @@ NAME = minishell
 
 CC = gcc
 SRCS =  built-in/cd.c\
+		built-in/cd_utils.c\
 		built-in/echo.c\
 		built-in/export.c\
 		built-in/pwd.c\
