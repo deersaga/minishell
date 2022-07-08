@@ -12,6 +12,8 @@ SRCS =  built-in/cd.c\
 		environ/environ.c\
 		environ/environ_utils.c\
 		environ/environ_for_env.c\
+		ft_func/ft_close.c\
+		ft_func/ft_signal.c\
 		parser/expander.c\
 		parser/parser.c\
 		parser/syntax.c\
