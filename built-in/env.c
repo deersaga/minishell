@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:27 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 20:59:16 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:33:04 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	ft_env(t_mshell *mshell, t_command *cmd)
 
 	create_argv(mshell, cmd);
 	pid = fork();
-	i = 1;
 	if (pid == 0)
 	{
 		i = update_mshell(mshell, cmd);
@@ -51,8 +50,8 @@ int	ft_env(t_mshell *mshell, t_command *cmd)
 			perror(cmd->argv[i]);
 			exit(127);
 		}
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 	wait_childs(mshell);
-	return (0);
+	return (mshell->exit_status);
 }
