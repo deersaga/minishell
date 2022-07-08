@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argv.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:00:44 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 13:58:02 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 20:39:43 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,25 +61,3 @@ void	create_argv(t_mshell *mshell, t_command *cmd)
 	argv[i] = NULL;
 	cmd->argv = argv;
 }
-
-/*int main(int argc, char **argv)
-{
-	t_token	*head;
-	t_mshell mshell;
-	t_token	*cur;
-
-	init_env(&mshell);
-	register_or_update_env(&mshell, "test", "cho           hello 3<3test");
-	register_or_update_env(&mshell, "test1", "sekai");
-	parser(&mshell, "$test   \nhello world  \t kon  '$PWD'\"hi\" \t\n a   \t\n");
-	mshell.commands->token = expand_and_retokenize(&mshell, mshell.commands->token);
-	//cur = head;
-	print_tokens(mshell.commands->token);
-	argv = create_argv(&mshell, mshell.commands);
-	while (*argv)
-	{
-		printf("argv %s\n", *argv);
-		argv++;
-	}
-	//printf("%zu\n", get_size(mshell.commands->token));
-}*/

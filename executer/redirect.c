@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:31:36 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 20:09:37 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/08 21:20:25 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,10 @@ int	openfile(char *filename, t_type_token mode)
 	return (fd);
 }
 
-int	reconnect_redir_with_stdio(t_command *cur_com)
+int	reconnect_redir_in(t_command *cur_com)
 {
 	int		fd;
 	t_redir	*cur_redir_in;
-	t_redir	*cur_redir_out;
 
 	cur_redir_in = cur_com->redir_in;
 	while (cur_redir_in && cur_redir_in->file)
@@ -48,18 +47,38 @@ int	reconnect_redir_with_stdio(t_command *cur_com)
 		if (cur_redir_in->type == T_REDIR_IN || cur_redir_in->type == T_HEREDOC)
 		{
 			fd = openfile(cur_redir_in->file, T_REDIR_IN);
+			if (fd < 0)
+				return (-1);
 			dup2(fd, STDIN_FILENO);
 			ft_close(fd);
 		}
 		cur_redir_in = cur_redir_in->next;
 	}
-	cur_redir_out = cur_com->redir_out;
+	return (0);
+}
+
+int	reconnect_redir_out(t_command *cur_com)
+{
+	int		fd;
+	t_redir	*cur_redir_out;
+
 	while (cur_redir_out && cur_redir_out->file)
 	{
 		fd = openfile(cur_redir_out->file, cur_redir_out->type);
+		if (fd < 0)
+			return (-1);
 		dup2(fd, STDOUT_FILENO);
 		ft_close(fd);
 		cur_redir_out = cur_redir_out->next;
 	}
+	return (0);
+}
+
+int	reconnect_redir_with_stdio(t_command *cur_com)
+{
+	if (reconnect_redir_in(cur_com) < 0)
+		return (-1);
+	if (reconnect_redir_out(cur_com) < 0)
+		return (-1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:36:50 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:13:12 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/08 21:11:33 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	wait_childs(t_mshell *mshell)
 {
 	int	status;
-
+//wait自体が失敗した時に対応しているのかよくわからなくなったため保留
 	while (wait(&status) >= 0)
 		;
 	if (status == SIGINT)
