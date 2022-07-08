@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 21:08:20 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 15:10:10 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ void	init_mshell(t_mshell *mshell)
 
 bool	is_valid_cmdline(t_mshell *mshell, char *cmdline)
 {
+	signal(SIGINT, SIG_DFL);
 	if (!cmdline)
 	{
 		delete_all_env(mshell);
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		exit(0);
 	}
 	else if (!ft_strcmp(cmdline, ""))
