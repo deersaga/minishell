@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:38:27 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/08 14:26:46 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	execute_any_cmd(t_mshell *mshell)
 	if (!is_export_cmd(head_cmd->token))
 		head_cmd->token = expand_and_retokenize(mshell, head_cmd->token);
 	if (mshell->num_commands == 1 && is_builtin_cmd(mshell, head_cmd))
-		execute_a_builtin_cmd(mshell, head_cmd);
+		mshell->exit_status = execute_a_builtin_cmd(mshell, head_cmd);
 	else
 		execute_cmds(mshell, head_cmd);
 	delete_heredoc_files(mshell);

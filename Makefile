@@ -68,4 +68,7 @@ bonus : $(NAME)
 
 re: fclean all
 
+norm: $(SRCS)
+	norminette $(SRCS)
+
 .PHONY: all  clean fclean re bonus

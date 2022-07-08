@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:36:35 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 20:59:15 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:19:36 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_exit(t_mshell *mshell, t_command *cmd)
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		return (1);
 	}
-	else 
+	else
 		msg_exit(EXIT_SUCCESS);
 	return (0);
 }

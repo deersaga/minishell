@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:20 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 21:16:01 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:23:38 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,8 @@ static int	get_path(char **argv, char **path, t_mshell *mshell)
 
 static void	update_dir_env(t_mshell *mshell, char *path, char *oldpwd)
 {
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	if (pwd)
-		register_or_update_env(mshell, "PWD", path);
-	else
-		register_or_update_env(mshell, "PWD", path);
+	register_or_update_env(mshell, "PWD", path);
 	register_or_update_env(mshell, "OLDPWD", oldpwd);
-	free(pwd);
 }
 
 int	ft_cd(t_mshell *mshell, t_command *cmd)

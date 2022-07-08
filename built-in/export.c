@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 21:16:04 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:23:55 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 {
 	char		*key_val[2];
 	size_t		i;
+	int			status;
 
 	create_export_argv(mshell, cmd);
 	if (cmd->argc == 1)
@@ -87,9 +88,11 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 	i = 0;
 	while (cmd->argv[++i])
 	{		
+		status = 0;
 		if (!is_valid(cmd->argv[i]))
 		{
 			ft_putstr_fd("export: not a valid identifier\n", 2);
+			status = 1;
 			continue ;
 		}
 		get_key_val(cmd->argv[i], key_val);
@@ -97,5 +100,5 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 		free(key_val[0]);
 		free(key_val[1]);
 	}
-	return (0);
+	return (status);
 }
