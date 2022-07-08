@@ -30,7 +30,6 @@ SRCS =  built-in/cd.c\
 		executer/pipe.c \
 		executer/redirect.c \
 		executer/wait.c \
-		file/open_file.c\
 		path/get_cmd_path.c\
 		argv.c\
 		signal.c\
