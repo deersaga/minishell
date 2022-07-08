@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 20:18:28 by kaou             ###   ########.fr       */
+/*   Created: 2022/07/08 19:54:46 by kaou              #+#    #+#             */
+/*   Updated: 2022/07/08 20:04:33 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_putchar_fd(char c, int fd)
+void	ft_signal(int sig, void (*func)(int))
 {
-	ft_write(fd, &c, 1);
+	if (signal(sig, func) == SIG_ERR)
+	{
+		perror("signal");
+		exit(EXIT_FAILURE);
+	}
 }

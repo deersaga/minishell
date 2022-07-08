@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:31:36 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 19:42:35 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 20:09:37 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	reconnect_redir_with_stdio(t_command *cur_com)
 		{
 			fd = openfile(cur_redir_in->file, T_REDIR_IN);
 			dup2(fd, STDIN_FILENO);
-			close(fd);
+			ft_close(fd);
 		}
 		cur_redir_in = cur_redir_in->next;
 	}
@@ -58,7 +58,7 @@ int	reconnect_redir_with_stdio(t_command *cur_com)
 	{
 		fd = openfile(cur_redir_out->file, cur_redir_out->type);
 		dup2(fd, STDOUT_FILENO);
-		close(fd);
+		ft_close(fd);
 		cur_redir_out = cur_redir_out->next;
 	}
 	return (0);

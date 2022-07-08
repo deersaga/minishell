@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:24:51 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:13:05 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/08 20:18:25 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	create_heredoc_file(t_mshell *mshell, t_redir *heredoc)
 	int		fd;
 
 	fd = open(heredoc->file, O_CREAT | O_WRONLY | O_TRUNC, S_IWUSR | S_IRUSR);
-	signal(SIGINT, signal_handler_heredoc);
+	ft_signal(SIGINT, signal_handler_heredoc);
 	rl_event_hook = check_heredoc_sigint;
 	while (1)
 	{
@@ -94,13 +94,13 @@ void	create_heredoc_file(t_mshell *mshell, t_redir *heredoc)
 		}
 		if (!heredoc->has_quote)
 			cmdline = expansion(mshell, cmdline);
-		write(fd, cmdline, ft_strlen(cmdline));
-		write(fd, "\n", 1);
+		ft_write(fd, cmdline, ft_strlen(cmdline));
+		ft_write(fd, "\n", 1);
 		free(cmdline);
 	}
 	rl_event_hook = NULL;
-	signal(SIGINT, signal_handler_int);
-	close(fd);
+	ft_signal(SIGINT, signal_handler_int);
+	ft_close(fd);
 }
 
 void	delete_heredoc_files(t_mshell	*mshell)

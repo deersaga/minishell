@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:12:42 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:37:38 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/08 20:07:42 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ int	execute_a_builtin_cmd(t_mshell *mshell, t_command *cmd)
 	dup_stdio_fd[1] = dup(1);
 	reconnect_redir_with_stdio(cmd);
 	status = execute_a_builtin(mshell, cmd);
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
+	ft_close(STDIN_FILENO);
+	ft_close(STDOUT_FILENO);
 	dup2(dup_stdio_fd[0], STDIN_FILENO);
 	dup2(dup_stdio_fd[1], STDOUT_FILENO);
-	close(dup_stdio_fd[0]);
-	close(dup_stdio_fd[1]);
+	ft_close(dup_stdio_fd[0]);
+	ft_close(dup_stdio_fd[1]);
 	return (status);
 }

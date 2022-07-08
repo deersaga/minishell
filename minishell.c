@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 15:10:10 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 20:01:18 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_mshell(t_mshell *mshell)
 
 bool	is_valid_cmdline(t_mshell *mshell, char *cmdline)
 {
-	signal(SIGINT, SIG_DFL);
+	ft_signal(SIGINT, SIG_DFL);
 	if (!cmdline)
 	{
 		delete_all_env(mshell);
@@ -47,9 +47,8 @@ int	main(void)
 	init_env(&mshell);
 	while (1)
 	{
-		if (signal(SIGINT, signal_handler_int) == SIG_ERR || \
-		signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-			return (1);
+		ft_signal(SIGINT, signal_handler_int);
+		ft_signal(SIGQUIT, SIG_IGN);
 		cmdline = readline("minishell$>");
 		if (!is_valid_cmdline(&mshell, cmdline))
 		{

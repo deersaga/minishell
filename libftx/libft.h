@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:48:57 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 21:04:58 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 20:17:22 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,6 @@ char			*ft_get_next_line(int fd);
 int				ft_int_abs(int n);
 long			ft_atol(const char *str);
 int				ft_strcmp(const char *s1, const char *s2);
+void			ft_write(int fd, void *buf, unsigned int byte);
+
 #endif

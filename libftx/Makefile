@@ -4,6 +4,7 @@ CFLAG = -Wall -Wextra -Werror
 DEBUGF	= -g -fsanitize=undefined -fsanitize=address 
 OBJ_DIR = ./obj
 SRCS =	ft_malloc.c \
+		ft_write.c \
 		ft_strlcpy.c \
 		ft_strlen.c \
 		ft_strlcat.c \

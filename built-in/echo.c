@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:26:13 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 20:59:17 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 20:18:21 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ int	ft_echo(t_mshell *mshell, t_command *cmd)
 		{
 			ft_putstr_fd(cmd->argv[i], STDOUT_FILENO);
 			if (i != cmd->argc - 1)
-				write(STDOUT_FILENO, " ", 1);
+				ft_write(STDOUT_FILENO, " ", 1);
 			i++;
 		}
 	}
 	if (!n_opt)
-		write(STDOUT_FILENO, "\n", 1);
+		ft_write(STDOUT_FILENO, "\n", 1);
 	return (EXIT_SUCCESS);
 }

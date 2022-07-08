@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_close.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 20:18:28 by kaou             ###   ########.fr       */
+/*   Created: 2022/07/08 19:54:46 by kaou              #+#    #+#             */
+/*   Updated: 2022/07/08 20:09:46 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_putchar_fd(char c, int fd)
+void	ft_close(int fd)
 {
-	ft_write(fd, &c, 1);
+	if (close(fd) == -1)
+	{
+		perror("close");
+		exit(EXIT_FAILURE);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 21:09:20 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 20:10:11 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,10 @@ char			*get_cmd_name(t_token *head);
 int				is_export_cmd(t_token *head);
 int				is_builtin_cmd(t_mshell *mshell, t_command *cur_com);
 char			*get_abs_path(char	*path);
+
+//ft_func
+void			ft_close(int fd);
+void			ft_signal(int sig, void (*func)(int));
+
 
 #endif

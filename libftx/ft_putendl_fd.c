@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:02:38 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/08 20:18:29 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@ void	ft_putendl_fd(char *s, int fd)
 	if (!s)
 		return ;
 	ft_putstr_fd(s, fd);
-	write(fd, "\n", 1);
+	ft_write(fd, "\n", 1);
 }

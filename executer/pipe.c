@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:23:31 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 16:52:48 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/08 20:09:18 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	close_pipe_list(t_mshell *mshell, int **pipe_list)
 	i = 0;
 	while (i < num_pipe_list)
 	{
-		close(pipe_list[i][0]);
-		close(pipe_list[i][1]);
+		ft_close(pipe_list[i][0]);
+		ft_close(pipe_list[i][1]);
 		i++;
 	}
 }
