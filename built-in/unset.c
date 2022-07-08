@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:14:27 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/08 20:06:32 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 20:09:33 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_unset(t_mshell *mshell, t_command *cmd)
 			ft_putstr_fd("unset: ", STDERR_FILENO);
 			ft_putstr_fd(cmd->argv[i], STDERR_FILENO);
 			ft_putstr_fd(": not a valid identifier\n", STDERR_FILENO);
-			status = 1;
+			status = EXIT_FAILURE;
 		}
 		else
 			delete_one_env(mshell, cmd->argv[i]);

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/08 20:06:25 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 20:09:48 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 			ft_putstr_fd("export: ", STDERR_FILENO);
 			ft_putstr_fd(cmd->argv[i], STDERR_FILENO);
 			ft_putstr_fd(": not a valid identifier\n", STDERR_FILENO);
-			status = 1;
+			status = EXIT_FAILURE;
 			continue ;
 		}
 		get_key_val(cmd->argv[i], key_val);
