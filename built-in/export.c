@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/08 14:23:55 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 15:18:16 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,9 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 	int			status;
 
 	create_export_argv(mshell, cmd);
+	sort_env(mshell->env);
 	if (cmd->argc == 1)
-	{
-		sort_env(mshell->env);
 		print_export(mshell->env);
-	}
 	i = 0;
 	while (cmd->argv[++i])
 	{		
