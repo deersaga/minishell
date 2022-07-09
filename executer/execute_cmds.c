@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 13:48:42 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:20:24 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 void	execute_one_of_cmds(t_mshell *mshell, size_t cur_idx, \
 					t_command *cur_com, int **pipe_list)
 {
-	extern char	**environ;
+	char	**environ;
 	char		*command_path;
 
 	ft_signal(SIGINT, SIG_DFL);
 	ft_signal(SIGQUIT, SIG_DFL);
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
 	reconnect_redir_with_stdio(cur_com);
-	//if (!ft_strcmp("./minishell", cur_com->token->token) \
-	//	&& mshell->num_commands > 1)
-	//	exit(0);
+	if (!ft_strcmp("./minishell", cur_com->token->token) \
+		&& mshell->num_commands > 1)
+		exit(0);
 	if (is_builtin_cmd(mshell, cur_com))
 		exit(execute_a_builtin(mshell, cur_com));
 	create_argv(mshell, cur_com);
 	command_path = get_cmd_path(mshell, cur_com->argv[0]);
 	environ = make_environ(mshell);
-	execve(command_path, cur_com->argv, environ);
+	ft_execve(command_path, cur_com->argv, environ);
 	free_array(environ);
 	exit(127);
 }

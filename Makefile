@@ -15,6 +15,7 @@ SRCS =  built-in/cd.c\
 		ft_func/ft_close.c\
 		ft_func/ft_signal.c\
 		ft_func/ft_dup2.c\
+		ft_func/ft_execve.c\
 		parser/expander.c\
 		parser/parser.c\
 		parser/syntax.c\
@@ -33,7 +34,7 @@ SRCS =  built-in/cd.c\
 		executer/pipe.c \
 		executer/redirect.c \
 		executer/wait.c \
-		path/get_cmd_path.c\
+		path.c\
 		argv.c\
 		signal.c\
 		minishell.c

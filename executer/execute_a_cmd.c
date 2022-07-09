@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:12:42 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 13:48:33 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:07:03 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,9 @@ int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
 	{
 		create_argv(mshell, cmd);
 		path = get_cmd_path(mshell, cmd->argv[0]);
-		if (path)
-		{
-			free(cmd->argv[0]);
-			cmd->argv[0] = path;
-		}
-		else
-			exit(127);
 		environ = make_environ(mshell);
 		print_array(environ);
-		execve(cmd->argv[0], cmd->argv, environ);
+		ft_execve(path, cmd->argv, environ);
 		free_commands(mshell->commands);
 		exit(1);
 	}

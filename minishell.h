@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 13:41:36 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:10:00 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,6 @@ char			*get_abs_path(char	*path);
 void			ft_close(int fd);
 void			ft_signal(int sig, void (*func)(int));
 void			ft_dup2(int oldfd, int newfd);
-
+void			ft_execve(char *file, char **argv, char **env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 21:08:33 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:19:21 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_array(char **array)
 	free(array);
 }
 
-void	print_array(char **array)
+/*void	print_array(char **array)
 {
 	size_t	i;
 
@@ -40,7 +40,7 @@ void	print_array(char **array)
 		printf("argv%zu %s\n", i, array[i]);
 		i++;
 	}
-}
+}*/
 
 char	*search_cmd_path(char **paths, char *cmd)
 {
@@ -78,7 +78,7 @@ char	*get_cmd_path(t_mshell *mshell, char *cmd)
 		if (!access(cmd, X_OK))
 			return (ft_strdup(cmd));
 		ft_putstr_fd(cmd, STDERR_FILENO);
-		if (stat(cmd, &buff))
+		if (stat(cmd, &buff) == -1)
 		{
 			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 			exit(127);

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:27 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/08 14:33:04 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:02:21 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ int	ft_env(t_mshell *mshell, t_command *cmd)
 		else
 		{
 			path = get_cmd_path(mshell, cmd->argv[i]);
-			execve(path, &(cmd->argv[i]), make_environ(mshell));
-			perror(cmd->argv[i]);
-			exit(127);
+			ft_execve(path, &(cmd->argv[i]), make_environ(mshell));
 		}
 		exit(EXIT_SUCCESS);
 	}
