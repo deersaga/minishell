@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:12:42 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 17:49:33 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:57:10 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	execute_a_builtin_cmd(t_mshell *mshell, t_command *cmd)
 	int		dup_stdio_fd[2];
 
 	status = 0;
-	dup_stdio_fd[0] = dup(0);
-	dup_stdio_fd[1] = dup(1);
+	dup_stdio_fd[0] = ft_dup(0);
+	dup_stdio_fd[1] = ft_dup(1);
 	if (reconnect_redir_with_stdio(cmd) != -1)
 		status = execute_a_builtin(mshell, cmd);
 	else
