@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:31:36 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 18:12:17 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:18:46 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	openfile(char *filename, t_type_token mode)
 	{
 		if (access(filename, F_OK))
 		{
-			perror("access");
+			perror(filename);
 			return (-1);
 		}
 		fd = (open(filename, O_RDONLY));
