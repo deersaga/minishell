@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 14:20:24 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:39:27 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	execute_one_of_cmds(t_mshell *mshell, size_t cur_idx, \
 					t_command *cur_com, int **pipe_list)
 {
-	char	**environ;
+	char		**environ;
 	char		*command_path;
 
 	ft_signal(SIGINT, SIG_DFL);
