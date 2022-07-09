@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:31:36 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 17:49:38 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:57:44 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	openfile(char *filename, t_type_token mode)
 	{
 		if (access(filename, F_OK))
 		{
-			fprintf(stderr, "%s: No such file or directory\n", filename);
+			perror("access");
 			return (-1);
 		}
 		fd = (open(filename, O_RDONLY));
@@ -32,7 +32,7 @@ int	openfile(char *filename, t_type_token mode)
 		fd = (open(filename, O_CREAT | O_WRONLY | O_APPEND, \
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH));
 	if (fd < 0)
-		fprintf(stderr, "%s: No such file or directory\n", filename);
+		perror("open");
 	return (fd);
 }
 
