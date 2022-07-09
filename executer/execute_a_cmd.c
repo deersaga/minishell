@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:12:42 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 14:07:03 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:45:23 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,6 @@ int	execute_a_builtin(t_mshell *mshell, t_command *cmd)
 		status = ft_exit(mshell, cmd);
 	free(cmd_name);
 	return (status);
-}
-
-int	execute_a_add_on(t_mshell *mshell, t_command *cmd)
-{
-	pid_t		pid;
-	char		*path;
-	extern char	**environ;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		create_argv(mshell, cmd);
-		path = get_cmd_path(mshell, cmd->argv[0]);
-		environ = make_environ(mshell);
-		print_array(environ);
-		ft_execve(path, cmd->argv, environ);
-		free_commands(mshell->commands);
-		exit(1);
-	}
-	return (0);
 }
 
 int	execute_a_builtin_cmd(t_mshell *mshell, t_command *cmd)
