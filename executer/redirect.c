@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:31:36 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 17:57:44 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 18:12:17 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	openfile(char *filename, t_type_token mode)
 		fd = (open(filename, O_CREAT | O_WRONLY | O_APPEND, \
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH));
 	if (fd < 0)
-		perror("open");
+		perror(filename);
 	return (fd);
 }
 
