@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 15:25:45 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:23:03 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ char			*get_abs_path(char	*path);
 //ft_func
 void			ft_close(int fd);
 void			ft_signal(int sig, void (*func)(int));
+int				ft_dup(int oldfd);
 void			ft_dup2(int oldfd, int newfd);
 void			ft_execve(char *file, char **argv, char **env);
 

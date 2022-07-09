@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 14:54:25 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:24:06 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	execute_empty_cmd(t_mshell *mshell, t_command *cmd)
 {
 	int		dup_stdio_fd[2];
 
-	dup_stdio_fd[0] = dup(0);
-	dup_stdio_fd[1] = dup(1);
+	dup_stdio_fd[0] = ft_dup(0);
+	dup_stdio_fd[1] = ft_dup(1);
 	reconnect_redir_with_stdio(cmd);
 	ft_close(STDIN_FILENO);
 	ft_close(STDOUT_FILENO);
