@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:19:31 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/04 18:01:24 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 17:50:41 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	free_redir(t_redir *redir)
 
 void	free_command(t_command *cmd)
 {
-	free_redir(cmd->redir_in);
-	free_redir(cmd->redir_out);
+	free_redir(cmd->redir);
 	free_all_token(cmd->token);
 	if (cmd->argv)
 		free_array(cmd->argv);

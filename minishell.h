@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 17:43:37 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:51:19 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,9 @@ int				check_minishell(t_mshell *mshell, t_command *cmd);
 //ft_func
 void			ft_close(int fd);
 void			ft_signal(int sig, void (*func)(int));
+int				ft_dup(int oldfd);
 void			ft_dup2(int oldfd, int newfd);
 void			ft_execve(char *file, char **argv, char **env);
+pid_t			ft_fork(void);
 
 #endif
