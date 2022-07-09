@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:14:22 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:30:33 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:37:47 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_pwd(t_mshell *mshell, t_command *cmd)
 	char	*pwd;
 
 	(void)cmd;
-	pwd = mshell->info.PWD;
+	pwd = mshell->info.pwd;
 	if (*pwd == '\0')
 	{
 		pwd = getcwd(NULL, 0);
