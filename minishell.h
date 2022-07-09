@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 17:05:45 by ktada              #+#    #+#             */
-/*   Updated: 2022/07/09 17:51:19 by katakagi         ###   ########.fr       */
+/*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
+/*   Updated: 2022/07/09 18:36:27 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ typedef struct s_command {
 }	t_command;
 
 typedef struct s_info {
-	char	*PWD;
-	char	*SHLVL;
-	char	*HOME;
+	char	*pwd;
+	char	*shlvl;
+	char	*home;
 	ino_t	mshell_inode;
 }	t_info;
 
@@ -197,7 +197,6 @@ int				is_export_cmd(t_token *head);
 int				is_builtin_cmd(t_mshell *mshell, t_command *cur_com);
 char			*get_abs_path(char	*path);
 int				check_minishell(t_mshell *mshell, t_command *cmd);
-
 
 //ft_func
 void			ft_close(int fd);
