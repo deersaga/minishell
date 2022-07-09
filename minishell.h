@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 14:46:59 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:54:56 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,18 @@ typedef struct s_command {
 	int					num_token;
 }	t_command;
 
+typedef struct s_info {
+	char	*PWD;
+	char	*SHLVL;
+	char	*HOME;
+}	t_info;
+
 typedef struct s_mshell {
 	struct s_command	*commands;
 	size_t				num_commands;
 	int					exit_status;
 	struct s_envList	*env;
+	struct s_info		info;
 }	t_mshell;
 
 //built-in

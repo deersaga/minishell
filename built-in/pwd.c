@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:14:22 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 21:07:46 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 21:01:39 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ int	ft_pwd(t_mshell *mshell, t_command *cmd)
 	char	*pwd;
 
 	(void)cmd;
-	(void)mshell;
-	pwd = get_env(mshell, "PWD");
-	if (!pwd)
+	pwd = mshell->info.PWD;
+	if (*pwd == '\0')
 	{
 		pwd = getcwd(NULL, 0);
 		if (!pwd)

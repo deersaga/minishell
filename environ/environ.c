@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:54:04 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 20:59:07 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 21:13:06 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,15 @@ void	init_env(t_mshell *mshell)
 	while (environ[i])
 	{
 		get_key_val(environ[i], key_val);
-		cur->key = key_val[0];
-		cur->val = key_val[1];
+		cur->key = ft_strdup(key_val[0]);
+		if (!ft_strcmp(key_val[0], "SHLVL"))
+			cur->val = ft_itoa(ft_atoi(key_val[1]) + 1);
+		else if (ft_strcmp(key_val[0], "OLDPWD"))
+			cur->val = ft_strdup(key_val[1]);
+		free(key_val[0]);
+		free(key_val[1]);
 		cur->next = ft_calloc(1, sizeof(t_envList));
 		cur = cur->next;
 		i++;
 	}
-	register_or_update_env(mshell, "OLDPWD", "");
 }

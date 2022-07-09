@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:14:27 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/08 20:09:33 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:55:51 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	is_valid(char *key)
 {
 	size_t	i;
-	
+
 	if (!(ft_isalpha(key[0]) || key[0] == '_'))
 		return (0);
 	i = 0;
