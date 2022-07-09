@@ -6,14 +6,11 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:12:42 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 14:45:23 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:46:45 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <fcntl.h>
-
-extern char	**environ;
 
 void	print_array(char **array)
 {

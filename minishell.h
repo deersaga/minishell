@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 14:10:00 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:46:59 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # include <sys/signalvar.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
-# include <limits.h>
 # include "./libftx/libft.h"
 
 volatile sig_atomic_t	g_heredoc_sigint;

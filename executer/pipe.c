@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:23:31 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 13:48:51 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:48:46 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	**make_pipe_list(t_mshell *mshell)
 	{
 		if (pipe(pipe_list[i]) == -1)
 		{
-			fprintf(stderr, "make pipe error\n");
+			perror("pipe");
 			exit(EXIT_FAILURE);
 		}
 		i++;
