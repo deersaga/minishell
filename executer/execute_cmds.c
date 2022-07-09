@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 16:26:48 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 17:40:49 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	execute_cmds(t_mshell *mshell, t_command *head)
 	{
 		if (cur_idx > 0 && !is_export_cmd(cur_com->token))
 			cur_com->token = expand_and_retokenize(mshell, cur_com->token);
-		pid = fork();
+		pid = ft_fork();
 		if (pid == 0)
 			execute_one_of_cmds(mshell, cur_idx, cur_com, pipe_list);
 		cur_idx++;

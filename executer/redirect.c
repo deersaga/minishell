@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:31:36 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 15:34:49 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:47:05 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ int	reconnect_redir_out(t_command *cur_com)
 
 int	reconnect_redir_with_stdio(t_command *cur_com)
 {
-	if (reconnect_redir_in(cur_com) < 0)
-		return (-1);
 	if (reconnect_redir_out(cur_com) < 0)
+		return (-1);
+	if (reconnect_redir_in(cur_com) < 0)
 		return (-1);
 	return (0);
 }

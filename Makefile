@@ -17,6 +17,7 @@ SRCS =  built-in/cd.c\
 		ft_func/ft_dup.c\
 		ft_func/ft_dup2.c\
 		ft_func/ft_execve.c\
+		ft_func/ft_fork.c\
 		parser/expander.c\
 		parser/parser.c\
 		parser/syntax.c\

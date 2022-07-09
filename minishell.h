@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 16:26:13 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 17:39:50 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,5 +206,6 @@ void			ft_signal(int sig, void (*func)(int));
 int				ft_dup(int oldfd);
 void			ft_dup2(int oldfd, int newfd);
 void			ft_execve(char *file, char **argv, char **env);
+pid_t			ft_fork(void);
 
 #endif

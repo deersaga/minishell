@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:27 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 14:02:21 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:41:00 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_env(t_mshell *mshell, t_command *cmd)
 	char		*path;
 
 	create_argv(mshell, cmd);
-	pid = fork();
+	pid = ft_fork();
 	if (pid == 0)
 	{
 		i = update_mshell(mshell, cmd);
