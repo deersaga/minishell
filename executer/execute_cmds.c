@@ -6,7 +6,7 @@
 /*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 16:24:06 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 16:26:48 by kaou             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	execute_one_of_cmds(t_mshell *mshell, size_t cur_idx, \
 	ft_signal(SIGQUIT, SIG_DFL);
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
 	reconnect_redir_with_stdio(cur_com);
-	if (!ft_strcmp("./minishell", cur_com->token->token) \
-		&& mshell->num_commands > 1)
+	if (check_minishell(mshell, cur_com) && mshell->num_commands > 1)
 		exit(0);
 	if (is_builtin_cmd(mshell, cur_com))
 		exit(execute_a_builtin(mshell, cur_com));
