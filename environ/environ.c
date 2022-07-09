@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:54:04 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:37:47 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/09 19:55:15 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	init_env(t_mshell *mshell, char **environ)
 		cur->key = ft_strdup(key_val[0]);
 		if (!ft_strcmp(key_val[0], "SHLVL"))
 			cur->val = ft_itoa(ft_atoi(key_val[1]) + 1);
-		else if (ft_strcmp(key_val[0], "OLDpwd"))
+		else if (ft_strcmp(key_val[0], "OLDPWD"))
 			cur->val = ft_strdup(key_val[1]);
 		free(key_val[0]);
 		free(key_val[1]);
