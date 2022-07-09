@@ -6,33 +6,11 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:20:38 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:31:50 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:34:59 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*void	print_redir(t_command *cmd)
-{
-	t_redir	*cur;
-
-	cur = cmd->redir_in;
-	printf("redir_in\n");
-	while (cur)
-	{
-		printf("file %s fd %d type %d has_qupte %d\n", cur->file,
-			cur->fd, cur->type, cur->has_quote);
-		cur = cur->next;
-	}
-	cur = cmd->redir_out;
-	printf("redir_out\n");
-	while (cur)
-	{
-		printf("file %s fd %d type %d has_qupte %d\n", cur->file,
-			cur->fd, cur->type, cur->has_quote);
-		cur = cur->next;
-	}
-}*/
 
 void	print_redir(t_command *cmd)
 {

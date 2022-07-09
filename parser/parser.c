@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:43:13 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:31:49 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:43:58 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ void	split_to_commands(t_mshell *mshell, t_command *cmd)
 	cur = terminate_command(mshell, cur, &cmd);
 }
 
+/*
+* 2>みたいなものに対応したければ、format_tokensのwhile文の中に下のelse if文を追加する必要がある。
+*
+*	else if (all_num(cur->token) && is_redirect_token(next->type))
+*	{
+*		next->fd = ft_atoi(cur->token);
+*		delete_one_token(&head, pre, cur, next);
+*	}
+*/
 t_token	*format_tokens(t_token *head)
 {
 	t_token	*pre;
@@ -71,11 +80,6 @@ t_token	*format_tokens(t_token *head)
 		else if (cur->type == T_DELM && ((pre && is_operator_token(pre->type)) \
 		|| is_operator_token(next->type)))
 			delete_one_token(&head, pre, cur, next);
-		else if (all_num(cur->token) && is_redirect_token(next->type))
-		{
-			next->fd = ft_atoi(cur->token);
-			delete_one_token(&head, pre, cur, next);
-		}
 		else
 			pre = cur;
 		cur = next;

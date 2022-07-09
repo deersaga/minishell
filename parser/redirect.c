@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:21:42 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:31:52 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:35:42 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,6 @@ cat <<bb <<aa | cat <<ee <<ff
 四つ目(ff):7
 になる
 */
-/*void	new_redir(t_command *cmd, t_token *op, t_type_token type)
-{
-	t_redir			*last;
-	t_token			*file;
-	t_token			*end;
-	static size_t	heredoc_id;
-
-	file = op->next;
-	last = get_redir_last(cmd);
-	last->type = type;
-	end = skip_word_quote_token(file);
-	last->has_quote = has_quote(file, end);
-	last->file = subtoken(file, end);
-	last->next = ft_calloc(1, sizeof(t_redir));
-	if (type == T_HEREDOC)
-	{
-		last->heredoc_eof = last->file;
-		last->file = make_heredoc_filename(heredoc_id);
-		heredoc_id++;
-	}
-}*/
 
 //last->fd = get_fd(op);は対応しなくても良さそうなので外した。
 void	add_redir_info(t_command *cmd, t_token *op)
