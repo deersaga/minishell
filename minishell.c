@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/09 18:50:27 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:53:49 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int argc, char **argv, char **environ)
 	if (argc == 1)
 		mshell_interactive(&mshell);
 	else
-		return (1);
+		return (127);
 	return (0);
 }
 
