@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/09 18:53:49 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 20:05:16 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_info(t_mshell *mshell, char **environ)
 	while (environ[i])
 	{
 		get_key_val(environ[i], key_val);
-		if (!ft_strcmp(key_val[0], "home"))
+		if (!ft_strcmp(key_val[0], "HOME"))
 			mshell->info.home = ft_strdup(key_val[1]);
 		else if (!ft_strcmp(key_val[0], "SHLVL"))
 			mshell->info.shlvl = ft_itoa(ft_atoi(key_val[1]) + 1);
