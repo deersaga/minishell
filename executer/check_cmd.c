@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:30:19 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/07 17:13:20 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 16:05:55 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,19 @@ int	is_export_cmd(t_token *head)
 	}
 	free(cmd);
 	return (0);
+}
+
+int	check_minishell(t_mshell *mshell, t_command *cmd)
+{
+	char		*cmdname;
+	struct stat	buff;
+	int			flag;
+
+	flag = 0;
+	cmdname = get_cmd_name(cmd->token);
+	stat(cmdname, &buff);
+	if (mshell->info.mshell_inode == buff.st_ino)
+		flag = 1;
+	free(cmdname);
+	return (flag);
 }

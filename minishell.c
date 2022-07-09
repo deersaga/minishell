@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 15:30:35 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:06:23 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,12 @@ void	init_info(t_mshell *mshell, char **environ)
 		mshell->info.PWD = ft_strdup("");
 }
 
-void	init_mshell(t_mshell *mshell, char **environ)
+void	init_mshell(t_mshell *mshell, char **argv, char **environ)
 {
+	struct stat	buff;
+
+	if (stat(argv[0], &buff) == 0)
+		mshell->info.mshell_inode = buff.st_ino;
 	mshell->commands = NULL;
 	mshell->env = NULL;
 	mshell->num_commands = 0;
@@ -93,8 +97,7 @@ int	main(int argc, char **argv, char **environ)
 {
 	t_mshell	mshell;
 
-	(void)argv;
-	init_mshell(&mshell, environ);
+	init_mshell(&mshell, argv, environ);
 	init_env(&mshell, environ);
 	if (argc == 1)
 		mshell_interactive(&mshell);

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 15:25:45 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:03:50 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_info {
 	char	*PWD;
 	char	*SHLVL;
 	char	*HOME;
+	ino_t	mshell_inode;
 }	t_info;
 
 typedef struct s_mshell {
@@ -196,6 +197,8 @@ char			*get_cmd_name(t_token *head);
 int				is_export_cmd(t_token *head);
 int				is_builtin_cmd(t_mshell *mshell, t_command *cur_com);
 char			*get_abs_path(char	*path);
+int				check_minishell(t_mshell *mshell, t_command *cmd);
+
 
 //ft_func
 void			ft_close(int fd);
