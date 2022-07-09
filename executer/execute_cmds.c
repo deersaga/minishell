@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 16:05:41 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:42:13 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	execute_one_of_cmds(t_mshell *mshell, size_t cur_idx, \
 	ft_signal(SIGINT, SIG_DFL);
 	ft_signal(SIGQUIT, SIG_DFL);
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
-	reconnect_redir_with_stdio(cur_com);
+	if (reconnect_redir_with_stdio(cur_com) == -1)
+		exit(1);
 	if (check_minishell(mshell, cur_com) && mshell->num_commands > 1)
 		exit(0);
 	if (is_builtin_cmd(mshell, cur_com))
@@ -34,13 +35,16 @@ void	execute_one_of_cmds(t_mshell *mshell, size_t cur_idx, \
 	exit(127);
 }
 
-void	execute_empty_cmd(t_mshell *mshell, t_command *cmd)
+int	execute_empty_cmd(t_mshell *mshell, t_command *cmd)
 {
 	int		dup_stdio_fd[2];
+	int		status;
 
+	status = 0;
 	dup_stdio_fd[0] = dup(0);
 	dup_stdio_fd[1] = dup(1);
-	reconnect_redir_with_stdio(cmd);
+	if (reconnect_redir_with_stdio(cmd) == -1)
+		status = 1;
 	ft_close(STDIN_FILENO);
 	ft_close(STDOUT_FILENO);
 	ft_dup2(dup_stdio_fd[0], STDIN_FILENO);
@@ -50,6 +54,7 @@ void	execute_empty_cmd(t_mshell *mshell, t_command *cmd)
 	delete_heredoc_files(mshell);
 	ft_signal(SIGINT, signal_handler_int);
 	ft_signal(SIGQUIT, SIG_IGN);
+	return (status);
 }
 
 void	execute_cmds(t_mshell *mshell, t_command *head)
@@ -87,7 +92,7 @@ void	execute_any_cmd(t_mshell *mshell)
 	head_cmd = mshell->commands;
 	if (skip_delimiter_token(head_cmd->token)->token == NULL)
 	{
-		execute_empty_cmd(mshell, head_cmd);
+		mshell->exit_status = execute_empty_cmd(mshell, head_cmd);
 		return ;
 	}
 	if (!is_export_cmd(head_cmd->token))

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:20:38 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/07 17:50:33 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 17:02:21 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_redir(t_command *cmd)
+/*void	print_redir(t_command *cmd)
 {
 	t_redir	*cur;
 
@@ -26,6 +26,20 @@ void	print_redir(t_command *cmd)
 	}
 	cur = cmd->redir_out;
 	printf("redir_out\n");
+	while (cur)
+	{
+		printf("file %s fd %d type %d has_qupte %d\n", cur->file,
+			cur->fd, cur->type, cur->has_quote);
+		cur = cur->next;
+	}
+}*/
+
+void	print_redir(t_command *cmd)
+{
+	t_redir	*cur;
+
+	cur = cmd->redir;
+	printf("redir\n");
 	while (cur)
 	{
 		printf("file %s fd %d type %d has_qupte %d\n", cur->file,

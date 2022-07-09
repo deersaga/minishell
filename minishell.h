@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 16:03:50 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:56:21 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ typedef struct s_command {
 	struct s_token		*token;
 	char				**argv;
 	size_t				argc;
-	struct s_redir		*redir_in;
-	struct s_redir		*redir_out;
+	struct s_redir		*redir;
+	//struct s_redir		*redir_in;
+	//struct s_redir		*redir_out;
 	struct s_command	*next;
 	int					num_token;
 }	t_command;

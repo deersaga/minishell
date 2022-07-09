@@ -3,31 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:21:42 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/01 20:58:07 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 17:28:47 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_redir	*get_redir_last(t_command *cmd, t_type_token type)
+t_redir	*get_redir_last(t_command *cmd)
 {
 	t_redir	*last;
 
-	if (type == T_REDIR_IN || type == T_HEREDOC)
-	{
-		if (!cmd->redir_in)
-			cmd->redir_in = ft_calloc(1, sizeof(t_redir));
-		last = cmd->redir_in;
-	}
-	else
-	{
-		if (!cmd->redir_out)
-			cmd->redir_out = ft_calloc(1, sizeof(t_redir));
-		last = cmd->redir_out;
-	}
+	if (!cmd->redir)
+		cmd->redir = ft_calloc(1, sizeof(t_redir));
+	last = cmd->redir;
 	while (last->next)
 		last = last->next;
 	return (last);
@@ -80,8 +71,7 @@ cat <<bb <<aa | cat <<ee <<ff
 四つ目(ff):7
 になる
 */
-//last->fd = get_fd(op);は対応しなくても良さそうなので外した。
-void	new_redir(t_command *cmd, t_token *op, t_type_token type)
+/*void	new_redir(t_command *cmd, t_token *op, t_type_token type)
 {
 	t_redir			*last;
 	t_token			*file;
@@ -89,9 +79,9 @@ void	new_redir(t_command *cmd, t_token *op, t_type_token type)
 	static size_t	heredoc_id;
 
 	file = op->next;
-	end = skip_word_quote_token(file);
-	last = get_redir_last(cmd, type);
+	last = get_redir_last(cmd);
 	last->type = type;
+	end = skip_word_quote_token(file);
 	last->has_quote = has_quote(file, end);
 	last->file = subtoken(file, end);
 	last->next = ft_calloc(1, sizeof(t_redir));
@@ -101,18 +91,29 @@ void	new_redir(t_command *cmd, t_token *op, t_type_token type)
 		last->file = make_heredoc_filename(heredoc_id);
 		heredoc_id++;
 	}
-}
+}*/
 
-void	add_redir_info(t_command *cmd, t_token *cur)
-{
-	if (cur->type == T_REDIR_IN)
-		new_redir(cmd, cur, cur->type);
-	else if (cur->type == T_REDIR_OUT)
-		new_redir(cmd, cur, cur->type);
-	else if (cur->type == T_APPEND)
-		new_redir(cmd, cur, cur->type);
-	else if (cur->type == T_HEREDOC)
-		new_redir(cmd, cur, cur->type);
+//last->fd = get_fd(op);は対応しなくても良さそうなので外した。
+void	add_redir_info(t_command *cmd, t_token *op)
+{	
+	t_redir			*last;
+	t_token			*file;
+	t_token			*end;
+	static size_t	heredoc_id;
+
+	file = op->next;
+	last = get_redir_last(cmd);
+	last->type = op->type;
+	end = skip_word_quote_token(file);
+	last->has_quote = has_quote(file, end);
+	last->file = subtoken(file, end);
+	last->next = ft_calloc(1, sizeof(t_redir));
+	if (op->type == T_HEREDOC)
+	{
+		last->heredoc_eof = last->file;
+		last->file = make_heredoc_filename(heredoc_id);
+		heredoc_id++;
+	}
 }
 
 t_token	*delete_redir_token(t_command *cmd, t_token *previous, t_token *current)

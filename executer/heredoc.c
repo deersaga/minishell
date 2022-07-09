@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:24:51 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 20:18:25 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 17:21:28 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,19 @@ char	*make_heredoc_filename(size_t	heredoc_id)
 void	create_heredoc_files(t_mshell *mshell)
 {
 	t_command	*cur_com;
-	t_redir		*cur_redir_in;
+	t_redir		*cur_redir;
 	size_t		i;
 
 	cur_com = mshell->commands;
 	i = 0;
 	while (i < mshell->num_commands)
 	{
-		cur_redir_in = cur_com->redir_in;
-		while (cur_redir_in && cur_redir_in->file)
+		cur_redir = cur_com->redir;
+		while (cur_redir && cur_redir->file)
 		{
-			if (cur_redir_in->type == T_HEREDOC)
-				create_heredoc_file(mshell, cur_redir_in);
-			cur_redir_in = cur_redir_in->next;
+			if (cur_redir->type == T_HEREDOC)
+				create_heredoc_file(mshell, cur_redir);
+			cur_redir = cur_redir->next;
 		}
 		cur_com = cur_com->next;
 		i++;
@@ -106,19 +106,19 @@ void	create_heredoc_file(t_mshell *mshell, t_redir *heredoc)
 void	delete_heredoc_files(t_mshell	*mshell)
 {
 	t_command	*cur;
-	t_redir		*redir_in;
+	t_redir		*redir;
 	size_t		i;
 
 	cur = mshell->commands;
 	i = 0;
 	while (i < mshell->num_commands)
 	{
-		redir_in = cur->redir_in;
-		while (redir_in && redir_in->file)
+		redir = cur->redir;
+		while (redir && redir->file)
 		{
-			if (redir_in->type == T_HEREDOC)
-				unlink(redir_in->file);
-			redir_in = redir_in->next;
+			if (redir->type == T_HEREDOC)
+				unlink(redir->file);
+			redir = redir->next;
 		}
 		cur = cur->next;
 		i++;
