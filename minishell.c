@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 19:24:45 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 21:12:53 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	init_info(t_mshell *mshell)
 	while (environ[i])
 	{
 		get_key_val(environ[i], key_val);
-		if (!ft_strcmp(key_val[0], "PWD"))
-			mshell->info.PWD = ft_strdup(key_val[1]);
-		else if (!ft_strcmp(key_val[0], "HOME"))
+		//if (!ft_strcmp(key_val[0], "PWD"))
+		//	mshell->info.PWD = ft_strdup(key_val[1]);
+		if (!ft_strcmp(key_val[0], "HOME"))
 			mshell->info.HOME = ft_strdup(key_val[1]);
 		else if (!ft_strcmp(key_val[0], "SHLVL"))
 				mshell->info.SHLVL = ft_itoa(ft_atoi(key_val[1]) + 1);
@@ -32,8 +32,10 @@ void	init_info(t_mshell *mshell)
 		free(key_val[0]);
 		i++;
 	}
-	if (!mshell->info.PWD)
-		mshell->info.PWD = getcwd(NULL, 0);
+	//if (!mshell->info.PWD)
+	mshell->info.PWD = getcwd(NULL, 0);
+	if(!mshell->info.PWD)
+		mshell->info.PWD = ft_strdup("");
 }
 
 void	init_mshell(t_mshell *mshell)
@@ -52,7 +54,6 @@ bool	is_valid_cmdline(t_mshell *mshell, char *cmdline)
 	{
 		delete_all_env(mshell);
 		free(mshell->info.PWD);
-		free(mshell->info.OLDPWD);
 		free(mshell->info.HOME);
 		free(mshell->info.SHLVL);
 		ft_putstr_fd("exit\n", STDOUT_FILENO);

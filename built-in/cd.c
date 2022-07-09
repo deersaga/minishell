@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:20 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/08 19:26:59 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/08 21:41:11 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,20 @@ static char	*get_simple_path(t_mshell *mshell, char *argv1)
 	char	*tmp;
 	char	*path;
 
+	if (mshell->info.PWD[0] != '/')
+	{
+		tmp = mshell->info.PWD;
+		mshell->info.PWD = getcwd(NULL, 0);
+		if (!mshell->info.PWD)
+			mshell->info.PWD = tmp;
+		else
+			free(tmp);
+	}
 	tmp = mshell->info.PWD;
-	if (tmp[ft_strlen(tmp) - 1] != '/')
-		tmp = ft_strjoin(mshell->info.PWD, "/");
-	else
+	if (*tmp == '\0' || tmp[ft_strlen(tmp) - 1] == '/')
 		tmp = ft_strdup(mshell->info.PWD);
+	else
+		tmp = ft_strjoin(mshell->info.PWD, "/");
 	path = ft_strjoin(tmp, argv1);
 	free(tmp);
 	return (path);
@@ -60,8 +69,10 @@ static void	update_dir_env(t_mshell *mshell, char *path, char *oldpwd)
 {
 	register_or_update_env(mshell, "PWD", path);
 	register_or_update_env(mshell, "OLDPWD", oldpwd);
+	free(oldpwd);
 	free(mshell->info.PWD);
 	mshell->info.PWD = path;
+	//mshell->info.PWD = getcwd(NULL, 0);
 }
 
 int	ft_cd(t_mshell *mshell, t_command *cmd)
@@ -78,7 +89,8 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 		free(oldpwd);
 		return (EXIT_FAILURE);
 	}
-	path = get_abs_path(path);
+	if (mshell->info.PWD[0] == '/')
+		path = get_abs_path(path);
 	if (chdir(path) == -1)
 	{
 		perror("chdir");
