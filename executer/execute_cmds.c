@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 20:07:50 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 13:48:42 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	execute_one_of_cmds(t_mshell *mshell, size_t cur_idx, \
 	ft_signal(SIGQUIT, SIG_DFL);
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
 	reconnect_redir_with_stdio(cur_com);
-	if (!ft_strcmp("./minishell", cur_com->token->token) \
-		&& mshell->num_commands > 1)
-		exit(0);
+	//if (!ft_strcmp("./minishell", cur_com->token->token) \
+	//	&& mshell->num_commands > 1)
+	//	exit(0);
 	if (is_builtin_cmd(mshell, cur_com))
 		exit(execute_a_builtin(mshell, cur_com));
 	create_argv(mshell, cur_com);
@@ -44,8 +44,8 @@ void	execute_empty_cmd(t_mshell *mshell, t_command *cmd)
 	reconnect_redir_with_stdio(cmd);
 	ft_close(STDIN_FILENO);
 	ft_close(STDOUT_FILENO);
-	dup2(dup_stdio_fd[0], STDIN_FILENO);
-	dup2(dup_stdio_fd[1], STDOUT_FILENO);
+	ft_dup2(dup_stdio_fd[0], STDIN_FILENO);
+	ft_dup2(dup_stdio_fd[1], STDOUT_FILENO);
 	ft_close(dup_stdio_fd[0]);
 	ft_close(dup_stdio_fd[1]);
 	delete_heredoc_files(mshell);

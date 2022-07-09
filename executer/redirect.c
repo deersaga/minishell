@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:31:36 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 21:20:25 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 13:49:01 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	reconnect_redir_in(t_command *cur_com)
 			fd = openfile(cur_redir_in->file, T_REDIR_IN);
 			if (fd < 0)
 				return (-1);
-			dup2(fd, STDIN_FILENO);
+			ft_dup2(fd, STDIN_FILENO);
 			ft_close(fd);
 		}
 		cur_redir_in = cur_redir_in->next;
@@ -62,12 +62,13 @@ int	reconnect_redir_out(t_command *cur_com)
 	int		fd;
 	t_redir	*cur_redir_out;
 
+	cur_redir_out = cur_com->redir_out;
 	while (cur_redir_out && cur_redir_out->file)
 	{
 		fd = openfile(cur_redir_out->file, cur_redir_out->type);
 		if (fd < 0)
 			return (-1);
-		dup2(fd, STDOUT_FILENO);
+		ft_dup2(fd, STDOUT_FILENO);
 		ft_close(fd);
 		cur_redir_out = cur_redir_out->next;
 	}

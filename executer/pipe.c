@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:23:31 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 20:09:18 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 13:48:51 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	reconnect_pipe_with_stdio(\
 	t_mshell *mshell, size_t cur_idx, int **pipe_list)
 {
 	if (cur_idx > 0)
-		dup2(pipe_list[cur_idx - 1][0], STDIN_FILENO);
+		ft_dup2(pipe_list[cur_idx - 1][0], STDIN_FILENO);
 	if (cur_idx + 1 < mshell->num_commands)
-		dup2(pipe_list[cur_idx][1], STDOUT_FILENO);
+		ft_dup2(pipe_list[cur_idx][1], STDOUT_FILENO);
 	close_pipe_list(mshell, pipe_list);
 }

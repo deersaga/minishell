@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:36:50 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 21:11:33 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 13:48:02 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	wait_childs(t_mshell *mshell)
 {
-	int	status;
+	int		status;
 //wait自体が失敗した時に対応しているのかよくわからなくなったため保留
-	while (wait(&status) >= 0)
+	while (wait(&status) > 0)
 		;
 	if (status == SIGINT)
 	{

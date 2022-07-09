@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_a_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaou <kaou@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:12:42 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/08 20:07:42 by kaou             ###   ########.fr       */
+/*   Updated: 2022/07/09 13:48:33 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ int	execute_a_builtin_cmd(t_mshell *mshell, t_command *cmd)
 	status = execute_a_builtin(mshell, cmd);
 	ft_close(STDIN_FILENO);
 	ft_close(STDOUT_FILENO);
-	dup2(dup_stdio_fd[0], STDIN_FILENO);
-	dup2(dup_stdio_fd[1], STDOUT_FILENO);
+	ft_dup2(dup_stdio_fd[0], STDIN_FILENO);
+	ft_dup2(dup_stdio_fd[1], STDOUT_FILENO);
 	ft_close(dup_stdio_fd[0]);
 	ft_close(dup_stdio_fd[1]);
 	return (status);
