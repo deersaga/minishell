@@ -6,17 +6,16 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 15:03:08 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 15:30:35 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_info(t_mshell *mshell)
+void	init_info(t_mshell *mshell, char **environ)
 {
-	extern char	**environ;
-	char		*key_val[2];
-	size_t		i;
+	char	*key_val[2];
+	size_t	i;
 
 	i = 0;
 	while (environ[i])
@@ -35,13 +34,13 @@ void	init_info(t_mshell *mshell)
 		mshell->info.PWD = ft_strdup("");
 }
 
-void	init_mshell(t_mshell *mshell)
+void	init_mshell(t_mshell *mshell, char **environ)
 {
 	mshell->commands = NULL;
 	mshell->env = NULL;
 	mshell->num_commands = 0;
 	mshell->exit_status = 0;
-	init_info(mshell);
+	init_info(mshell, environ);
 }
 
 bool	is_valid_cmdline(t_mshell *mshell, char *cmdline)
@@ -62,35 +61,45 @@ bool	is_valid_cmdline(t_mshell *mshell, char *cmdline)
 		return (true);
 }
 
-int	main(void)
+void	mshell_interactive(t_mshell *mshell)
 {
-	t_mshell	mshell;
 	char		*cmdline;
 	int			status;
 
-	init_mshell(&mshell);
-	init_env(&mshell);
 	while (1)
 	{
 		ft_signal(SIGINT, signal_handler_int);
 		ft_signal(SIGQUIT, SIG_IGN);
 		cmdline = readline("minishell$>");
-		if (!is_valid_cmdline(&mshell, cmdline))
+		if (!is_valid_cmdline(mshell, cmdline))
 		{
 			free(cmdline);
 			continue ;
 		}
 		add_history(cmdline);
-		status = parser(&mshell, cmdline);
+		status = parser(mshell, cmdline);
 		if (status)
-			mshell.exit_status = status;
+			mshell->exit_status = status;
 		else
 		{
-			execute_any_cmd(&mshell);
-			free_commands(mshell.commands);
+			execute_any_cmd(mshell);
+			free_commands(mshell->commands);
 		}
 		free(cmdline);
 	}
+}
+
+int	main(int argc, char **argv, char **environ)
+{
+	t_mshell	mshell;
+
+	(void)argv;
+	init_mshell(&mshell, environ);
+	init_env(&mshell, environ);
+	if (argc == 1)
+		mshell_interactive(&mshell);
+	else
+		return (1);
 	return (0);
 }
 

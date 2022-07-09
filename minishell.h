@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by kaou              #+#    #+#             */
-/*   Updated: 2022/07/09 14:54:56 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 15:25:45 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int				ft_env(t_mshell *mshell, t_command *cmd);
 int				ft_echo(t_mshell *mshell, t_command *cmd);
 
 //environment
-void			init_env(t_mshell *mshell);
+void			init_env(t_mshell *mshell, char **environ);
 void			register_or_update_env(t_mshell *mshell,
 					char *tar_key, char *tar_val);
 char			*get_env(t_mshell *mshell, char *key);

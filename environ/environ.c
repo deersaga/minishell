@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:54:04 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/08 21:13:06 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 15:26:10 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,8 @@ void	register_or_update_env(t_mshell *mshell, char *tar_key, char *tar_val)
 	cur->next->val = NULL;
 }
 
-void	init_env(t_mshell *mshell)
+void	init_env(t_mshell *mshell, char **environ)
 {
-	extern char	**environ;
 	char		*key_val[2];
 	size_t		i;
 	t_envList	*cur;
