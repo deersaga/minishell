@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:29:59 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:31:44 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:37:28 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int argc, char **argv)
 	init_env(&mshell);
 	register_or_update_env(&mshell, "test", "sekai");
 	t_token *tmp1;
-	tmp1 = verbose_tokenizer("$HOME-$test$- $a$test$", tmp1);
+	tmp1 = verbose_tokenizer("$home-$test$- $a$test$", tmp1);
 	print_tokens(tmp1);
 	char	*tmp;
 	tmp = concat_expanded_tokens(&mshell, tmp1);

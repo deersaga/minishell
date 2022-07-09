@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/07/09 18:42:56 by katakagi         ###   ########.fr       */
+=======
+/*   Updated: 2022/07/09 18:37:28 by ktada            ###   ########.fr       */
+>>>>>>> 334f157f5c1137db7fb1e380be1e52c241ce5b36
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +25,17 @@ void	init_info(t_mshell *mshell, char **environ)
 	while (environ[i])
 	{
 		get_key_val(environ[i], key_val);
-		if (!ft_strcmp(key_val[0], "HOME"))
-			mshell->info.HOME = ft_strdup(key_val[1]);
+		if (!ft_strcmp(key_val[0], "home"))
+			mshell->info.home = ft_strdup(key_val[1]);
 		else if (!ft_strcmp(key_val[0], "SHLVL"))
-			mshell->info.SHLVL = ft_itoa(ft_atoi(key_val[1]) + 1);
+			mshell->info.shlvl = ft_itoa(ft_atoi(key_val[1]) + 1);
 		free(key_val[1]);
 		free(key_val[0]);
 		i++;
 	}
-	mshell->info.PWD = getcwd(NULL, 0);
-	if (!mshell->info.PWD)
-		mshell->info.PWD = ft_strdup("");
+	mshell->info.pwd = getcwd(NULL, 0);
+	if (!mshell->info.pwd)
+		mshell->info.pwd = ft_strdup("");
 }
 
 void	init_mshell(t_mshell *mshell, char **argv, char **environ)
@@ -53,9 +57,9 @@ bool	is_valid_cmdline(t_mshell *mshell, char *cmdline)
 	if (!cmdline)
 	{
 		delete_all_env(mshell);
-		free(mshell->info.PWD);
-		free(mshell->info.HOME);
-		free(mshell->info.SHLVL);
+		free(mshell->info.pwd);
+		free(mshell->info.home);
+		free(mshell->info.shlvl);
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		exit(0);
 	}

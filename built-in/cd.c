@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:20 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:30:27 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:37:47 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static char	*get_special_path(t_mshell *mshell, char *argv1)
 {
 	if (!argv1)
-		return (ft_strdup(mshell->info.HOME));
+		return (ft_strdup(mshell->info.home));
 	else if (*argv1 == '~')
-		return (ft_strjoin(mshell->info.HOME, &argv1[1]));
+		return (ft_strjoin(mshell->info.home, &argv1[1]));
 	return (ft_strdup(argv1));
 }
 
@@ -26,20 +26,20 @@ static char	*get_simple_path(t_mshell *mshell, char *argv1)
 	char	*tmp;
 	char	*path;
 
-	if (mshell->info.PWD[0] != '/')
+	if (mshell->info.pwd[0] != '/')
 	{
-		tmp = mshell->info.PWD;
-		mshell->info.PWD = getcwd(NULL, 0);
-		if (!mshell->info.PWD)
-			mshell->info.PWD = tmp;
+		tmp = mshell->info.pwd;
+		mshell->info.pwd = getcwd(NULL, 0);
+		if (!mshell->info.pwd)
+			mshell->info.pwd = tmp;
 		else
 			free(tmp);
 	}
-	tmp = mshell->info.PWD;
+	tmp = mshell->info.pwd;
 	if (*tmp == '\0' || tmp[ft_strlen(tmp) - 1] == '/')
-		tmp = ft_strdup(mshell->info.PWD);
+		tmp = ft_strdup(mshell->info.pwd);
 	else
-		tmp = ft_strjoin(mshell->info.PWD, "/");
+		tmp = ft_strjoin(mshell->info.pwd, "/");
 	path = ft_strjoin(tmp, argv1);
 	free(tmp);
 	return (path);
@@ -51,11 +51,11 @@ static int	get_path(char **argv, char **path, t_mshell *mshell)
 		*path = get_special_path(mshell, argv[1]);
 	else if (!ft_strcmp(argv[1], "-"))
 	{
-		if (get_env(mshell, "OLDPWD"))
-			*path = ft_strdup(get_env(mshell, "OLDPWD"));
+		if (get_env(mshell, "OLDpwd"))
+			*path = ft_strdup(get_env(mshell, "OLDpwd"));
 		else
 		{
-			ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
+			ft_putstr_fd("cd: OLDpwd not set\n", STDERR_FILENO);
 			return (EXIT_FAILURE);
 		}
 		ft_putendl_fd(*path, STDOUT_FILENO);
@@ -67,11 +67,11 @@ static int	get_path(char **argv, char **path, t_mshell *mshell)
 
 static void	update_dir_env(t_mshell *mshell, char *path, char *oldpwd)
 {
-	register_or_update_env(mshell, "PWD", path);
-	register_or_update_env(mshell, "OLDPWD", oldpwd);
+	register_or_update_env(mshell, "pwd", path);
+	register_or_update_env(mshell, "OLDpwd", oldpwd);
 	free(oldpwd);
-	free(mshell->info.PWD);
-	mshell->info.PWD = path;
+	free(mshell->info.pwd);
+	mshell->info.pwd = path;
 }
 
 int	ft_cd(t_mshell *mshell, t_command *cmd)
@@ -80,7 +80,7 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 	char	*oldpwd;
 
 	create_argv(mshell, cmd);
-	oldpwd = ft_strdup(mshell->info.PWD);
+	oldpwd = ft_strdup(mshell->info.pwd);
 	if (!oldpwd)
 		perror("cd");
 	if (get_path(cmd->argv, &path, mshell))
@@ -88,7 +88,7 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 		free(oldpwd);
 		return (EXIT_FAILURE);
 	}
-	if (mshell->info.PWD[0] == '/')
+	if (mshell->info.pwd[0] == '/')
 		path = get_abs_path(path);
 	if (chdir(path) == -1)
 	{

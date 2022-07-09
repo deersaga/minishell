@@ -1,37 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   get_abs_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 17:01:00 by ktada             #+#    #+#             */
+/*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
 /*   Updated: 2022/07/09 18:35:01 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_strtrim(char const *s, char const *set)
+char	*delete_dot_dot(char *path);
+
+char	*delete_dot_slash(char *path)
 {
-	size_t	start;
-	size_t	end;
-	char	*ret;
+	char	*tmp;
+	char	*target;
+	size_t	i;
 
-	if (!s)
-		return (NULL);
-	if (*s == '\0' || !set)
-		return (ft_strdup(s));
-	start = 0;
-	end = ft_strlen(s);
-	while (ft_strchr(set, s[start]) != NULL)
-		start++;
-	while (ft_strchr(set, s[end]) != NULL && end > start)
-		end--;
-	if (end == start)
+	i = 0;
+	target = ft_strnstr(path, "/.", ft_strlen(path));
+	while (target)
 	{
-		return (ft_substr(s, start, 1));
+		if (*(target + 2) != '.')
+		{
+			tmp = path;
+			path = ft_strreplace(path, "/.", "", &i);
+			free(tmp);
+		}
+		else
+		{
+			i = target - path + 3;
+		}
+		target = ft_strnstr(path + i, "/.", ft_strlen(path));
 	}
-	ret = ft_substr(s, start, end - start + 1);
-	return (ret);
+	return (path);
+}
+
+char	*get_abs_path(char	*path)
+{
+	path = delete_dot_slash(path);
+	path = delete_dot_dot(path);
+	return (path);
 }
