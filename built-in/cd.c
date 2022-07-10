@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:20 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:37:47 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/10 20:55:19 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ static int	get_path(char **argv, char **path, t_mshell *mshell)
 		*path = get_special_path(mshell, argv[1]);
 	else if (!ft_strcmp(argv[1], "-"))
 	{
-		if (get_env(mshell, "OLDpwd"))
-			*path = ft_strdup(get_env(mshell, "OLDpwd"));
+		if (get_env(mshell, "OLDPWD"))
+			*path = ft_strdup(get_env(mshell, "OLDPWD"));
 		else
 		{
-			ft_putstr_fd("cd: OLDpwd not set\n", STDERR_FILENO);
+			ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
 			return (EXIT_FAILURE);
 		}
 		ft_putendl_fd(*path, STDOUT_FILENO);
@@ -68,7 +68,7 @@ static int	get_path(char **argv, char **path, t_mshell *mshell)
 static void	update_dir_env(t_mshell *mshell, char *path, char *oldpwd)
 {
 	register_or_update_env(mshell, "pwd", path);
-	register_or_update_env(mshell, "OLDpwd", oldpwd);
+	register_or_update_env(mshell, "OLDPWD", oldpwd);
 	free(oldpwd);
 	free(mshell->info.pwd);
 	mshell->info.pwd = path;
@@ -92,7 +92,7 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 		path = get_abs_path(path);
 	if (chdir(path) == -1)
 	{
-		perror("chdir");
+		perror("ch");
 		free(path);
 		free(oldpwd);
 		return (EXIT_FAILURE);
