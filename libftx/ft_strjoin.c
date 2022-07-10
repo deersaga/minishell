@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/09 18:35:01 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/10 15:42:42 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
 	ptr = (char *)ft_malloc(size * sizeof(char));
-	if (!ptr)
-	{
-		perror("malloc");
-		exit(1);
-	}
 	ptr[0] = '\0';
 	ft_strcat(ptr, s1);
 	ft_strcat(ptr, s2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/09 18:35:01 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/10 15:42:55 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static char	**free_storage(char **storage, size_t count)
 		i++;
 	}
 	free(storage);
-	perror("malloc");
 	exit(1);
 }
 
@@ -73,10 +72,5 @@ char	**ft_split(char const *str, char sep)
 		i++;
 	}
 	storage = (char **)ft_malloc((count + 1) * sizeof(char *));
-	if (!storage)
-	{
-		perror("malloc");
-		exit(1);
-	}
 	return (make_storage(storage, str, sep));
 }
