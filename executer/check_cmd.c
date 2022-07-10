@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:30:19 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/09 18:48:28 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:49:44 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	check_minishell(t_mshell *mshell, t_command *cmd)
 	flag = 0;
 	cmdname = get_cmd_name(cmd->token);
 	stat(cmdname, &buff);
-	if (mshell->info.mshell_inode == buff.st_ino)
+	if (mshell->info.mshell_inode == buff.st_ino && mshell->commands == cmd)
 		flag = 1;
 	free(cmdname);
 	return (flag);

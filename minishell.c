@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 16:16:21 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:30:31 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,11 @@ int	main(int argc, char **argv, char **environ)
 		{
 			count = read(STDIN_FILENO, buff, BUFF_SIZE);
 			if (count == -1)
+			{
+				perror("read");
 				exit(EXIT_FAILURE);
+			}
 			buff[count] = '\0';
-			printf("buff %x\n", *buff);
 			ft_putstr_fd(buff, STDERR_FILENO);
 		}
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:31:36 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/09 18:46:49 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:54:35 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ int	reconnect_redir_with_stdio(t_command *cmd)
 			return (-1);
 		cur_redir = cur_redir->next;
 	}
+	printf("");
 	return (0);
 }
