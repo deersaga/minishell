@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 15:55:47 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:16:21 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	mshell_interactive(t_mshell *mshell)
 int	main(int argc, char **argv, char **environ)
 {
 	t_mshell	mshell;
+	char		buff[BUFF_SIZE];
+	ssize_t		count;
 
 	init_mshell(&mshell, argv, environ);
 	init_env(&mshell, environ);
@@ -108,7 +110,17 @@ int	main(int argc, char **argv, char **environ)
 		mshell_interactive(&mshell);
 	else
 	{
-		ft_putstr_fd(argv[1], STDERR_FILENO);
+		if (argv[1])
+			ft_putstr_fd(argv[1], STDERR_FILENO);
+		else
+		{
+			count = read(STDIN_FILENO, buff, BUFF_SIZE);
+			if (count == -1)
+				exit(EXIT_FAILURE);
+			buff[count] = '\0';
+			printf("buff %x\n", *buff);
+			ft_putstr_fd(buff, STDERR_FILENO);
+		}
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		return (127);
 	}

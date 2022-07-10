@@ -6,13 +6,13 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 15:28:44 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:04:03 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
+# define BUFF_SIZE 1028
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
