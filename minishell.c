@@ -6,11 +6,36 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 16:30:31 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:24:25 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	fail_invoke(char **argv)
+{
+	char		buff[BUFF_SIZE];
+	ssize_t		count;
+	
+	if (argv[1])
+		ft_putstr_fd(argv[1], STDERR_FILENO);
+	else
+	{
+		count = read(STDIN_FILENO, buff, BUFF_SIZE);
+		if (count == -1)
+		{
+			perror("read");
+			exit(EXIT_FAILURE);
+		}
+		if (count == BUFF_SIZE)
+			buff[count - 1] = '\0';
+		else
+			buff[count] = '\0';
+		ft_putstr_fd(buff, STDERR_FILENO);
+	}
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+	return (127);
+}
 
 void	init_info(t_mshell *mshell, char **environ)
 {
@@ -52,24 +77,6 @@ void	init_mshell(t_mshell *mshell, char **argv, char **environ)
 	init_info(mshell, environ);
 }
 
-bool	is_valid_cmdline(t_mshell *mshell, char *cmdline)
-{
-	ft_signal(SIGINT, SIG_DFL);
-	if (!cmdline)
-	{
-		delete_all_env(mshell);
-		free(mshell->info.pwd);
-		free(mshell->info.home);
-		free(mshell->info.shlvl);
-		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		exit(0);
-	}
-	else if (!ft_strcmp(cmdline, ""))
-		return (false);
-	else
-		return (true);
-}
-
 void	mshell_interactive(t_mshell *mshell)
 {
 	char		*cmdline;
@@ -101,31 +108,14 @@ void	mshell_interactive(t_mshell *mshell)
 int	main(int argc, char **argv, char **environ)
 {
 	t_mshell	mshell;
-	char		buff[BUFF_SIZE];
-	ssize_t		count;
 
 	init_mshell(&mshell, argv, environ);
 	init_env(&mshell, environ);
+	rl_outstream = stderr;
 	if (argc == 1 && isatty(STDIN_FILENO))
 		mshell_interactive(&mshell);
 	else
-	{
-		if (argv[1])
-			ft_putstr_fd(argv[1], STDERR_FILENO);
-		else
-		{
-			count = read(STDIN_FILENO, buff, BUFF_SIZE);
-			if (count == -1)
-			{
-				perror("read");
-				exit(EXIT_FAILURE);
-			}
-			buff[count] = '\0';
-			ft_putstr_fd(buff, STDERR_FILENO);
-		}
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-		return (127);
-	}
+		return (fail_invoke(argv));
 	return (0);
 }
 

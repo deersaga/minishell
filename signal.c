@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:28 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:32:33 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:28:59 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	signal_handler_int(int sig)
 {
 	(void)sig;
-	ft_putstr_fd("\n", STDOUT_FILENO);
+	ft_write(STDERR_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

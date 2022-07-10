@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 16:04:03 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:14:48 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ char			*ft_strreplace(char *src, char *target,
 int				check_syntax(t_token *head);
 void			free_commands(t_command *cmd);
 void			print_commands(t_mshell *mshell);
+void			print_array(char **array);
 
 //executer
 void			execute_any_cmd(t_mshell *mshell);
@@ -166,7 +167,7 @@ int				reconnect_redir_with_stdio(t_command *cmd);
 int				openfile(char *filename, t_type_token mode);
 void			wait_childs(t_mshell *mshell);
 char			*get_cmd_name(t_token *head);
-int				check_minishell(t_mshell *mshell, t_command *cmd);
+//int				check_minishell(t_mshell *mshell, t_command *cmd);
 int				is_export_cmd(t_token *head);
 int				is_builtin_cmd(t_mshell *mshell, t_command *cur_com);
 int				execute_a_builtin(t_mshell *mshell, t_command *cmd);
@@ -183,11 +184,12 @@ void			delete_heredoc_files(t_mshell	*mshell);
 //signal
 void			signal_handler_int(int sig);
 void			signal_handler_heredoc(int sig);
+void			signal_handler_pipe(int sig);
 
 //utils
 void			free_array(char **array);
-void			print_array(char **array);
 char			*get_cmd_path(t_mshell *mshell, char *cmd);
+bool			is_valid_cmdline(t_mshell *mshell, char *cmdline);
 
 //ft_func
 void			ft_close(int fd);

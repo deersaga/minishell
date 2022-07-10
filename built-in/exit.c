@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:36:35 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:30:30 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:30:17 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	all_signed_num(char *s)
 
 static void	msg_exit(int status)
 {
-	ft_putstr_fd("exit\n", 1);
+	ft_putstr_fd("exit\n", STDERR_FILENO);
 	exit(status);
 }
 
@@ -41,11 +41,11 @@ int	ft_exit(t_mshell *mshell, t_command *cmd)
 		msg_exit(EXIT_SUCCESS);
 	if (!all_signed_num(cmd->argv[1]))
 	{
-		ft_putstr_fd("exit: numeric argument required\n", 2);
+		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
 		msg_exit(255);
 	}
 	if (cmd->argc == 2)
 		msg_exit(ft_atol(cmd->argv[1]) % 256);
-	ft_putstr_fd("exit: too many arguments\n", 2);
+	ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 17:15:41 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:28:37 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	execute_one_of_cmds(t_mshell *mshell, size_t cur_idx, \
 	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
 	if (reconnect_redir_with_stdio(cur_com) == -1)
 		exit(1);
-	if (check_minishell(mshell, cur_com) && mshell->num_commands > 1)
-		exit(0);
 	if (is_builtin_cmd(mshell, cur_com))
 		exit(execute_a_builtin(mshell, cur_com));
 	create_argv(mshell, cur_com);

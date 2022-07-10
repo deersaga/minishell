@@ -6,11 +6,28 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:20:38 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:34:59 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:29:04 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	print_array(char **array)
+{
+	size_t	i;
+
+	i = 0;
+	if (!array)
+	{
+		printf("array = NULL\n");
+		return ;
+	}
+	while (array[i])
+	{
+		printf("argv%zu %s\n", i, array[i]);
+		i++;
+	}
+}
 
 void	print_redir(t_command *cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:30:19 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 16:49:44 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 17:31:56 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	is_export_cmd(t_token *head)
 	return (0);
 }
 
-int	check_minishell(t_mshell *mshell, t_command *cmd)
+/*int	check_minishell(t_mshell *mshell, t_command *cmd)
 {
 	char		*cmdname;
 	struct stat	buff;
@@ -71,3 +71,4 @@ int	check_minishell(t_mshell *mshell, t_command *cmd)
 	free(cmdname);
 	return (flag);
 }
+*/

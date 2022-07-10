@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/10 14:33:35 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:28:53 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,22 @@ void	free_array(char **array)
 	free(array);
 }
 
-void	print_array(char **array)
+bool	is_valid_cmdline(t_mshell *mshell, char *cmdline)
 {
-	size_t	i;
-
-	i = 0;
-	if (!array)
+	ft_signal(SIGINT, SIG_DFL);
+	if (!cmdline)
 	{
-		printf("array = NULL\n");
-		return ;
+		delete_all_env(mshell);
+		free(mshell->info.pwd);
+		free(mshell->info.home);
+		free(mshell->info.shlvl);
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+		exit(0);
 	}
-	while (array[i])
-	{
-		printf("argv%zu %s\n", i, array[i]);
-		i++;
-	}
+	else if (!ft_strcmp(cmdline, ""))
+		return (false);
+	else
+		return (true);
 }
 
 static void	exit_with_errmsg(char *cmd, int permission_denied)
