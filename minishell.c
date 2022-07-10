@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 15:03:27 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 15:26:51 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_info(t_mshell *mshell, char **environ)
 		get_key_val(environ[i], key_val);
 		if (!ft_strcmp(key_val[0], "HOME"))
 			mshell->info.home = ft_strdup(key_val[1]);
-		else if (!ft_strcmp(key_val[0], "SHLVL"))
+		else if (!ft_strcmp(key_val[0], "SHLVL") && all_num(key_val[1]))
 			mshell->info.shlvl = ft_itoa(ft_atoi(key_val[1]) + 1);
 		free(key_val[1]);
 		free(key_val[0]);
@@ -33,6 +33,10 @@ void	init_info(t_mshell *mshell, char **environ)
 	mshell->info.pwd = getcwd(NULL, 0);
 	if (!mshell->info.pwd)
 		mshell->info.pwd = ft_strdup("");
+	if (!mshell->info.shlvl)
+		mshell->info.shlvl = ft_strdup("1");
+	if (!mshell->info.home)
+		mshell->info.home = ft_strdup("");
 }
 
 void	init_mshell(t_mshell *mshell, char **argv, char **environ)
@@ -71,10 +75,10 @@ void	mshell_interactive(t_mshell *mshell)
 	char		*cmdline;
 	int			status;
 
+	ft_signal(SIGINT, signal_handler_int);
+	ft_signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		ft_signal(SIGINT, signal_handler_int);
-		ft_signal(SIGQUIT, SIG_IGN);
 		cmdline = readline("minishell$>");
 		if (!is_valid_cmdline(mshell, cmdline))
 		{

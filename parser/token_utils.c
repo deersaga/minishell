@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 10:16:59 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/10 13:49:51 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 15:21:53 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_operator(char c)
 	return (0);
 }
 
-/*int	all_num(char *s)
+int	all_num(char *s)
 {
 	size_t	i;
 
@@ -45,4 +45,4 @@ int	is_operator(char c)
 		i++;
 	}
 	return (1);
-}*/
+}

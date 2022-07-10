@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 14:37:59 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 15:21:04 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ int				is_operator(char c);
 int				is_quote(char cur);
 int				is_delimiter(char c);
 int				is_operator_token(t_type_token type);
+int				all_num(char *s);
 
 //parser and expansion
 int				parser(t_mshell *mshell, char *cmdline);

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:54:04 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 19:55:15 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 15:22:58 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,7 @@ void	init_env(t_mshell *mshell, char **environ)
 	{
 		get_key_val(environ[i], key_val);
 		cur->key = ft_strdup(key_val[0]);
-		if (!ft_strcmp(key_val[0], "SHLVL"))
-			cur->val = ft_itoa(ft_atoi(key_val[1]) + 1);
-		else if (ft_strcmp(key_val[0], "OLDPWD"))
+		if (ft_strcmp(key_val[0], "OLDPWD"))
 			cur->val = ft_strdup(key_val[1]);
 		free(key_val[0]);
 		free(key_val[1]);
@@ -97,4 +95,5 @@ void	init_env(t_mshell *mshell, char **environ)
 		cur = cur->next;
 		i++;
 	}
+	register_or_update_env(mshell, "SHLVL", mshell->info.shlvl);
 }
