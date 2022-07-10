@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/10 21:05:48 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 22:43:58 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,33 +45,43 @@ static void	exit_with_errmsg(char *cmd, int permission_denied)
 	}
 }
 
-char	*search_cmd_path(char **paths, char *cmd)
+char	*concat_cmd_with_path(char *path, char *cmd)
+{
+	size_t	len;
+	char	*ret;
+	char	*slash_terminated;
+
+	len = ft_strlen(path);
+	if (path[len - 1] != '/')
+		slash_terminated = ft_strjoin(path, "/");
+	else
+		slash_terminated = path;
+	ret = ft_strjoin(slash_terminated, cmd);
+	return (ret);
+}
+
+char	*search_cmd_path(t_mshell *mshell, char ***paths, char *cmd)
 {
 	size_t		i;
 	struct stat	buff;
 	char		*cand;
-	char		*tmp;
 	int			permission_denied;
 
 	i = 0;
 	permission_denied = 0;
 	if (*cmd == '\0')
 		exit_with_errmsg(cmd, permission_denied);
-	while (paths[i])
+	if (*paths == NULL)
+		*paths = ft_split(mshell->info.pwd, '\0');
+	while ((*paths)[i])
 	{
-		tmp = ft_strjoin(paths[i++], "/");
-		cand = ft_strjoin(tmp, cmd);
-		free(tmp);
+		cand = concat_cmd_with_path((*paths)[i++], cmd);
 		if (!access(cand, X_OK))
-		{
-			free_array(paths);
 			return (cand);
-		}
 		else if (stat(cand, &buff) == 0)
 			permission_denied = 1;
 		free(cand);
 	}
-	free_array(paths);
 	exit_with_errmsg(cmd, permission_denied);
 	return (NULL);
 }
@@ -79,6 +89,7 @@ char	*search_cmd_path(char **paths, char *cmd)
 char	*get_cmd_path(t_mshell *mshell, char *cmd)
 {
 	char		**paths;
+	char		*cand;
 	int			permission_denied;
 	struct stat	buff;
 
@@ -93,7 +104,7 @@ char	*get_cmd_path(t_mshell *mshell, char *cmd)
 		exit_with_errmsg(cmd, permission_denied);
 	}
 	paths = ft_split(get_env(mshell, "PATH"), ':');
-	if (!paths)
-		exit(EXIT_FAILURE);
-	return (search_cmd_path(paths, cmd));
+	cand = search_cmd_path(mshell, &paths, cmd);
+	free_array(paths);
+	return (cand);
 }
