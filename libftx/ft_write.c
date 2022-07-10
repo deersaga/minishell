@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_write.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:14:24 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/09 18:35:01 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/10 19:23:38 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_write(int fd, void *buf, unsigned int byte)
 {
+	signal(SIGPIPE, SIG_IGN);
 	if (write(fd, buf, byte) == -1)
 	{
 		perror("write");
