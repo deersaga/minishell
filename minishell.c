@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 13:24:13 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 15:03:27 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_info(t_mshell *mshell, char **environ)
 	size_t	i;
 
 	i = 0;
+	ft_bzero(&mshell->info, sizeof(t_info));
 	while (environ[i])
 	{
 		get_key_val(environ[i], key_val);
@@ -104,7 +105,7 @@ int	main(int argc, char **argv, char **environ)
 	else
 	{
 		ft_putstr_fd(argv[1], STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);		
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		return (127);
 	}
 	return (0);

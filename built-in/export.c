@@ -6,13 +6,13 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:30:31 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:36:53 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_export(t_envList *env)
+static void	print_export(t_envList *env)
 {
 	t_envList	*cur;
 	char		*val;

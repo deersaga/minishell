@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:32:30 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:33:35 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_array(char **array)
 	free(array);
 }
 
-/*void	print_array(char **array)
+void	print_array(char **array)
 {
 	size_t	i;
 
@@ -40,7 +40,7 @@ void	free_array(char **array)
 		printf("argv%zu %s\n", i, array[i]);
 		i++;
 	}
-}*/
+}
 
 static void	exit_with_errmsg(char *cmd, int permission_denied)
 {

@@ -6,28 +6,11 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:12:42 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/09 18:52:25 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:40:50 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	print_array(char **array)
-{
-	size_t	i;
-
-	i = 0;
-	if (!array)
-	{
-		printf("array = NULL\n");
-		return ;
-	}
-	while (array[i])
-	{
-		printf("argv%zu %s\n", i, array[i]);
-		i++;
-	}
-}
 
 int	execute_a_builtin(t_mshell *mshell, t_command *cmd)
 {

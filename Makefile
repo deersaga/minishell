@@ -11,7 +11,6 @@ SRCS =  built-in/cd.c\
 		built-in/exit.c\
 		environ/environ.c\
 		environ/environ_utils.c\
-		environ/environ_for_env.c\
 		ft_func/ft_close.c\
 		ft_func/ft_signal.c\
 		ft_func/ft_dup.c\
@@ -32,12 +31,12 @@ SRCS =  built-in/cd.c\
 		executer/check_cmd.c\
 		executer/execute_a_cmd.c\
 		executer/execute_cmds.c\
+		executer/execve_arg.c\
 		executer/heredoc.c \
 		executer/pipe.c \
 		executer/redirect.c \
 		executer/wait.c \
-		path.c\
-		argv.c\
+		utils.c\
 		signal.c\
 		minishell.c
 OBJ_DIR = ./obj

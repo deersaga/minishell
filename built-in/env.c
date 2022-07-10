@@ -6,11 +6,32 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:27 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:51:07 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:40:22 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/*static t_envList	*copy_env(t_envList *env)
+{
+	t_envList	*copy;
+	t_envList	*cur;
+	t_envList	*copy_cur;
+
+	copy = ft_calloc(1, sizeof(t_envList));
+	copy_cur = copy;
+	cur = env;
+	while (cur && cur->key)
+	{
+		copy_cur->key = ft_strdup(cur->key);
+		if (cur->val)
+			copy_cur->val = ft_strdup(cur->val);
+		cur = cur->next;
+		copy_cur->next = ft_calloc(1, sizeof(t_envList));
+		copy_cur = copy_cur->next;
+	}
+	return (copy);
+}*/
 
 size_t	update_mshell(t_mshell *mshell, t_command *cmd)
 {

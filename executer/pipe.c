@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 16:23:31 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/09 18:50:48 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 14:34:39 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_pipe_list(t_mshell *mshell, int **pipe_list)
 	free(pipe_list);
 }
 
-int	**make_array_2d_int(size_t h, size_t w)
+static int	**make_array_2d_int(size_t h, size_t w)
 {
 	int		**array;
 	size_t	i;
