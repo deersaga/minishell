@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:20 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/10 20:55:19 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 20:56:13 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 		path = get_abs_path(path);
 	if (chdir(path) == -1)
 	{
-		perror("ch");
+		perror("cd");
 		free(path);
 		free(oldpwd);
 		return (EXIT_FAILURE);
