@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 15:26:51 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 15:55:47 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	main(int argc, char **argv, char **environ)
 
 	init_mshell(&mshell, argv, environ);
 	init_env(&mshell, environ);
-	if (argc == 1)
+	if (argc == 1 && isatty(STDIN_FILENO))
 		mshell_interactive(&mshell);
 	else
 	{
