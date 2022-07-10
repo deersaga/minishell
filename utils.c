@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/10 19:28:53 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 20:40:28 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char	*search_cmd_path(char **paths, char *cmd)
 
 	i = 0;
 	permission_denied = 0;
+	if (*cmd == '\0')
+		exit_with_errmsg(cmd, permission_denied);
 	while (paths[i])
 	{
 		tmp = ft_strjoin(paths[i++], "/");
@@ -78,7 +80,7 @@ char	*search_cmd_path(char **paths, char *cmd)
 			free_array(paths);
 			return (cand);
 		}
-		else if (stat(cmd, &buff) == 0)
+		else if (stat(cand, &buff) == 0)
 			permission_denied = 1;
 		free(cand);
 	}
