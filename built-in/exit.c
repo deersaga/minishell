@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:36:35 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/10 17:30:17 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 20:53:06 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	all_signed_num(char *s)
 	size_t	i;
 
 	i = 0;
+	if (*s == '\0')
+		return (0);
 	if (s[i] == '+' || s[i] == '-')
 		i++;
 	while (s[i])
@@ -28,24 +30,19 @@ static int	all_signed_num(char *s)
 	return (1);
 }
 
-static void	msg_exit(int status)
-{
-	ft_putstr_fd("exit\n", STDERR_FILENO);
-	exit(status);
-}
-
 int	ft_exit(t_mshell *mshell, t_command *cmd)
 {
 	create_argv(mshell, cmd);
-	if (!cmd->argv[1])
-		msg_exit(EXIT_SUCCESS);
+	ft_putstr_fd("exit\n", STDERR_FILENO);
+	if (cmd->argv[1] == NULL)
+		exit(EXIT_SUCCESS);
 	if (!all_signed_num(cmd->argv[1]))
 	{
 		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
-		msg_exit(255);
+		exit(255);
 	}
 	if (cmd->argc == 2)
-		msg_exit(ft_atol(cmd->argv[1]) % 256);
+		exit(ft_atol(cmd->argv[1]) % 256);
 	ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
 	return (1);
 }
