@@ -6,11 +6,24 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:19:31 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 19:59:32 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 21:05:17 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	free_array(char **array)
+{
+	size_t	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
 
 void	free_all_token(t_token *cur)
 {

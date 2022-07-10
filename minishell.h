@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 19:14:48 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 21:05:39 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ char			*ft_strreplace(char *src, char *target,
 					char *implant, size_t *start);
 int				check_syntax(t_token *head);
 void			free_commands(t_command *cmd);
+void			free_array(char **array);
 void			print_commands(t_mshell *mshell);
 void			print_array(char **array);
 
@@ -187,7 +188,6 @@ void			signal_handler_heredoc(int sig);
 void			signal_handler_pipe(int sig);
 
 //utils
-void			free_array(char **array);
 char			*get_cmd_path(t_mshell *mshell, char *cmd);
 bool			is_valid_cmdline(t_mshell *mshell, char *cmdline);
 

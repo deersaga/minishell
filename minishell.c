@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 19:24:25 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 21:06:10 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	fail_invoke(char **argv)
 {
 	char		buff[BUFF_SIZE];
 	ssize_t		count;
-	
+
 	if (argv[1])
 		ft_putstr_fd(argv[1], STDERR_FILENO);
 	else
