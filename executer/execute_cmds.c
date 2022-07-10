@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 19:28:37 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:38:22 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	execute_cmds(t_mshell *mshell, t_command *head)
 		pid = ft_fork();
 		if (pid == 0)
 			execute_one_of_cmds(mshell, cur_idx, cur_com, pipe_list);
+		mshell->exit_status = 0;
 		cur_idx++;
 		cur_com = cur_com->next;
 	}
