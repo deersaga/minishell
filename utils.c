@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/10 22:43:58 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/11 20:54:03 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ char	*concat_cmd_with_path(char *path, char *cmd)
 	if (path[len - 1] != '/')
 		slash_terminated = ft_strjoin(path, "/");
 	else
-		slash_terminated = path;
+		slash_terminated = ft_strdup(path);
 	ret = ft_strjoin(slash_terminated, cmd);
+	free(slash_terminated);
 	return (ret);
 }
 

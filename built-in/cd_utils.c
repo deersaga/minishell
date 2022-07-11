@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 18:06:45 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:30:25 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/11 20:36:31 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,7 @@ char	*delete_dot_slash(char *path)
 			free(tmp);
 		}
 		else
-		{
 			i = target - path + 3;
-		}
 		target = ft_strnstr(path + i, "/.", ft_strlen(path));
 	}
 	return (path);

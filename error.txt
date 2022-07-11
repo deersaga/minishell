@@ -1,0 +1,51 @@
+==5875== Memcheck, a memory error detector
+==5875== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==5875== Using Valgrind-3.19.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
+==5875== Command: ./minishell
+==5875== Parent PID: 1450
+==5875== 
+==5879== 
+==5879== HEAP SUMMARY:
+==5879==     in use at exit: 305,391 bytes in 506 blocks
+==5879==   total heap usage: 822 allocs, 316 frees, 327,924 bytes allocated
+==5879== 
+==5879== 157 bytes in 10 blocks are definitely lost in loss record 65 of 125
+==5879==    at 0x10012B545: malloc (in /usr/local/Cellar/valgrind/HEAD-6ff08b6/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==5879==    by 0x100006714: ft_malloc (in ./minishell)
+==5879==    by 0x10000733A: ft_strjoin (in ./minishell)
+==5879==    by 0x100005F08: concat_cmd_with_path (utils.c:56)
+==5879==    by 0x100005FEC: search_cmd_path (utils.c:78)
+==5879==    by 0x1000061DA: get_cmd_path (utils.c:107)
+==5879==    by 0x100004E0F: execute_one_of_cmds (execute_cmds.c:29)
+==5879==    by 0x100004FDC: execute_cmds (execute_cmds.c:74)
+==5879==    by 0x100005113: execute_any_cmd (execute_cmds.c:102)
+==5879==    by 0x100006639: mshell_interactive (minishell.c:97)
+==5879==    by 0x1000066CA: main (minishell.c:112)
+==5879== 
+==5879== LEAK SUMMARY:
+==5879==    definitely lost: 157 bytes in 10 blocks
+==5879==    indirectly lost: 0 bytes in 0 blocks
+==5879==      possibly lost: 0 bytes in 0 blocks
+==5879==    still reachable: 287,285 bytes in 334 blocks
+==5879==         suppressed: 17,949 bytes in 162 blocks
+==5879== Reachable blocks (those to which a pointer was found) are not shown.
+==5879== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==5879== 
+==5879== For lists of detected and suppressed errors, rerun with: -s
+==5879== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 10 from 10)
+==5875== 
+==5875== HEAP SUMMARY:
+==5875==     in use at exit: 294,900 bytes in 374 blocks
+==5875==   total heap usage: 778 allocs, 404 frees, 320,789 bytes allocated
+==5875== 
+==5875== LEAK SUMMARY:
+==5875==    definitely lost: 0 bytes in 0 blocks
+==5875==    indirectly lost: 0 bytes in 0 blocks
+==5875==      possibly lost: 0 bytes in 0 blocks
+==5875==    still reachable: 280,983 bytes in 212 blocks
+==5875==         suppressed: 13,917 bytes in 162 blocks
+==5875== Reachable blocks (those to which a pointer was found) are not shown.
+==5875== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==5875== 
+==5875== For lists of detected and suppressed errors, rerun with: -s
+==5875== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 5 from 5)

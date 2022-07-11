@@ -6,7 +6,7 @@
 /*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:29:59 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/09 18:37:28 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/11 20:35:28 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char	*ft_strreplace(char *src, char *target, char *implant, size_t *start)
 				ret[i++] = implant[j++];
 			src += ft_strlen(target);
 		}
-		ret[i++] = *src++;
+		else
+			ret[i++] = *src++;
 	}
 	ret[i] = '\0';
 	(*start) += ft_strlen(implant);

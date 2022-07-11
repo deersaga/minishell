@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/11 18:11:01 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/11 20:10:33 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	init_info(t_mshell *mshell, char **environ)
 		mshell->info.home = ft_strdup("");
 }
 
-void	init_mshell(t_mshell *mshell, char **argv, char **environ)
+void	init_mshell(t_mshell *mshell, char **environ)
 {
 	mshell->commands = NULL;
 	mshell->env = NULL;
@@ -105,7 +105,7 @@ int	main(int argc, char **argv, char **environ)
 {
 	t_mshell	mshell;
 
-	init_mshell(&mshell, argv, environ);
+	init_mshell(&mshell, environ);
 	init_env(&mshell, environ);
 	rl_outstream = stderr;
 	if (argc == 1 && isatty(STDIN_FILENO))

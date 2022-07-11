@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/11 18:10:42 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/11 20:10:57 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,6 @@ char			*make_heredoc_filename(size_t	heredoc_id);
 void			create_heredoc_files(t_mshell *mshell);
 void			create_heredoc_file(t_mshell *mshell, t_redir *heredoc);
 void			delete_heredoc_files(t_mshell	*mshell);
-
 
 //signal
 void			signal_handler_int(int sig);
