@@ -6,7 +6,7 @@
 /*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/11 22:20:10 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/11 22:40:13 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,16 @@ long long	ft_try_atoll(const char *str, bool *error)
 	sign = check_sign(str);
 	if (*str == '+' || *str == '-')
 		str++;
+	while (*str == '0')
+		str++;
 	if (!all_signed_num(str) || ft_strlen(str) > 19)
 		return (atoll_error(error));
 	else if (ft_strlen(str) < 19)
 		return (ft_atoll(str_arg));
 	else
 	{
-		if (sign == -1 && ft_strcmp(str, "9223372036854775808") > 0)
-			return (atoll_error(error));
-		if (sign == 1 && ft_strcmp(str, "9223372036854775807") > 0)
+		if ((sign == -1 && ft_strcmp(str, "9223372036854775808") > 0) \
+		|| (sign == 1 && ft_strcmp(str, "9223372036854775807") > 0))
 			return (atoll_error(error));
 		return (ft_atoll(str_arg));
 	}
