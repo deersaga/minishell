@@ -56,7 +56,6 @@ SRCS =	ft_malloc.c \
 		ft_fdlstnew.c \
 		ft_get_next_line.c \
 		ft_hextoui.c \
-		ft_atol.c \
 		ft_strcmp.c
 
 OBJS	=	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

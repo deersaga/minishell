@@ -11,6 +11,7 @@ SRCS =  built-in/cd.c\
 		built-in/exit.c\
 		environ/environ.c\
 		environ/environ_utils.c\
+		ft_func/ft_try_atoll.c\
 		ft_func/ft_close.c\
 		ft_func/ft_signal.c\
 		ft_func/ft_dup.c\

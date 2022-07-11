@@ -6,7 +6,7 @@
 /*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/11 20:10:57 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/11 22:05:36 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,5 +196,6 @@ int				ft_dup(int oldfd);
 void			ft_dup2(int oldfd, int newfd);
 void			ft_execve(char *file, char **argv, char **env);
 pid_t			ft_fork(void);
+long long		ft_try_atoll(const char *str, bool *error);
 
 #endif
