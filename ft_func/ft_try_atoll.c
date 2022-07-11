@@ -6,7 +6,7 @@
 /*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/11 22:40:13 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/11 22:45:10 by ktada            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,9 @@ long long	ft_atoll(const char *str)
 long long	ft_try_atoll(const char *str, bool *error)
 {
 	const char			*str_arg;
-	unsigned long		result;
 	long				sign;
 
 	str_arg = str;
-	result = 0;
 	while (*str == ' ' || *str == '\t' || *str == '\n'\
 	|| *str == '\v' || *str == '\f' || *str == '\r')
 		str++;
