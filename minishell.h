@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 21:05:39 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/11 18:10:42 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct s_info {
 	char	*pwd;
 	char	*shlvl;
 	char	*home;
-	ino_t	mshell_inode;
 }	t_info;
 
 typedef struct s_mshell {

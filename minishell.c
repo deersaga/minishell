@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:06:18 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 22:45:33 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/11 18:11:01 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,6 @@ void	init_info(t_mshell *mshell, char **environ)
 
 void	init_mshell(t_mshell *mshell, char **argv, char **environ)
 {
-	struct stat	buff;
-
-	if (stat(argv[0], &buff) == 0)
-		mshell->info.mshell_inode = buff.st_ino;
 	mshell->commands = NULL;
 	mshell->env = NULL;
 	mshell->num_commands = 0;
@@ -122,5 +118,4 @@ int	main(int argc, char **argv, char **environ)
 /*__attribute__((destructor)) static void destructor()
 {
 	system("leaks -q minishell");
-}
-*/
+}*/
