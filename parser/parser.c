@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:43:13 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/10 17:31:03 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 03:09:04 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ t_token	*terminate_command(t_mshell *mshell, t_token *cur, t_command **cmd)
 void	split_to_commands(t_mshell *mshell, t_command *cmd)
 {
 	t_token	*cur;
-	t_token	*pre;
 
-	pre = NULL;
 	cur = cmd->token;
 	while (cur && cur->token)
 	{
@@ -46,10 +44,9 @@ void	split_to_commands(t_mshell *mshell, t_command *cmd)
 		if (is_redirect_token(cur->type))
 		{
 			add_redir_info(cmd, cur);
-			cur = delete_redir_token(cmd, pre, cur);
+			cur = delete_redir_token(cmd, cur, cur->next);
 			continue ;
 		}
-		pre = cur;
 		cur = cur->next;
 	}
 	cur = terminate_command(mshell, cur, &cmd);

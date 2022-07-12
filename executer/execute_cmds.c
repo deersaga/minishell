@@ -6,32 +6,11 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/10 22:41:34 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 03:21:02 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	execute_one_of_cmds(t_mshell *mshell, size_t cur_idx, \
-					t_command *cur_com, int **pipe_list)
-{
-	char		**environ;
-	char		*command_path;
-
-	ft_signal(SIGINT, SIG_DFL);
-	ft_signal(SIGQUIT, SIG_DFL);
-	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
-	if (reconnect_redir_with_stdio(cur_com) == -1)
-		exit(1);
-	if (is_builtin_cmd(mshell, cur_com))
-		exit(execute_a_builtin(mshell, cur_com));
-	create_argv(mshell, cur_com);
-	command_path = get_cmd_path(mshell, cur_com->argv[0]);
-	environ = make_environ(mshell);
-	ft_execve(command_path, cur_com->argv, environ);
-	free_array(environ);
-	exit(127);
-}
 
 int	execute_empty_cmd(t_mshell *mshell, t_command *cmd)
 {
@@ -53,6 +32,29 @@ int	execute_empty_cmd(t_mshell *mshell, t_command *cmd)
 	ft_signal(SIGINT, signal_handler_int);
 	ft_signal(SIGQUIT, SIG_IGN);
 	return (status);
+}
+
+void	execute_one_of_cmds(t_mshell *mshell, size_t cur_idx, \
+					t_command *cur_com, int **pipe_list)
+{
+	char		**environ;
+	char		*command_path;
+
+	ft_signal(SIGINT, SIG_DFL);
+	ft_signal(SIGQUIT, SIG_DFL);
+	reconnect_pipe_with_stdio(mshell, cur_idx, pipe_list);
+	if (skip_delimiter_token(cur_com->token)->token == NULL)
+		exit(execute_empty_cmd(mshell, cur_com));
+	if (reconnect_redir_with_stdio(cur_com) == -1)
+		exit(1);
+	if (is_builtin_cmd(mshell, cur_com))
+		exit(execute_a_builtin(mshell, cur_com));
+	create_argv(mshell, cur_com);
+	command_path = get_cmd_path(mshell, cur_com->argv[0]);
+	environ = make_environ(mshell);
+	ft_execve(command_path, cur_com->argv, environ);
+	free_array(environ);
+	exit(127);
 }
 
 void	execute_cmds(t_mshell *mshell, t_command *head)
