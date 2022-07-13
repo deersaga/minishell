@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:20 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/13 16:58:13 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:28:38 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	ft_cd(t_mshell *mshell, t_command *cmd)
 	char	*oldpwd;
 
 	create_argv(mshell, cmd);
-	oldpwd = ft_strdup(mshell->info.pwd);
+	oldpwd = ft_strdup(get_env(mshell, "PWD"));
 	if (get_path(cmd->argv, &path, mshell))
 	{
 		free(oldpwd);
