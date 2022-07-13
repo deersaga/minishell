@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/11 22:05:36 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/13 13:25:19 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void			reconnect_pipe_with_stdio(\
 					t_mshell *mshell, size_t cur_idx, int **pipe_list);
 int				reconnect_redir_with_stdio(t_command *cmd);
 int				openfile(char *filename, t_type_token mode);
-void			wait_childs(t_mshell *mshell);
+void			wait_childs(t_mshell *mshell, pid_t pid);
 char			*get_cmd_name(t_token *head);
 //int				check_minishell(t_mshell *mshell, t_command *cmd);
 int				is_export_cmd(t_token *head);

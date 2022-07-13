@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/13 03:43:21 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 13:25:01 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	execute_cmds(t_mshell *mshell, t_command *head)
 		cur_com = cur_com->next;
 	}
 	close_pipe_list(mshell, pipe_list);
-	wait_childs(mshell);
+	wait_childs(mshell, pid);
 	free_pipe_list(mshell, pipe_list);
 }
 
