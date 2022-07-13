@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:21:42 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/13 03:18:39 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:32:00 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,6 @@ void	add_redir_info(t_command *cmd, t_token *op)
 	file = op->next;
 	last = get_redir_last(cmd);
 	last->type = op->type;
-	free(op->token);
-	op->token = ft_strdup(" ");
-	op->type = T_DELM;
 	end = skip_word_quote_token(file);
 	last->has_quote = has_quote(file, end);
 	last->file = subtoken(file, end);
@@ -96,6 +93,9 @@ void	add_redir_info(t_command *cmd, t_token *op)
 		last->file = make_heredoc_filename(heredoc_id);
 		heredoc_id++;
 	}
+	free(op->token);
+	op->token = ft_strdup(" ");
+	op->type = T_DELM;
 }
 
 t_token	*delete_redir_token(t_command *cmd, t_token *previous, t_token *current)

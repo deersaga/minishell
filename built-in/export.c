@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/13 14:24:56 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:26:51 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	is_valid(char *s)
 	eq_pos = ft_strchr(s, '=');
 	if (!eq_pos)
 		eq_pos = ft_strchr(s, '\0');
+	if (*eq_pos != '\0' && *(eq_pos))
 	cur = s;
 	if (!(ft_isalpha(*cur) || *cur == '_') || cur == eq_pos)
 		return (0);
