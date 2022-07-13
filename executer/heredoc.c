@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:24:51 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/13 15:00:11 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:59:14 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,7 @@ void	create_heredoc_file(t_mshell *mshell, t_redir *heredoc)
 		if (g_heredoc_sigint == 1)
 			break ;
 		cmdline = readline(">");
-		if (!cmdline)
-			break ;
-		if (!ft_strcmp(heredoc->heredoc_eof, cmdline))
+		if (!cmdline || !ft_strcmp(heredoc->heredoc_eof, cmdline))
 		{
 			free(cmdline);
 			break ;
