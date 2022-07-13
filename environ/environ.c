@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:54:04 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/13 15:26:27 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:06:04 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,5 @@ void	init_env(t_mshell *mshell, char **environ)
 		i++;
 	}
 	register_or_update_env(mshell, "SHLVL", mshell->info.shlvl);
+	register_or_update_env(mshell, "PWD", mshell->info.pwd);
 }
