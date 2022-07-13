@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/13 13:25:01 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:25:48 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	execute_any_cmd(t_mshell *mshell)
 	ft_signal(SIGQUIT, SIG_IGN);
 	create_heredoc_files(mshell);
 	head_cmd = mshell->commands;
-	if (skip_delimiter_token(head_cmd->token)->token == NULL && mshell->num_commands == 1)
+	if (skip_delimiter_token(head_cmd->token)->token == NULL \
+		&& mshell->num_commands == 1)
 	{
 		mshell->exit_status = execute_empty_cmd(mshell, head_cmd);
 		return ;

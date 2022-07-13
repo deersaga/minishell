@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:27 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/10 22:11:35 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:34:56 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ int	ft_env(t_mshell *mshell, t_command *cmd)
 		}
 		exit(EXIT_SUCCESS);
 	}
-	wait_childs(mshell);
+	wait_childs(mshell, pid);
 	return (mshell->exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/13 13:25:19 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:53:46 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ char			*get_abs_path(char	*path);
 int				ft_pwd(t_mshell *mshell, t_command *cmd);
 int				ft_unset(t_mshell *mshell, t_command *cmd);
 int				ft_export(t_mshell *mshell, t_command *cmd);
+void			append_lefthand_side(t_mshell *mshell,
+					t_command *cmd, size_t i, char *key_val[2]);
 int				ft_exit(t_mshell *mshell, t_command *cmd);
 int				ft_env(t_mshell *mshell, t_command *cmd);
 int				ft_echo(t_mshell *mshell, t_command *cmd);

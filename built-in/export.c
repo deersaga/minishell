@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 13:39:19 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/13 14:26:51 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:50:24 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,20 @@ static void	print_export(t_envList *env)
 static int	is_valid(char *s)
 {
 	char	*eq_pos;
+	char	*plus_pos;
 	char	*cur;
 
 	eq_pos = ft_strchr(s, '=');
 	if (!eq_pos)
 		eq_pos = ft_strchr(s, '\0');
-	if (*eq_pos != '\0' && *(eq_pos))
+	if (*eq_pos != '\0' && *(eq_pos - 1) == '+')
+		plus_pos = eq_pos - 1;
+	else
+		plus_pos = eq_pos;
 	cur = s;
-	if (!(ft_isalpha(*cur) || *cur == '_') || cur == eq_pos)
+	if (!(ft_isalpha(*cur) || *cur == '_') || cur == plus_pos)
 		return (0);
-	while (cur != eq_pos)
+	while (cur != plus_pos)
 	{
 		if (!(ft_isalnum(*cur) || *cur == '_'))
 			return (0);
@@ -102,6 +106,7 @@ int	ft_export(t_mshell *mshell, t_command *cmd)
 			continue ;
 		}
 		get_key_val(cmd->argv[i], key_val);
+		append_lefthand_side(mshell, cmd, i, key_val);
 		register_or_update_env(mshell, key_val[0], key_val[1]);
 		free(key_val[0]);
 		free(key_val[1]);
