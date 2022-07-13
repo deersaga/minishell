@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:20 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/10 21:04:18 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:58:13 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,27 @@
 static char	*get_special_path(t_mshell *mshell, char *argv1)
 {
 	if (!argv1)
-		return (ft_strdup(mshell->info.home));
+	{
+		if (!get_env(mshell, "HOME"))
+		{
+			ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
+			return (NULL);
+		}
+		else if (!ft_strcmp(get_env(mshell, "HOME"), ""))
+			return (ft_strdup(mshell->info.pwd));
+		return (ft_strdup(get_env(mshell, "HOME")));
+	}
 	else if (*argv1 == '~')
-		return (ft_strjoin(mshell->info.home, &argv1[1]));
+	{
+		if (!get_env(mshell, "HOME"))
+		{
+			ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
+			return (NULL);
+		}
+		else if (!ft_strcmp(get_env(mshell, "HOME"), ""))
+			return (ft_strdup(mshell->info.pwd));
+		return (ft_strjoin(get_env(mshell, "HOME"), &argv1[1]));
+	}
 	return (ft_strdup(argv1));
 }
 
@@ -62,6 +80,8 @@ static int	get_path(char **argv, char **path, t_mshell *mshell)
 	}
 	else
 		*path = get_simple_path(mshell, argv[1]);
+	if (*path == NULL)
+		return (EXIT_FAILURE);
 	return (0);
 }
 

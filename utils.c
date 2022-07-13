@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 11:59:54 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/11 20:54:03 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/13 16:03:20 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ bool	is_valid_cmdline(t_mshell *mshell, char *cmdline)
 	{
 		delete_all_env(mshell);
 		free(mshell->info.pwd);
-		free(mshell->info.home);
 		free(mshell->info.shlvl);
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 		exit(0);

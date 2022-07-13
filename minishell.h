@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/13 15:53:46 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:02:10 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_command {
 typedef struct s_info {
 	char	*pwd;
 	char	*shlvl;
-	char	*home;
 }	t_info;
 
 typedef struct s_mshell {
