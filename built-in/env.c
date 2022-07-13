@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 12:55:27 by katakagi          #+#    #+#             */
-/*   Updated: 2022/07/13 14:34:56 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:18:58 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,24 @@
 	return (copy);
 }*/
 
-size_t	update_mshell(t_mshell *mshell, t_command *cmd)
+static void	get_key_val_env(char *key_eq_val, char *key_val[2])
+{
+	char	*eq;
+
+	eq = ft_strchr(key_eq_val, '=');
+	if (!eq)
+	{
+		key_val[0] = ft_strdup(key_eq_val);
+		key_val[1] = NULL;
+	}
+	else
+	{
+		key_val[0] = ft_substr(key_eq_val, 0, eq - key_eq_val);
+		key_val[1] = ft_substr(eq + 1, 0, ft_strlen(key_eq_val));
+	}
+}
+
+ssize_t	update_mshell(t_mshell *mshell, t_command *cmd)
 {
 	size_t	i;
 	char	*key_val[2];
@@ -42,7 +59,14 @@ size_t	update_mshell(t_mshell *mshell, t_command *cmd)
 	i = 1;
 	while (cmd->argv[i] && ft_strchr(cmd->argv[i], '='))
 	{
-		get_key_val(cmd->argv[i], key_val);
+		if (*(cmd->argv[i]) == '=')
+		{
+			ft_putstr_fd("env: ", STDERR_FILENO);
+			ft_putstr_fd(cmd->argv[i], STDERR_FILENO);
+			ft_putstr_fd(": Invalid argument\n", STDERR_FILENO);
+			return (-1);
+		}
+		get_key_val_env(cmd->argv[i], key_val);
 		register_or_update_env(mshell, key_val[0], key_val[1]);
 		free(key_val[0]);
 		free(key_val[1]);
@@ -53,7 +77,7 @@ size_t	update_mshell(t_mshell *mshell, t_command *cmd)
 
 int	ft_env(t_mshell *mshell, t_command *cmd)
 {
-	size_t		i;
+	ssize_t		i;
 	pid_t		pid;
 	char		*path;
 
@@ -62,6 +86,8 @@ int	ft_env(t_mshell *mshell, t_command *cmd)
 	if (pid == 0)
 	{
 		i = update_mshell(mshell, cmd);
+		if (i == -1)
+			exit(EXIT_FAILURE);
 		if (cmd->argv[i] == NULL)
 			print_env(mshell->env);
 		else
