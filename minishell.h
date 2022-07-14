@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:05:45 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/13 16:02:10 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/14 23:04:42 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ char			**make_environ(t_mshell *mshell);
 
 //heredoc
 char			*make_heredoc_filename(size_t	heredoc_id);
-void			create_heredoc_files(t_mshell *mshell);
+int				create_heredoc_files(t_mshell *mshell);
 void			create_heredoc_file(t_mshell *mshell, t_redir *heredoc);
 void			delete_heredoc_files(t_mshell	*mshell);
 

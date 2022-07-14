@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:24:51 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/13 15:59:14 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/14 23:06:49 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ char	*make_heredoc_filename(size_t	heredoc_id)
 	return (file_name);
 }
 
-void	create_heredoc_files(t_mshell *mshell)
+int	create_heredoc_files(t_mshell *mshell)
 {
 	t_command	*cur_com;
 	t_redir		*cur_redir;
 	size_t		i;
+	int			status;
 
 	cur_com = mshell->commands;
 	i = 0;
@@ -61,16 +62,17 @@ void	create_heredoc_files(t_mshell *mshell)
 		cur_com = cur_com->next;
 		i++;
 	}
+	status = g_heredoc_sigint;
 	g_heredoc_sigint = 0;
+	if (status)
+		return (1);
+	return (0);
 }
 
 static int	check_heredoc_sigint(void)
 {
 	if (g_heredoc_sigint == 1)
-	{
-		rl_delete_text(0, rl_end);
 		rl_done = 1;
-	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/13 15:25:48 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/14 23:09:41 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,20 +89,22 @@ void	execute_any_cmd(t_mshell *mshell)
 
 	ft_signal(SIGINT, SIG_IGN);
 	ft_signal(SIGQUIT, SIG_IGN);
-	create_heredoc_files(mshell);
-	head_cmd = mshell->commands;
-	if (skip_delimiter_token(head_cmd->token)->token == NULL \
-		&& mshell->num_commands == 1)
+	if (!create_heredoc_files(mshell))
 	{
-		mshell->exit_status = execute_empty_cmd(mshell, head_cmd);
-		return ;
+		head_cmd = mshell->commands;
+		if (skip_delimiter_token(head_cmd->token)->token == NULL \
+			&& mshell->num_commands == 1)
+		{
+			mshell->exit_status = execute_empty_cmd(mshell, head_cmd);
+			return ;
+		}
+		if (!is_export_cmd(head_cmd->token))
+			head_cmd->token = expand_and_retokenize(mshell, head_cmd->token);
+		if (mshell->num_commands == 1 && is_builtin_cmd(mshell, head_cmd))
+			mshell->exit_status = execute_a_builtin_cmd(mshell, head_cmd);
+		else
+			execute_cmds(mshell, head_cmd);
 	}
-	if (!is_export_cmd(head_cmd->token))
-		head_cmd->token = expand_and_retokenize(mshell, head_cmd->token);
-	if (mshell->num_commands == 1 && is_builtin_cmd(mshell, head_cmd))
-		mshell->exit_status = execute_a_builtin_cmd(mshell, head_cmd);
-	else
-		execute_cmds(mshell, head_cmd);
 	delete_heredoc_files(mshell);
 	ft_signal(SIGINT, signal_handler_int);
 	ft_signal(SIGQUIT, SIG_IGN);
