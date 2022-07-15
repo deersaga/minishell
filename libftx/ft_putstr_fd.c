@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ktada <ktada@student.42.fr>                +#+  +:+       +#+        */
+/*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:01:00 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/09 18:35:01 by ktada            ###   ########.fr       */
+/*   Updated: 2022/07/16 02:10:33 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,11 @@ void	ft_putstr_fd(char *s, int fd)
 	if (!s)
 		return ;
 	len = ft_strlen(s);
+	while (len > INT_MAX)
+	{
+		ft_write(fd, s, INT_MAX)
+		len -= INT_MAX;
+		s += INT_MAX;
+	}
 	ft_write(fd, s, len);
 }

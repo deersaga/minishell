@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 17:48:57 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/11 17:53:42 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/16 01:54:35 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include <signal.h>
+# include <limits.h>
 # define BASE "0123456789abcdef"
 # define BUFFER_SIZE 1024
 
