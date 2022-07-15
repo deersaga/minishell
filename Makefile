@@ -47,13 +47,14 @@ LIB = ./libftx/libft.a
 LIB_DIR = ./libftx
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+DFLAGS = -g -fsanitize=address -fsanitize=leak
 IFLAGS = -I $(shell brew --prefix readline)/include
 LDFLAGS = -lreadline -lhistory -L $(shell brew --prefix readline)/lib
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(dir $@);
-	@$(CC) -g -Wall -Wextra -Werror $(IFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C $(LIB_DIR)
