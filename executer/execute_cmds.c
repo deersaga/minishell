@@ -6,7 +6,7 @@
 /*   By: katakagi <katakagi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:07:53 by ktada             #+#    #+#             */
-/*   Updated: 2022/07/14 23:09:41 by katakagi         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:15:49 by katakagi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	execute_any_cmd(t_mshell *mshell)
 		else
 			execute_cmds(mshell, head_cmd);
 	}
+	else
+		mshell->exit_status = 1;
 	delete_heredoc_files(mshell);
 	ft_signal(SIGINT, signal_handler_int);
 	ft_signal(SIGQUIT, SIG_IGN);
